@@ -1,0 +1,432 @@
+{% extends "base.html" %} 
+{% load comments %}
+{% load dajaxice_templatetags %}
+{% block sidebar %}
+								<div id="user-profile" class="box">
+									<div class="clearfix">
+										<div id="avatar" class="pull-left">
+											<img src="http://www.gravatar.com/avatar/{{owner.userprofile.get_gravatar_hash}}?d=identicon" class="img-rounded" alt="Avatar">
+										</div>
+										<div id="user-info" class="pull-left">
+											<h2>
+												{%if owner.first_name%}
+													{{owner.first_name}}
+												{%else%}
+													{{owner.username}}
+												{%endif%}
+												
+											</h2>
+											<ul>
+												<li>努力中 <span class="badge badge-info">{{ing_count}}</span></li>
+												<li>已完成 <span class="badge badge-success">{{ed_count}}</span></li>
+												<li>未完成 <span class="badge badge-important">{{fail_count}}</span></li>
+											</ul>	
+										</div>
+									</div>
+									<div id="user-desc">{{owner.userprofile.description}}</div>
+								</div>
+								<div id="menu">
+									<ul class="nav nav-list">
+										<li {%if status == 'ing' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=ing">努力中的计划<i class="icon-chevron-right pull-right"></i></a></li>
+										<li {%if status == 'ed' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=ed">已经完成的计划<i class="icon-chevron-right pull-right"></i></a></li>
+										<li {%if status == 'fail' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=fail">未如期完成的计划<i class="icon-chevron-right pull-right"></i></a></li>
+									</ul>
+								</div>
+								<div id="friend-list" class="box hide">
+									<h3>
+										我关注的朋友
+										<a href="#">查看全部</a>
+									</h3>
+									<ul class="media-list">
+										<li class="media">
+											<a class="pull-left" href="#">
+												<img class="media-object img-rounded" src="http://www.gravatar.com/avatar/205e460b4792e2a1231230c08d50?d=identicon" class="img-rounded" alt="Avatar">
+											</a>
+											<div class="media-body">
+												<h4 class="media-heading">Tom</h4>
+												大家好，我是TOM，磊哥威武。。
+											</div>
+										</li>
+
+									</ul>
+								</div>
+								{{ block.super }}
+{% endblock %}
+{% block content %}	
+{%for todo in todo_list%}
+	<div class="todo">
+		<h2>
+			{{todo.todo_name}} 
+			{%if user.is_authenticated and user.username == owner.username%}
+										<span class="pull-right">
+											<a href="javascript:void(0)" class="markComplete" data-todoid="{{todo.id}}" title="{%if todo.todo_is_completed%}撤销已完成状态{%else%}设置为已完成{%endif%}"><i class=" icon-ok"></i></a>
+											{%if not todo.todo_erasable%}
+											<a href="javascript:void(0)" class="deleteTodo" data-todoid="{{todo.id}}" title="删除该计划"><i class=" icon-trash"></i></a>
+											{%endif%}
+											<a href="javascript:void(0)" class="changeVisibale" data-todoid="{{todo.id}}" title="{%if todo.todo_visibale%}设置为仅对自己可见{%else%}设置为对所有人可见{%endif%}"><i class=" icon-eye-open"></i></a>
+											{%if not todo.todo_is_completed%}
+											<a href="javascript:void(0)" class="add-new-complete" data-todoid="{{todo.id}}" title="添加新的进度"><i class="icon-plus"></i></a>
+											{%endif%}
+										</span>
+			{%endif%}
+		</h2>
+		<div class="todo_meta shadow{%if not todo.todo_visibale%} todo_private{%endif%}">
+			<div class="todo_info">
+				该计划由 <a href="./{{todo.user.username}}">{%if todo.user.first_name%}
+													{{todo.user.first_name}}
+												{%else%}
+													{{todo.user.username}}
+												{%endif%}</a> 开始于  {{todo.todo_start|date:'Y年n月j日'}} ，计划在
+				 {{todo.todo_end|date:'Y年n月j日'}}  完成！
+			</div>
+			<div class="todo_desc">{{todo.todo_description}}</div>
+		</div>
+		
+		<!-- 
+		{% render_comment_list for todo %}
+		{% render_comment_form for todo %}
+		 -->
+		<div class="todo_complete">
+			<div class="accordion" id="todo-completes{{todo.id}}">
+			{%for ac in todo.achievement_set.all%}
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse"
+							data-parent="#todo-completes{{todo.id}}" href="#collapse{{ac.id}}">
+							在{{ac.ac_time|date:'Y年n月j日'}} {{ac}} </a>
+					</div>
+					<div id="collapse{{ac.id}}" class="accordion-body collapse {%if forloop.first%}in{%endif%}">
+						<div class="accordion-inner">{{ac.ac_description}}</div>
+					</div>
+				</div>
+				{% empty %}
+					    {%if user.is_authenticated and user.username == owner.username%}
+						    <div class="shadow" style="padding:20px;">
+						    你还没有为该计划做任何事情，要加油呀！
+						    {%if not todo.todo_is_completed%}
+						    <a  href="javascript:void(0)" data-todoid="{{todo.id}}" data-toggle="modal" class="add-new-complete btn btn-info">添加进度</a>
+						    {%endif%}
+						    </div>
+						    
+					    {%else%}
+					    						    <div class="shadow" style="padding:20px;">
+						{{ owner.username}}还没有为该计划做任何努力，遗憾呀，难道他要荒废了吗！
+						    </div>
+					    {%endif%}
+			{%endfor%}
+			</div>
+		</div>
+	</div>
+	{% empty %}
+		<div class="todo">
+				    {%if user.is_authenticated and user.username == owner.username%}
+				    	
+				    	{%if status == 'ing' %}
+				    	<h2 style="height:100px; padding:20px">你竟然还没有添加过任何计划，抓紧时间给自己制定个计划，开始奋斗吧！
+					    <a  href="javascript:void(0)" class="add-new-todo btn btn-info">添加计划</a>
+					    </h2>
+				    	{%endif%}
+				    	{%if status == 'ed' %}
+				    	<h2 style="height:100px; padding:20px">你暂时还没有完成过任何计划，要加油了呀！
+					    </h2>
+				    	{%endif%}
+				    	{%if status == 'fail' %}
+				    	<h2 style="height:100px; padding:20px">你还没有未完成的计划，再接再厉！
+					    </h2>
+				    	{%endif%}
+				    {%else%}
+				    	{%if status == 'ing' %}
+				    		<h2 style="height:100px; padding:20px">{{ owner.username }} 竟然还没有添加过任何计划！</h2>
+				    	{%endif%}
+				    	{%if status == 'ed' %}
+				    		<h2 style="height:100px; padding:20px">{{ owner.username }} 竟然还没有已经完成的计划！</h2>
+				    	{%endif%}
+				    	{%if status == 'fail' %}
+				    		<h2 style="height:100px; padding:20px">{{ owner.username }} 竟然还没有未完成的计划！</h2>
+				    	{%endif%}
+				    {%endif%}
+		</div>
+	{%endfor%}
+{% endblock %}
+
+{% block extra %}
+{{ block.super }}
+					<!--Ac Modal -->
+					<div id="acModal" class="hide">
+						<div>
+							<form id="ac-form" action="../AddAc/" method="post">{% csrf_token %}
+								<label for="inputEmail">为你这一重大突破起一个响亮的名字</label>
+								{{ac_form.ac_name}}
+								<label for="inputPassword">描述一下你这次又做了哪些努力</label>
+								{{ac_form.ac_description}}
+								<input type="hidden" name="todoid" value="">
+							</form>
+						</div>
+					</div> 
+					<div id="dialog-confirm" class="hide">
+					  <div style="line-height:30px;"></div>
+					</div>
+	{% endblock %}
+	
+	
+	{%block extrajs%}
+ 		{{ block.super }}
+					{% dajaxice_js_import %}
+					<script type="text/javascript">
+					
+					function delete_todo_callback(data){
+						if(data.flag == 1){
+							$("#dialog-confirm div").html("计划已被成功删除！");
+							window.setTimeout(function(){
+									$("#dialog-confirm").dialog( "close");
+									$(".current_todo").slideToggle();
+								}, 500);
+						}else{
+							$("#dialog-confirm div").html("计划删除失败！");
+							window.setTimeout(function(){$("#dialog-confirm").dialog( "close");}, 1000);
+						}
+					}
+					function mark_complete_callback(data){
+						if(data.flag == 1){
+							$("#dialog-confirm div").html("计划已被标记为已完成！");
+							window.setTimeout(function(){
+									$("#dialog-confirm").dialog( "close");
+									$(".current_todo").slideToggle();
+								}, 500);
+						}else{
+							$("#dialog-confirm div").html("操作失败！");
+							window.setTimeout(function(){$("#dialog-confirm").dialog( "close");}, 1000);
+						}
+					}
+					function change_visibale_callback(data){
+						if(data.flag == 1){
+							if(data.visibale){
+								$("#dialog-confirm div").html("成功设置该计划对所有人可见！");
+								window.setTimeout(function(){
+									$("#dialog-confirm").dialog( "close");
+									$(".current_todo .todo_meta").removeClass("todo_private");
+								}, 500);
+							}
+							else{
+								$("#dialog-confirm div").html("成功设置该计划仅对自己可见！");
+								window.setTimeout(function(){
+									$("#dialog-confirm").dialog( "close");
+									$(".current_todo .todo_meta").addClass("todo_private");
+								}, 500);
+							}
+						}else{
+							$("#dialog-confirm div").html("计划删除失败！");
+							window.setTimeout(function(){$("#dialog-confirm").dialog( "close");}, 1000);
+						}
+					}
+					
+					function show_comfirm(title,callback,message,type,todo_id){
+						$( "#dialog-confirm div" ).html(message);
+						$( "#dialog-confirm" ).dialog({
+						      resizable: false,
+						      height:185,
+						      modal: true,
+						      title: title,
+						      buttons: {
+						        "确定": function() {
+						        	if(type=="deletetodo")
+						        		Dajaxice.todos.DeleteTodo(callback,{'todo_id':todo_id});
+						        	if(type=="markcomplete")
+						        		Dajaxice.todos.MarkComplete(callback,{'todo_id':todo_id});
+						        	if(type=="changevisibale")
+						        		Dajaxice.todos.ChangeVisibale(callback,{'todo_id':todo_id});
+						        },
+						        "取消": function() {
+						          $( this ).dialog( "close" );
+						        }
+						      }
+						    });
+					}
+					
+					$(function(){
+						$('.deleteTodo').click(function(){
+							$(this).parents(".todo").addClass("current_todo").siblings(".todo").removeClass("current_todo");
+							show_comfirm("删除计划",delete_todo_callback,'制定了计划就应该全力以赴哟…… <br>你确定要删除该计划吗？','deletetodo',$(this).data("todoid"))
+						});
+						$('.markComplete').click(function(){
+							$(this).parents(".todo").addClass("current_todo").siblings(".todo").removeClass("current_todo");
+							show_comfirm("标记完成",mark_complete_callback,'自觉评判自己的计划，切忌自欺欺人…… <br> 你确定完成了该计划吗？','markcomplete',$(this).data("todoid"))
+						});
+						$('.changeVisibale').click(function(){
+							$(this).parents(".todo").addClass("current_todo").siblings(".todo").removeClass("current_todo");
+							show_comfirm("可见性",change_visibale_callback,'朋友的监督会成为执行的动力…… <br> 你确定修改该计划的可见性吗？','changevisibale',$(this).data("todoid"))
+						});
+						
+						$('body').tooltip({
+							selector: "button[data-trigger=tooltip]"
+						});
+						$('.add-new-todo').click(function(){
+					    	$('#todoModal').dialog({
+					    		height: 480,
+					    		width: 310,
+					    		modal: true,
+					    		title:"制定一个新的计划",
+					    		resizable: false,
+					    		buttons: {
+					    			保存: function() {
+					    				$("#todo-form").submit();
+					    			},
+					    			取消: function() {
+					    				$( this ).dialog( "close" );
+					    			}
+					    		},
+					    		open: function( event, ui ) {
+					    			$(this).find("input[type=text],textarea").addClass("input-block-level");
+					    		}
+					    	});
+					    });
+						$('.add-new-complete').click(function(){
+					    	var todoid = $( this ).data("todoid");
+					    	console.info($( this ));
+					    	console.info("todoid:"+todoid);
+					    	$('#acModal').dialog({
+					    		height: 335,
+					    		width: 300,
+					    		modal: true,
+					    		title:"制定一个新的计划",
+					    		resizable: false,
+					    		buttons: {
+					    			保存: function() {
+					    				$(this).find("input[name='todoid']").val(todoid);
+					    				$("#ac-form").submit();
+					    			},
+					    			取消: function() {
+					    				$( this ).dialog( "close" );
+					    			}
+					    		},
+					    		open: function( event, ui ) {
+					    			$(this).find("input[type=text],textarea").addClass("input-block-level");
+					    		}
+					    	});
+					    });
+
+						$.datepicker.setDefaults({
+							autoSize:true,
+							showAnim:"slideDown",
+							dateFormat:"yy-mm-dd",
+							closeText: '关闭',
+							prevText: '&#x3C;上月',
+							nextText: '下月&#x3E;',
+							currentText: '今天',
+							monthNames: ['一月','二月','三月','四月','五月','六月',
+							'七月','八月','九月','十月','十一月','十二月'],
+							monthNamesShort: ['一月','二月','三月','四月','五月','六月',
+							'七月','八月','九月','十月','十一月','十二月'],
+							dayNames: ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'],
+							dayNamesShort: ['周日','周一','周二','周三','周四','周五','周六'],
+							dayNamesMin: ['日','一','二','三','四','五','六'],
+							weekHeader: '周',
+							dateFormat: 'yy-mm-dd',
+							firstDay: 1,
+							isRTL: false,
+							showMonthAfterYear: true,
+							yearSuffix: '年'
+						});
+						$( "#id_todo_start" ).datepicker({
+							defaultDate: "+1w",
+							minDate:"+0d",
+			                changeYear: true,
+			                onClose: function( selectedDate ) {
+			                	$( "#id_todo_end" ).datepicker( "option", "minDate", selectedDate );
+			                }
+			            });
+						$( "#id_todo_end" ).datepicker({
+							defaultDate: "+1w",
+			                changeYear: true,
+			                minDate:"+0d",
+			                onClose: function( selectedDate ) {
+			                	$( "#id_todo_start" ).datepicker( "option", "maxDate", selectedDate );
+			                }
+			            });
+
+						$("#todo-form").validate(
+						{
+							errorClass: "error",
+							ignore: "input[type='checkbox']",
+							errorPlacement: function(error, element) {
+								element.prev().hide();
+								element.prev().after(error);
+							},
+							success:function(label){
+								label.prev().show();
+								label.remove();
+							},
+							rules: {
+								todo_name: {
+									required:true,
+									maxlength: 20
+								},
+								todo_description: {
+									required:true,
+									maxlength: 100
+								},
+								todo_start: {
+									required: true,
+									date: true
+								},
+								todo_end: {
+									required: true,
+									date: true
+								}
+							},
+							messages: {
+								todo_name: {
+									required: "不响亮不要紧，可不能不填哟",
+									maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
+								},
+								todo_description: {
+									required: "该计划到底想完成什么事情呢",
+									maxlength: jQuery.format("不过不能多于{0}个字符")
+								},
+								todo_start: {
+									required: "记得为该计划设定一个起始时间哟",
+									date: "我要的是日期，你输入的是火星文吗？"
+								},
+								todo_end: {
+									required: "记得为该计划设定一个结束时间哟",
+									date: "我要的是日期，你输入的是火星文吗？"
+								}
+							}
+						});
+						$("#ac-form").validate(
+						{
+							errorClass: "error",
+							ignore: "input[type='checkbox']",
+							errorPlacement: function(error, element) {
+								element.prev().hide();
+								element.prev().after(error);
+							},
+							success:function(label){
+								label.prev().show();
+								label.remove();
+							},
+							rules: {
+								ac_name: {
+									required:true,
+									maxlength: 20
+								},
+								ac_description: {
+									required:true,
+									maxlength: 100
+								}
+							},
+							messages: {
+								ac_name: {
+									required: "不响亮不要紧，可不能不填哟",
+									maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
+								},
+								ac_description: {
+									required: "你到底是完成了什么呢？",
+									maxlength: jQuery.format("不过不能多于{0}个字符")
+								},
+							}
+						});
+});
+</script>
+	{% endblock %}
+	

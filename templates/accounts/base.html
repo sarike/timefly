@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <base href="{{request.host_url}}" />
+    <meta charset="utf-8">
+    <title>Sign in &middot; Twitter Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    	<link rel="stylesheet" href="{{ url_for('static', filename='css/lib/bootstrap.min.css') }}"  media="screen, projection" type="text/css"/>
+    	<link rel="stylesheet" href="{{ url_for('static', filename='css/account.css') }}"  media="screen, projection" type="text/css"/>
+  </head>
+  <body>
+    <div class="container">
+    {%block content%}
+    {%endblock%}
+    </div> <!-- /container -->
+  </body>
+</html>

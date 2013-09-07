@@ -1,0 +1,41 @@
+#coding=utf-8
+from flask.ext.login import UserMixin
+from sqlalchemy.dialects.mysql import BIGINT, VARCHAR
+from sqlalchemy.types import String, Boolean
+from werkzeug.security import generate_password_hash, check_password_hash
+from wtforms.validators import ValidationError
+from models.base import Base, id_generate
+import sqlalchemy as SA
+from utils.database_session import session_cm
+
+
+class User(Base, UserMixin):
+    __tablename__ = 'user'
+    PER_PAGE = 15
+
+    id = SA.Column(BIGINT(unsigned=True), default=id_generate, primary_key=True)
+    email = SA.Column(VARCHAR(128, charset='latin1', collation='latin1_general_cs'), unique=True, nullable=False)
+    username = SA.Column(String(128), unique=True, nullable=False)
+    nick_name = SA.Column(String(128))
+    active = SA.Column(Boolean, default=True, nullable=False)
+    is_admin = SA.Column(Boolean, default=False, nullable=False)
+    pw_hash = SA.Column(String(128))
+
+    def set_password(self, pw):
+        self.pw_hash = generate_password_hash(pw, salt_length=16)
+
+    def check_password(self, pw):
+        return check_password_hash(self.pw_hash, pw)
+
+    @classmethod
+    def validate_user(cls, email, password):
+        # TODO: 验证用户是否激活，否则发送激活邮件
+
+        with session_cm() as session:
+            user = session.query(User).filter(User.email == email).first()
+            if not user:
+                raise ValidationError(u'用户不存在')
+            elif not user.check_password(password):
+                raise ValidationError(u'密码不正确')
+
+            return user

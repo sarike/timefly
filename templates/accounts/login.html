@@ -1,0 +1,45 @@
+{% extends "accounts/base.html" %}
+{%block content%}
+      <form class="form-signin form-horizontal" action="accounts/login" method="post">{{ form.csrf_token }}
+        <h2 class="form-signin-heading text-center">登录</h2>
+        <div class="form-signin-body">
+        
+        <div class="control-group {%if form.email.errors%}error{%endif%}">
+            <label class="control-label" for="id_email">邮箱</label>
+            <div class="controls">
+              {{form.email}}
+               <span class="help-inline">
+               	
+              </span>
+            </div>
+          </div>
+        <div class="control-group {%if form.password.errors%}error{%endif%}">
+            <label class="control-label" for="id_password">密码</label>
+            <div class="controls">
+              {{form.password}}
+               <span class="help-inline">
+               	
+              </span>
+            </div>
+        </div>
+        <div class="control-group {%if form.password.errors%}error{%endif%}">
+            <div class="controls">
+             <label class="checkbox">
+	          {{form.remember}} <span class="help-inline tip muted">下次自动登录</span>
+	        </label>
+            </div>
+          </div>
+       {% if messages %}
+		<ul class="messages text-center">
+		    {% for message in messages %}
+		    <li class="alert alert-error">{{ message }}</li>
+		    {% endfor %}
+		</ul>
+		{% endif %}
+        <div class="form-signin-footer text-center"><button class="btn btn-info" type="submit">提交</button> 
+        	<button class="btn btn-info" type="button" onclick="javascript:location.href='accounts/reg'">注册</button>
+        	<div class="tip text-right">
+          <a href="">忘记密码？</a>
+        </div></div>
+      </form>
+{%endblock%}

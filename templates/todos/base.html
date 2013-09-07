@@ -1,0 +1,137 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="http://{{request.get_host}}" />
+    <meta charset="utf-8">
+    {% block extrastyle %}
+    	<link rel="stylesheet" href="{%static 'css/lib/bootstrap.min.css'%}"  media="screen, projection" type="text/css"/>
+    	<link rel="stylesheet" href="{%static 'css/screen.css'%}"  media="screen, projection" type="text/css"/>
+    	<link rel="stylesheet" href="{%static 'css/lib/jquery-ui.css'%}" />
+    {% endblock %}
+    <title>{% block title %}时光飞逝 |TimeFly{% endblock %}</title>
+</head>
+<body>
+<div id="wrapper">
+
+	{% block navbar %}
+	<div class="navbar navbar-fixed-top">
+				<div class="navbar-inner">
+					<div class="container">
+						<ul class="nav">
+							<li {% if position == 'index' %}class="active"{%endif%}>
+								<a href="#" class=" clearfix">
+									<span><i class="nav-home"></i></span>
+									<span>主页</span>
+								</a>
+							</li>
+							{%if user.is_authenticated%}
+							 <li {% if user.username == owner.username %}class="active"{%endif%}>
+								<a href="./{{user.username}}" class=" clearfix">
+									<span><i class="nav-me"></i></span>
+									<span>我</span>
+								</a>
+							</li>	
+							{%endif%}
+						</ul>
+						
+						<div class="pull-right">
+						{%if user.is_authenticated%}
+						<ul class="nav">
+								<li>
+									<a href="#" class=" clearfix dropdown-toggle" data-toggle="dropdown">
+									<span>
+												{%if user.first_name%}
+													{{user.first_name}}
+												{%else%}
+													{{user.username}}
+												{%endif%}
+									</span>
+									<span>
+										<i class="caret"></i>
+									</span>
+									</a>
+									<ul class="dropdown-menu" role="menu" aria-labelledby="">
+										<li role="presentation">
+											<a role="menuitem" tabindex="-1" href="Setting/userinfo/">
+												<i class="icon-user "></i> 个人资料
+											</a>
+										</li>
+												<li role="presentation" class="divider"></li>
+												<li role="presentation">
+												<a role="menuitem" tabindex="-1" href="../accounts/logout/">
+													<i class="icon-off"></i> 退出登录</a></li>
+												</ul>
+											</li>		    
+										</ul>
+										<button title="制定新计划" class="add-new-todo btn btn-info">
+											<i class="nav-new-todo"></i><span></span>
+										</button>
+						{%else%} 
+						<form class="form-inline" action="../accounts/login/" method="post">{%csrf_token%}
+							  <input type="text" name="email" class="input-medium" placeholder="Email">
+							  <input type="password" name="password" class="input-medium" placeholder="Password">
+							  <label class="checkbox">
+							    <input type="checkbox"> 记住我
+							  </label>
+							  <button type="submit" class="btn btn-info">登录</button>
+							  <button class="btn btn-info" type="button" onclick="javascript:location.href='accounts/register/'">注册</button>
+							</form>
+						{%endif%}
+									</div>
+								</div>
+							</div>
+						</div>
+	{% endblock %}
+	
+	{% block header %}
+		<header></header>
+	{% endblock %}
+	
+	<div class="container">
+		    <div class="row-fluid">
+				<div class="span3" id="sidebar">
+				{% block sidebar %}
+				<div class="box">
+					<span class="copyright">&copy; 2013</span> <a href="#">关于</a>
+				</div>
+				{% endblock %}
+				</div>
+				<div class="span9">
+				{% block content %}{% endblock %}
+				</div>
+			</div>
+	</div>
+	    
+	{% block footer %}<footer></footer>{% endblock %}
+	{% block extra %}
+	<!--Todo Modal -->
+					<div id="todoModal" class="hide">
+						<div>
+							<form id="todo-form" action="../AddTodo/" method="post">{% csrf_token %}
+								<label for="id_todo_name">为你的新计划起一个响亮的名字</label>
+								{{todo_form.todo_name}}
+								<label for="id_todo_description">描述一下该计划打算要完成的事情</label>
+								{{todo_form.todo_description}}
+								<label for="id_todo_start">你打算什么时候开始这个计划？</label>
+								{{todo_form.todo_start}}
+								<label for="id_todo_end">这个计划你预计会在什么时候完成呢？</label>
+								{{todo_form.todo_end}}
+								<ul>
+									<li class="checkbox">{{todo_form.todo_visibale}} 对所有人可见</li>
+									<li class="checkbox"> {{todo_form.todo_erasable}} 不可删除</li>
+								</ul>
+							</form>
+						</div>
+					</div> 
+	{% endblock %}
+    {% block extrajs %}
+	    <script src="{%static 'js/jquery-1.9.0.min.js'%}"></script>
+	    <script src="{%static 'js/bootstrap.js'%}"></script>
+	    <script src="{%static 'js/jquery.validate.min.js'%}"></script>
+	    <script src="{%static 'js/jquery-ui.js'%}"></script>
+    {% endblock %}
+</div>
+	
+</body>
+</html>
