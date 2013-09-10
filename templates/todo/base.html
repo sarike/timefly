@@ -1,13 +1,12 @@
-{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<base href="http://{{request.get_host}}" />
+<base href="{{request.host_url}}" />
     <meta charset="utf-8">
     {% block extrastyle %}
-    	<link rel="stylesheet" href="{%static 'css/lib/bootstrap.min.css'%}"  media="screen, projection" type="text/css"/>
-    	<link rel="stylesheet" href="{%static 'css/screen.css'%}"  media="screen, projection" type="text/css"/>
-    	<link rel="stylesheet" href="{%static 'css/lib/jquery-ui.css'%}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/bootstrap.min.css') }}"  media="screen, projection" type="text/css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/screen.css') }}"  media="screen, projection" type="text/css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/jquery-ui.css') }}"  media="screen, projection" type="text/css"/>
     {% endblock %}
     <title>{% block title %}时光飞逝 |TimeFly{% endblock %}</title>
 </head>
@@ -25,9 +24,9 @@
 									<span>主页</span>
 								</a>
 							</li>
-							{%if user.is_authenticated%}
-							 <li {% if user.username == owner.username %}class="active"{%endif%}>
-								<a href="./{{user.username}}" class=" clearfix">
+							{%if current_user.is_authenticated() %}
+							 <li {% if current_user.username == owner.username %}class="active"{%endif%}>
+								<a href="./{{current_user.username}}" class=" clearfix">
 									<span><i class="nav-me"></i></span>
 									<span>我</span>
 								</a>
@@ -36,15 +35,15 @@
 						</ul>
 						
 						<div class="pull-right">
-						{%if user.is_authenticated%}
+						{%if current_user.is_authenticated() %}
 						<ul class="nav">
 								<li>
 									<a href="#" class=" clearfix dropdown-toggle" data-toggle="dropdown">
 									<span>
-												{%if user.first_name%}
-													{{user.first_name}}
+												{%if current_user.first_name%}
+													{{current_user.first_name}}
 												{%else%}
-													{{user.username}}
+													{{current_user.username}}
 												{%endif%}
 									</span>
 									<span>
@@ -59,7 +58,7 @@
 										</li>
 												<li role="presentation" class="divider"></li>
 												<li role="presentation">
-												<a role="menuitem" tabindex="-1" href="../accounts/logout/">
+												<a role="menuitem" tabindex="-1" href="../account/logout">
 													<i class="icon-off"></i> 退出登录</a></li>
 												</ul>
 											</li>		    
@@ -68,14 +67,14 @@
 											<i class="nav-new-todo"></i><span></span>
 										</button>
 						{%else%} 
-						<form class="form-inline" action="../accounts/login/" method="post">{%csrf_token%}
+						<form class="form-inline" action="../account/login" method="post">
 							  <input type="text" name="email" class="input-medium" placeholder="Email">
 							  <input type="password" name="password" class="input-medium" placeholder="Password">
 							  <label class="checkbox">
 							    <input type="checkbox"> 记住我
 							  </label>
 							  <button type="submit" class="btn btn-info">登录</button>
-							  <button class="btn btn-info" type="button" onclick="javascript:location.href='accounts/register/'">注册</button>
+							  <button class="btn btn-info" type="button" onclick="javascript:location.href='account/reg'">注册</button>
 							</form>
 						{%endif%}
 									</div>
@@ -108,28 +107,28 @@
 	<!--Todo Modal -->
 					<div id="todoModal" class="hide">
 						<div>
-							<form id="todo-form" action="../AddTodo/" method="post">{% csrf_token %}
+							<form id="todo-form" action="../AddTodo/" method="post">
 								<label for="id_todo_name">为你的新计划起一个响亮的名字</label>
-								{{todo_form.todo_name}}
+								<input type="text" name="todo_name"/>
 								<label for="id_todo_description">描述一下该计划打算要完成的事情</label>
-								{{todo_form.todo_description}}
+								<input type="text" name="todo_description"/>
 								<label for="id_todo_start">你打算什么时候开始这个计划？</label>
-								{{todo_form.todo_start}}
+								<input type="text" name="todo_start"/>
 								<label for="id_todo_end">这个计划你预计会在什么时候完成呢？</label>
-								{{todo_form.todo_end}}
+								<input type="text" name="todo_end"/>
 								<ul>
-									<li class="checkbox">{{todo_form.todo_visibale}} 对所有人可见</li>
-									<li class="checkbox"> {{todo_form.todo_erasable}} 不可删除</li>
+									<li class="checkbox"><input type="checkbox" name="todo_visibale"/>对所有人可见</li>
+									<li class="checkbox"><input type="checkbox" name="todo_erasable"/> 不可删除</li>
 								</ul>
 							</form>
 						</div>
 					</div> 
 	{% endblock %}
     {% block extrajs %}
-	    <script src="{%static 'js/jquery-1.9.0.min.js'%}"></script>
-	    <script src="{%static 'js/bootstrap.js'%}"></script>
-	    <script src="{%static 'js/jquery.validate.min.js'%}"></script>
-	    <script src="{%static 'js/jquery-ui.js'%}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='js/jquery-1.9.0.min.js') }}"  media="screen, projection" type="text/css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='js/bootstrap.js') }}"  media="screen, projection" type="text/css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='js/jquery.validate.min.js') }}"  media="screen, projection" type="text/css"/>
+        <link rel="stylesheet" href="{{ url_for('static', filename='js/jquery-ui.js') }}"  media="screen, projection" type="text/css"/>
     {% endblock %}
 </div>
 	

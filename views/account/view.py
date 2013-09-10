@@ -8,27 +8,31 @@ from wtforms import TextField, PasswordField, validators
 from models.user import User
 from utils.database_session import session_cm
 
-accounts = Blueprint('accounts', __name__,
-                     template_folder='templates')
+account = Blueprint('views', __name__, template_folder='templates')
 
 
-@accounts.route('/login', methods=['POST'])
+@account.route('/login', methods=['POST'])
 def login():
     template_var = {}
+    validate_user_errors = None
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate_on_submit():
         email = form.email.data
         password = form.password.data
         remember = form.remember.data
-        user = User.validate_user(email, password)
+        user, validate_user_errors = User.validate_user(email, password)
         if user is not None:
             login_user(user, remember)
-            return render_template('todos/index.html')
-    template_var["form"] = form
-    return render_template("accounts/login.html", **template_var)
+            template_var['owner'] = user
+            return render_template('todo/index.html', **template_var)
+    template_var.update({
+        'form': form,
+        'validate_user_errors': validate_user_errors
+    })
+    return render_template("account/login.html", **template_var)
 
 
-@accounts.route('/reg', methods=['GET', 'POST'])
+@account.route('/reg', methods=['GET', 'POST'])
 def register():
     """
     注册一个新的用户
@@ -46,19 +50,19 @@ def register():
             session.add(user)
             if user is not None:
                 login_user(user)
-                template_var['user'] = user
+                template_var['owner'] = user
             session.commit()
-            return render_template('todos/index.html', **template_var)
+            return render_template('todo/index.html', **template_var)
     template_var['form'] = form
-    return render_template('accounts/register.html', **template_var)
+    return render_template('account/register.html', **template_var)
 
-@accounts.route('/logout')
+@account.route('/logout')
 def logout():
     """
     注销用户
     """
     logout_user()
-    return render_template('todos/index.html')
+    return render_template('todo/index.html')
 
 
 class LoginForm(Form):

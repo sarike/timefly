@@ -1,56 +1,54 @@
-{% extends "base.html" %} 
-{% load comments %}
-{% load dajaxice_templatetags %}
+{% extends "todo/base.html" %}
 {% block sidebar %}
-								<div id="user-profile" class="box">
-									<div class="clearfix">
-										<div id="avatar" class="pull-left">
-											<img src="http://www.gravatar.com/avatar/{{owner.userprofile.get_gravatar_hash}}?d=identicon" class="img-rounded" alt="Avatar">
-										</div>
-										<div id="user-info" class="pull-left">
-											<h2>
-												{%if owner.first_name%}
-													{{owner.first_name}}
-												{%else%}
-													{{owner.username}}
-												{%endif%}
-												
-											</h2>
-											<ul>
-												<li>努力中 <span class="badge badge-info">{{ing_count}}</span></li>
-												<li>已完成 <span class="badge badge-success">{{ed_count}}</span></li>
-												<li>未完成 <span class="badge badge-important">{{fail_count}}</span></li>
-											</ul>	
-										</div>
-									</div>
-									<div id="user-desc">{{owner.userprofile.description}}</div>
-								</div>
-								<div id="menu">
-									<ul class="nav nav-list">
-										<li {%if status == 'ing' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=ing">努力中的计划<i class="icon-chevron-right pull-right"></i></a></li>
-										<li {%if status == 'ed' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=ed">已经完成的计划<i class="icon-chevron-right pull-right"></i></a></li>
-										<li {%if status == 'fail' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=fail">未如期完成的计划<i class="icon-chevron-right pull-right"></i></a></li>
-									</ul>
-								</div>
-								<div id="friend-list" class="box hide">
-									<h3>
-										我关注的朋友
-										<a href="#">查看全部</a>
-									</h3>
-									<ul class="media-list">
-										<li class="media">
-											<a class="pull-left" href="#">
-												<img class="media-object img-rounded" src="http://www.gravatar.com/avatar/205e460b4792e2a1231230c08d50?d=identicon" class="img-rounded" alt="Avatar">
-											</a>
-											<div class="media-body">
-												<h4 class="media-heading">Tom</h4>
-												大家好，我是TOM，磊哥威武。。
-											</div>
-										</li>
+    <div id="user-profile" class="box">
+        <div class="clearfix">
+            <div id="avatar" class="pull-left">
+                <img src="http://www.gravatar.com/avatar/{{owner.get_gravatar_hash()}}?d=identicon" class="img-rounded" alt="Avatar">
+            </div>
+            <div id="user-info" class="pull-left">
+                <h2>
+                    {%if owner.first_name%}
+                        {{owner.first_name}}
+                    {%else%}
+                        {{owner.username}}
+                    {%endif%}
 
-									</ul>
-								</div>
-								{{ block.super }}
+                </h2>
+                <ul>
+                    <li>努力中 <span class="badge badge-info">{{ing_count}}</span></li>
+                    <li>已完成 <span class="badge badge-success">{{ed_count}}</span></li>
+                    <li>未完成 <span class="badge badge-important">{{fail_count}}</span></li>
+                </ul>
+            </div>
+        </div>
+        <div id="user-desc">{{owner.description}}</div>
+    </div>
+    <div id="menu">
+        <ul class="nav nav-list">
+            <li {%if status == 'ing' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=ing">努力中的计划<i class="icon-chevron-right pull-right"></i></a></li>
+            <li {%if status == 'ed' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=ed">已经完成的计划<i class="icon-chevron-right pull-right"></i></a></li>
+            <li {%if status == 'fail' %}class="active"{%endif%}><a href="./{{owner.username}}/?status=fail">未如期完成的计划<i class="icon-chevron-right pull-right"></i></a></li>
+        </ul>
+    </div>
+    <div id="friend-list" class="box hide">
+        <h3>
+            我关注的朋友
+            <a href="#">查看全部</a>
+        </h3>
+        <ul class="media-list">
+            <li class="media">
+                <a class="pull-left" href="#">
+                    <img class="media-object img-rounded" src="http://www.gravatar.com/avatar/205e460b4792e2a1231230c08d50?d=identicon" class="img-rounded" alt="Avatar">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">Tom</h4>
+                    大家好，我是TOM，磊哥威武。。
+                </div>
+            </li>
+
+        </ul>
+    </div>
+    {{ super() }}
 {% endblock %}
 {% block content %}	
 {%for todo in todo_list%}
@@ -76,16 +74,12 @@
 													{{todo.user.first_name}}
 												{%else%}
 													{{todo.user.username}}
-												{%endif%}</a> 开始于  {{todo.todo_start|date:'Y年n月j日'}} ，计划在
-				 {{todo.todo_end|date:'Y年n月j日'}}  完成！
+												{%endif%}</a> 开始于  {{todo.todo_start}} ，计划在
+				 {{todo.todo_end}}  完成！
 			</div>
 			<div class="todo_desc">{{todo.todo_description}}</div>
 		</div>
 		
-		<!-- 
-		{% render_comment_list for todo %}
-		{% render_comment_form for todo %}
-		 -->
 		<div class="todo_complete">
 			<div class="accordion" id="todo-completes{{todo.id}}">
 			{%for ac in todo.achievement_set.all%}
@@ -93,13 +87,13 @@
 					<div class="accordion-heading">
 						<a class="accordion-toggle" data-toggle="collapse"
 							data-parent="#todo-completes{{todo.id}}" href="#collapse{{ac.id}}">
-							在{{ac.ac_time|date:'Y年n月j日'}} {{ac}} </a>
+							在{{ac.ac_time}} {{ac}} </a>
 					</div>
 					<div id="collapse{{ac.id}}" class="accordion-body collapse {%if forloop.first%}in{%endif%}">
 						<div class="accordion-inner">{{ac.ac_description}}</div>
 					</div>
 				</div>
-				{% empty %}
+				{% else %}
 					    {%if user.is_authenticated and user.username == owner.username%}
 						    <div class="shadow" style="padding:20px;">
 						    你还没有为该计划做任何事情，要加油呀！
@@ -117,9 +111,9 @@
 			</div>
 		</div>
 	</div>
-	{% empty %}
+	{% else %}
 		<div class="todo">
-				    {%if user.is_authenticated and user.username == owner.username%}
+				    {%if current_user.is_authenticated() and current_user.username == owner.username%}
 				    	
 				    	{%if status == 'ing' %}
 				    	<h2 style="height:100px; padding:20px">你竟然还没有添加过任何计划，抓紧时间给自己制定个计划，开始奋斗吧！
@@ -150,15 +144,15 @@
 {% endblock %}
 
 {% block extra %}
-{{ block.super }}
+{{ super() }}
 					<!--Ac Modal -->
 					<div id="acModal" class="hide">
 						<div>
-							<form id="ac-form" action="../AddAc/" method="post">{% csrf_token %}
+							<form id="ac-form" action="../AddAc/" method="post">
 								<label for="inputEmail">为你这一重大突破起一个响亮的名字</label>
-								{{ac_form.ac_name}}
+                                <input type="text"/>
 								<label for="inputPassword">描述一下你这次又做了哪些努力</label>
-								{{ac_form.ac_description}}
+                                <input type="text"/>
 								<input type="hidden" name="todoid" value="">
 							</form>
 						</div>
@@ -170,8 +164,7 @@
 	
 	
 	{%block extrajs%}
- 		{{ block.super }}
-					{% dajaxice_js_import %}
+ 		{{ super() }}
 					<script type="text/javascript">
 					
 					function delete_todo_callback(data){
@@ -423,7 +416,7 @@
 								ac_description: {
 									required: "你到底是完成了什么呢？",
 									maxlength: jQuery.format("不过不能多于{0}个字符")
-								},
+								}
 							}
 						});
 });

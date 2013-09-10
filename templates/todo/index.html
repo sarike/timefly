@@ -1,5 +1,4 @@
-{% extends "base.html" %} 
-{% load staticfiles %}
+{% extends "todo/base.html" %}
 {% block sidebar %}
 <div id="friend-list" class="box">
 	<h3>
@@ -9,7 +8,7 @@
 	{%for user in user_list%}
 		<li class="media"><a class="pull-left" href="#"> <img
 				class="media-object img-rounded"
-				src="http://www.gravatar.com/avatar/{{user.userprofile.get_gravatar_hash}}?d=identicon"
+				src="http://www.gravatar.com/avatar/{{user.get_gravatar_hash()}}?d=identicon"
 				class="img-rounded" alt="Avatar">
 		</a>
 			<div class="media-body">
@@ -20,12 +19,12 @@
 													{{user.username}}
 												{%endif%}
 												</a></h4>
-				{{user.userprofile.description}}
+				{{user.description}}
 			</div></li>
 	{%endfor%}
 	</ul>
 </div>
-{{ block.super }}
+{{ super() }}
 {% endblock%}
 {% block content %}	
 <div class="box">
@@ -36,7 +35,7 @@
 	{%for todo in todo_list%}
 		<div class="media">
 		  <a class="pull-left" href="http://{{request.get_host}}/{{todo.user.username}}">
-		    <img class="media-object img-rounded" src="http://www.gravatar.com/avatar/{{todo.user.userprofile.get_gravatar_hash}}?d=identicon">
+		    <img class="media-object img-rounded" src="http://www.gravatar.com/avatar/{{todo.user.get_gravatar_hash()}}?d=identicon">
 		  </a>
 		  <div class="media-body" style="font-size:14px;line-height: 20px;">
 		    <h4 class="media-heading">{{todo.todo_name}}</h4>
@@ -45,8 +44,8 @@
 												{%else%}
 													{{todo.user.username}}
 												{%endif%}
-												</a> 开始于  {{todo.todo_start|date:'Y年n月j日'}} ，计划在
-				 {{todo.todo_end|date:'Y年n月j日'}}  完成！
+												</a> 开始于  {{todo.todo_start}} ，计划在
+				 {{todo.todo_end}}  完成！
 				 <br>
 		    {{todo.todo_description}}
 		  </div>
@@ -55,7 +54,7 @@
 </div>
 {% endblock %}
 {%block extrajs%}
- 		{{ block.super }}
+ 		{{ super() }}
 					<script type="text/javascript">
 					
 					$(function(){
