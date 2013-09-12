@@ -12,11 +12,11 @@
 				class="img-rounded" alt="Avatar">
 		</a>
 			<div class="media-body">
-				<h4 class="media-heading"><a href="http://{{request.get_host}}/{{user.username}}">
-												{%if user.first_name%}
-													{{user.first_name}}
+				<h4 class="media-heading"><a href="{{request.host_url}}{{user.username}}">
+												{%if user.nickname %}
+													{{ user.nickname }}
 												{%else%}
-													{{user.username}}
+													{{ user.username }}
 												{%endif%}
 												</a></h4>
 				{{user.description}}
@@ -34,13 +34,14 @@
 	</div>
 	{%for todo in todo_list%}
 		<div class="media">
-		  <a class="pull-left" href="http://{{request.get_host}}/{{todo.user.username}}">
-		    <img class="media-object img-rounded" src="http://www.gravatar.com/avatar/{{todo.user.get_gravatar_hash()}}?d=identicon">
+		  <a class="pull-left" href="http://{{request.host_url}}{{todo.user.username}}">
+		    <img class="media-object img-rounded"
+                 src="http://www.gravatar.com/avatar/{{todo.user.get_gravatar_hash()}}?d=identicon">
 		  </a>
 		  <div class="media-body" style="font-size:14px;line-height: 20px;">
 		    <h4 class="media-heading">{{todo.todo_name}}</h4>
-		    该计划由 <a href="./{{todo.user.username}}">{%if todo.user.first_name%}
-													{{todo.user.first_name}}
+		    该计划由 <a href="./{{todo.user.username}}">{%if todo.user.nickname%}
+													{{todo.user.nickname}}
 												{%else%}
 													{{todo.user.username}}
 												{%endif%}
@@ -201,7 +202,7 @@
 								ac_description: {
 									required: "你到底是完成了什么呢？",
 									maxlength: jQuery.format("不过不能多于{0}个字符")
-								},
+								}
 							}
 						});
 });

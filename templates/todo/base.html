@@ -25,7 +25,7 @@
 								</a>
 							</li>
 							{%if current_user.is_authenticated() %}
-							 <li {% if current_user.username == owner.username %}class="active"{%endif%}>
+							 <li>
 								<a href="./{{current_user.username}}" class=" clearfix">
 									<span><i class="nav-me"></i></span>
 									<span>我</span>
@@ -40,10 +40,10 @@
 								<li>
 									<a href="#" class=" clearfix dropdown-toggle" data-toggle="dropdown">
 									<span>
-												{%if current_user.first_name%}
-													{{current_user.first_name}}
+												{%if current_user.nickname %}
+													{{ current_user.nickname }}
 												{%else%}
-													{{current_user.username}}
+													{{ current_user.username }}
 												{%endif%}
 									</span>
 									<span>
