@@ -1,8 +1,9 @@
 # coding=utf-8
 from flask import Blueprint, render_template
 from flask.ext.login import login_user, logout_user
+from flask.ext.principal import identity_changed, Identity
 from flask.ext.wtf.form import Form
-from flask.globals import request
+from flask.globals import request, current_app
 from wtforms.fields.core import BooleanField
 from wtforms import TextField, PasswordField, validators
 from models.user import User
@@ -23,6 +24,8 @@ def login():
         user, validate_user_errors = User.validate_user(email, password)
         if user is not None:
             login_user(user, remember)
+            # Tell Flask-Principal the identity changed
+            identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
             template_var['owner'] = user
             return render_template('todo/index.html', **template_var)
     template_var.update({
@@ -50,6 +53,8 @@ def register():
             session.add(user)
             if user is not None:
                 login_user(user)
+                # Tell Flask-Principal the identity changed
+                identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
                 template_var['owner'] = user
             session.commit()
             return render_template('todo/index.html', **template_var)
