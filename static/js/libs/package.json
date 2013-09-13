@@ -1,0 +1,15 @@
+{
+  "family": "sarike",
+  "name": "libs",
+  "version": "1.0.0",
+  "keywords": ["widget"],
+  "licenses": "MIT",
+  "spm": {
+    "output": ["libs.js"],
+    "alias": {
+
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}
