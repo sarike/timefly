@@ -1,0 +1,15 @@
+{
+  "family": "gallery",
+  "name": "jquery-ui",
+  "version": "1.10.3",
+  "keywords": ["widget"],
+  "licenses": "MIT",
+  "spm": {
+    "output": ["jquery-ui.js"],
+    "alias": {
+        "$": "$"
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}

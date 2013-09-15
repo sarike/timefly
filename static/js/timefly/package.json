@@ -6,7 +6,9 @@
         "output": ["timefly.js"],
         "alias": {
             "underscore": "gallery/underscore/1.4.4/underscore",
-            "backbone": "gallery/backbone/1.0.0/backbone"
+            "backbone": "gallery/backbone/1.0.0/backbone",
+            "libs": "sarike/libs/1.0.0/libs",
+            "form": "jquery-plugin/form/3.36.0/form"
         }
     },
     "devAlias": {},

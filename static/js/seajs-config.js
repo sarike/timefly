@@ -27,10 +27,7 @@ seajs.config({
   ],
 
   // 预加载项
-  preload: [
-    Function.prototype.bind ? '' : 'es5-safe',
-    this.JSON ? '' : 'json'
-  ],
+  preload: ['seajs/seajs-text/1.0.2/seajs-text'],
 
   // 调试模式
   debug: true,
@@ -47,7 +44,10 @@ if(seajs.data.debug){
         alias:{
             underscore: 'gallery/underscore/1.4.4/underscore',
             backbone: 'gallery/backbone/1.0.0/backbone',
-            bootstrap: 'gallery/bootstrap/3.0.0/bootstrap'
+            bootstrap: 'gallery/bootstrap/3.0.0/bootstrap',
+            "jquery-ui": "gallery/jquery-ui/1.10.3/jquery-ui",
+            "form": "jquery-plugin/form/3.36.0/form",
+            libs: "/static/js/libs/src/libs"
         }
     })
 }

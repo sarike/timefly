@@ -1,5 +1,5 @@
 # coding=utf-8
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify
 from flask.ext.login import login_user, logout_user
 from flask.ext.principal import identity_changed, Identity
 from flask.ext.wtf.form import Form
@@ -8,9 +8,23 @@ from wtforms.fields.core import BooleanField
 from wtforms import TextField, PasswordField, validators
 from models.user import User
 from utils.database_session import session_cm
+from utils.response import ajax_response
 
 account = Blueprint('views', __name__, template_folder='templates')
 
+
+@account.route('/passionate_users')
+def passionate_users():
+    res = ajax_response()
+    with session_cm() as session:
+        user_list = session.query(User).all()
+        user_dict_list = []
+        for user in user_list:
+            user_dict_list.append(user.to_dict())
+        res.update(data={
+            "items": user_dict_list
+        })
+    return jsonify(res)
 
 @account.route('/login', methods=['POST'])
 def login():

@@ -1,0 +1,1 @@
+define("sarike/libs/1.0.0/libs",["$","gallery/jquery-ui/1.10.3/jquery-ui","underscore","backbone"],function(a,b,c){a("$"),a("gallery/jquery-ui/1.10.3/jquery-ui"),a("underscore");var d=a("backbone"),e=d.View.extend({render:function(){return this.$el.html(this.template(this.options)),this},open:function(a){this.render(),this.$el.dialog(a)}}),f={Dialog:e};c.exports={JQueryUI:f}});

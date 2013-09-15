@@ -9,7 +9,7 @@ from models.todo import Todo
 from models.user import User
 from utils.database_session import session_cm
 
-todo = Blueprint('todo', __name__, template_folder='templates/todo')
+todo = Blueprint('todo', __name__)
 
 
 @todo.route('/')
@@ -23,7 +23,7 @@ def index():
             'todo_list': todo_list,
             'position': 'index'
         }
-    return render_template('todo/index.html', **context)
+    return render_template('index.html', **context)
 
 
 @todo.route('/<username>')

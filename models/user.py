@@ -30,6 +30,12 @@ class User(Base, UserMixin):
     def check_password(self, pw):
         return check_password_hash(self.pw_hash, pw)
 
+    def to_dict(self):
+        return {
+            "user_id": self.user_id,
+            "username": self.username
+        }
+
     @classmethod
     def validate_user(cls, email, password):
         # TODO: 验证用户是否激活，否则发送激活邮件

@@ -1,29 +1,6 @@
 {% extends "todo/base.html" %}
 {% block sidebar %}
-<div id="friend-list" class="box">
-	<h3>
-		活跃用户 <a href="#">查看全部</a>
-	</h3>
-	<ul class="media-list">
-	{%for user in user_list%}
-		<li class="media"><a class="pull-left" href="#"> <img
-				class="media-object img-rounded"
-				src="http://www.gravatar.com/avatar/{{user.get_gravatar_hash()}}?d=identicon"
-				class="img-rounded" alt="Avatar">
-		</a>
-			<div class="media-body">
-				<h4 class="media-heading"><a href="{{request.host_url}}{{user.username}}">
-												{%if user.nickname %}
-													{{ user.nickname }}
-												{%else%}
-													{{ user.username }}
-												{%endif%}
-												</a></h4>
-				{{user.description}}
-			</div></li>
-	{%endfor%}
-	</ul>
-</div>
+
 {{ super() }}
 {% endblock%}
 {% block content %}	
