@@ -8,15 +8,18 @@
                         <span>主页</span>
                     </a>
                 </li>
+                <% if(!!user && user.is_authenticated){ %>
                 <li>
-                    <a href="./{{ current_user.username }}" class=" clearfix">
+                    <a href="./<%=user.username %>" class=" clearfix">
                         <span><i class="nav-me"></i></span>
                         <span>我</span>
                     </a>
                 </li>
+                <% } %>
             </ul>
 
             <div class="pull-right">
+                <% if(!!user && user.is_authenticated){ %>
                 <ul class="nav">
                     <li>
                         <a href="#" class=" clearfix dropdown-toggle" data-toggle="dropdown">
@@ -43,6 +46,7 @@
                 <button title="制定新计划" class="add-new-todo btn btn-info">
                     <i class="nav-new-todo"></i><span></span>
                 </button>
+                <% } %>
                 <form class="form-inline" action="../account/login" method="post">
                     <input type="text" name="email" class="input-medium" placeholder="Email">
                     <input type="password" name="password" class="input-medium" placeholder="Password">

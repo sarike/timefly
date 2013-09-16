@@ -12,7 +12,6 @@ define(function(require, exports, module){
 
     var SideBar = Backbone.View.extend({
 
-
         boxs: [],
 
         render: function(){
@@ -30,11 +29,39 @@ define(function(require, exports, module){
     });
 
     var Content = Backbone.View.extend({
+        className: "box",
+        base_template: _.template(require("./templates/common_content.tpl")),
+        data: {},
 
+        render: function(){
+            this.$el.html(this.base_template({
+                title: this.options.title,
+                sub_title: this.options.sub_title
+            }));
+            this.renderMainContent();
+            return this;
+        },
+
+        renderMainContent: function(){
+            if(!this.template) return;
+            this.$el.append(this.template(this.data))
+        }
     });
 
     var Header = Backbone.View.extend({
+        template: _.template(require("./templates/common_header.tpl")),
 
+        initialize: function(){
+            if(!this.options.user)
+                console.warn("you should pass a user obj when init header");
+            else
+                this.user = this.options.user
+        },
+
+        render: function(){
+            this.$el.html(this.template({user: this.user}));
+            return this;
+        }
     });
 
     var Footer = Backbone.View.extend({

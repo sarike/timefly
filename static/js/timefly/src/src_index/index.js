@@ -31,11 +31,15 @@ define(function(require, exports, module){
         ]
     });
 
+    var IndexContent = Common.View.Content.extend({
+        template: _.template(require("./templates/index_content.tpl"))
+    });
+
     exports.init = function(context){
 
         var Componentes = {
             sideBar: new IndexSideBar()
-        }
+        };
         passionateCollection.fetch({
             success: function(){
             Common.init(context, Componentes);

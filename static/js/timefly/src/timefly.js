@@ -21,7 +21,6 @@ define(function(require, exports, module) {
             template: _.template(addTodoModalTemplate),
 
             ok: function(){
-                console.info("ok")
                 this.$("#todo-form").ajaxSubmit(function(){
                     console.info("form submited!")
                 });
