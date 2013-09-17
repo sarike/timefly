@@ -1,4 +1,5 @@
 from sqlalchemy.dialects.mysql.base import BIGINT
+from sqlalchemy.orm import relationship
 from sqlalchemy.types import String, Boolean, DateTime
 from models.base import Base, id_generate
 import sqlalchemy as SA
@@ -16,7 +17,6 @@ class Todo(Base):
     todo_visible = SA.Column(Boolean, default=True)
     todo_start = SA.Column(DateTime)
     todo_end = SA.Column(DateTime)
-    todo_add_time = SA.Column(DateTime)
     todo_is_top = SA.Column(Boolean, default=False)
     todo_erasable = SA.Column(Boolean, default=False)
     todo_is_completed = SA.Column(Boolean, default=False)
@@ -24,3 +24,16 @@ class Todo(Base):
 
     def __unicode__(self):
         return self.todo_name
+
+    def to_dict(self):
+        return {
+            'todo_id': self.todo_id,
+            'todo_name': self.todo_name,
+            'todo_description': self.todo_description,
+            'todo_visible': self.todo_visible,
+            'todo_erasable': self.todo_erasable,
+            'todo_start': self.todo_start,
+            'todo_end': self.todo_end,
+            'todo_is_completed': self.todo_is_completed,
+            'user': self.user.to_dict()
+        }

@@ -7,10 +7,6 @@ define(function(require, exports, module){
     var Common = require('../src_common/common')
     require("form");
 
-    var UserModel = Backbone.Model.extend({
-
-    });
-
     var UserItem = Backbone.View.extend({
         template: _.template(require("./templates/user_item.tpl")),
 

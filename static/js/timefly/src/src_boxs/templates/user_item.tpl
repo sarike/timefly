@@ -1,6 +1,6 @@
 <a class="pull-left" href="#"> <img
         class="media-object img-rounded"
-        src="http://www.gravatar.com/avatar/{{ user.get_gravatar_hash() }}?d=identicon"
+        src="http://www.gravatar.com/avatar/<%=avatar_hash %>?d=identicon"
         class="img-rounded" alt="Avatar">
 </a>
 

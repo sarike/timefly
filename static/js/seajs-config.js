@@ -47,7 +47,8 @@ if(seajs.data.debug){
             bootstrap: 'gallery/bootstrap/3.0.0/bootstrap',
             "jquery-ui": "gallery/jquery-ui/1.10.3/jquery-ui",
             "form": "jquery-plugin/form/3.36.0/form",
-            libs: "/static/js/libs/src/libs"
+            libs: "/static/js/libs/src/libs",
+            utils: "/static/js/utils/src/utils"
         }
     })
 }

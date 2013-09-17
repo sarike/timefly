@@ -17,33 +17,51 @@ define(function(require, exports, module){
 
 //    var indexSideBarTemplate = require("../templates/side_bars/");
 
-    var PassionateCollection = Common.Collections.UserCollection.extend({
+    var PassionateUserCollection = Common.Collections.BaseCollection.extend({
         url: "account/passionate_users"
     });
+    var LatestTodoCollection = Common.Collections.BaseCollection.extend({
+        url: "todo/latest_todos"
+    });
 
-    var passionateCollection = new PassionateCollection();
+    var passionateUserCollection = new PassionateUserCollection();
 
     var IndexSideBar = Common.Views.SiderBar.extend({
         boxs: [
             new Box.UserBox({
-                collection: passionateCollection
+                collection: passionateUserCollection
             })
         ]
     });
 
-    var IndexContent = Common.View.Content.extend({
-        template: _.template(require("./templates/index_content.tpl"))
+    var TodoItem = Common.Views.Item.extend({
+        className: "media",
+        template: _.template(require("./templates/todo_item.tpl")),
+        render: function(){
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
+
+    var IndexContent = Common.Views.Content.extend({
+        title: "最新计划",
+        sub_title: "时光飞逝网友们最近发布的最新计划，一起来为他们加油吧",
+        template: _.template(require("./templates/index_content.tpl")),
+        ItemView: TodoItem
     });
 
     exports.init = function(context){
 
-        var Componentes = {
-            sideBar: new IndexSideBar()
-        };
-        passionateCollection.fetch({
-            success: function(){
-            Common.init(context, Componentes);
-        }
-        });
+        var sideBar = new IndexSideBar({
+                collection: passionateUserCollection
+            }),
+            content = new IndexContent({
+                collection: new LatestTodoCollection()
+            });
+
+        Common.init(context, {
+            sidebar: sideBar,
+            content: content
+        })
     }
 });

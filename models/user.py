@@ -2,6 +2,7 @@
 import hashlib
 from flask.ext.login import UserMixin
 from sqlalchemy.dialects.mysql import BIGINT, VARCHAR
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import String, Boolean
 from werkzeug.security import generate_password_hash, check_password_hash
 from models.base import Base, id_generate
@@ -21,6 +22,8 @@ class User(Base, UserMixin):
     is_admin = SA.Column(Boolean, default=False, nullable=False)
     pw_hash = SA.Column(String(128))
 
+    todo_list = relationship('Todo', backref='user')
+
     def get_id(self):
         return self.user_id
 
@@ -33,7 +36,9 @@ class User(Base, UserMixin):
     def to_dict(self):
         return {
             "user_id": self.user_id,
-            "username": self.username
+            "username": self.username,
+            "is_authenticated": self.is_authenticated(),
+            "avatar_hash": self.get_gravatar_hash()
         }
 
     @classmethod

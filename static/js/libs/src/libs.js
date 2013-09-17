@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-define(function(require, exports, module) {
+define(function (require, exports, module) {
 
     var $ = require("$");
     var ui = require("jquery-ui");
@@ -21,7 +21,7 @@ define(function(require, exports, module) {
      */
     var Dialog = Backbone.View.extend({
 
-        _getButton: function(text, click){
+        _getButton: function (text, click) {
             return {
                 text: text,
                 click: click
@@ -31,7 +31,7 @@ define(function(require, exports, module) {
         defaultConfig: {
         },
 
-        initialize: function(){
+        initialize: function () {
             var okButton = this._getButton("确定", $.proxy(this.ok, this));
             var cancelButton = this._getButton("取消", $.proxy(this.cancel, this));
             this.defaultConfig.buttons = [
@@ -40,25 +40,25 @@ define(function(require, exports, module) {
             ];
         },
 
-        ok: function(){
+        ok: function () {
             console.warn("This is the default okClick, maybe you shoud override ok Func!")
         },
 
-        cancel: function(){
+        cancel: function () {
             this.close();
         },
 
-        render: function(){
+        render: function () {
             this.$el.html(this.template(this.options));
             return this;
         },
 
-        open: function(config){
+        open: function (config) {
             this.render();
             this.$el.dialog(_.extend(this.defaultConfig, config));
         },
 
-        close: function(){
+        close: function () {
             this.$el.dialog("close");
         }
     });

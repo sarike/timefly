@@ -1,5 +1,6 @@
 #coding:utf-8
 import datetime
+from flask import jsonify
 from flask.blueprints import Blueprint
 from flask.ext.login import current_user
 from flask.globals import request
@@ -8,61 +9,43 @@ from werkzeug.exceptions import abort
 from models.todo import Todo
 from models.user import User
 from utils.database_session import session_cm
+from utils.response import ajax_response
 
 todo = Blueprint('todo', __name__)
 
 
-@todo.route('/')
-@todo.route('/index')
-def index():
+@todo.route('/add_todo', methods=["POST"])
+def add_todo():
+    todo_name = request.form.get("todo_name")
+    todo_description = request.form.get("todo_description")
+    todo_start = request.form.get("todo_start")
+    todo_end = request.form.get("todo_end")
+    todo_visible = request.form.get("todo_visible") is not None
+    todo_erasable = request.form.get("todo_erasable") is not None
+    res = ajax_response()
     with session_cm() as session:
-        user_list = session.query(User).all()
-        todo_list = session.query(Todo).filter_by(todo_visible=True)
-        context = {
-            'user_list': user_list,
-            'todo_list': todo_list,
-            'position': 'index'
-        }
-    return render_template('index.html', **context)
+        todo = Todo(user_id=current_user.user_id,
+                    todo_name=todo_name,
+                    todo_description=todo_description,
+                    todo_start=todo_start,
+                    todo_end=todo_end,
+                    todo_visible=todo_visible,
+                    todo_erasable=todo_erasable)
+        session.add(todo)
+        session.commit()
+    return jsonify(res)
 
 
-@todo.route('/<username>')
-def user_home(username):
-    print username
+@todo.route('/latest_todos')
+def latest_todos():
+    res = ajax_response()
     with session_cm() as session:
-        owner = session.query(User).filter_by(username=username).first()
-        if owner:
-            status = request.args.get("status") if request.args.get("status") is not None else "ing"
-            todo_list_query = session.query(Todo).filter(Todo.user_id == owner.user_id,
-                                                         Todo.todo_is_deleted == False)
-            if status == "ing":
-                todo_list_query = todo_list_query.filter(Todo.todo_is_completed == False,
-                                                         Todo.todo_end > datetime.date.today())
-                if not current_user.is_authenticated() or \
-                        (current_user.is_authenticated() and owner.username != current_user.username):
-                    todo_list_query = todo_list_query.filter(Todo.todo_visible == True)
-            if status == "ed":
-                todo_list_query = todo_list_query.filter(Todo.todo_is_completed == True)
-                if not current_user.is_authenticated() or \
-                        (current_user.is_authenticated() and owner.username != current_user.username):
-                    todo_list_query = todo_list_query.filter(Todo.todo_visible == True)
-            if status == "fail":
-                todo_list_query = todo_list_query.\
-                    filter(Todo.todo_is_completed == False).\
-                    filter(Todo.todo_end < datetime.date.today().replace(day=datetime.date.today().day - 1))
-                if not current_user.is_authenticated() or \
-                        (current_user.is_authenticated() and owner.username != current_user.username):
-                    todo_list_query = todo_list_query.filter(Todo.todo_visible == True)
-
-            todo_list = todo_list_query.all()
-
-            context = {
-                'todo_list': todo_list,
-                'owner': owner,
-                'status': status,
-                'ing_count': 0,
-                'ed_count': 0,
-                'fail_count': 0
-            }
-            return render_template('todo/home.html', **context)
-        abort(404)
+        latest_todo_list = session.query(Todo).\
+            filter(Todo.todo_is_deleted == False).order_by(Todo.created_date.desc()).all()
+        items = []
+        for todo in latest_todo_list:
+            items.append(todo.to_dict())
+        res.update(data={
+            'items': items
+        })
+    return jsonify(res)

@@ -3,13 +3,15 @@ from flask.ext.login import LoginManager
 from models.user import User
 from utils.database_session import session_cm
 from views.account.view import account
+from views.frontend.views import frontend
 from views.todo.views import todo
 
 app = Flask(__name__)
 app.config.from_object('config.settings')
 
-app.register_blueprint(todo, url_prefix='')
+app.register_blueprint(todo, url_prefix='/todo')
 app.register_blueprint(account, url_prefix='/account')
+app.register_blueprint(frontend, url_prefix='')
 
 login_manager = LoginManager()
 

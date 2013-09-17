@@ -24,7 +24,7 @@
                     <li>
                         <a href="#" class=" clearfix dropdown-toggle" data-toggle="dropdown">
 									<span>
-                                        UserName
+                                        <%=user.username %>
 									</span>
 									<span>
 										<i class="caret"></i>
@@ -46,7 +46,7 @@
                 <button title="制定新计划" class="add-new-todo btn btn-info">
                     <i class="nav-new-todo"></i><span></span>
                 </button>
-                <% } %>
+                <% }else{ %>
                 <form class="form-inline" action="../account/login" method="post">
                     <input type="text" name="email" class="input-medium" placeholder="Email">
                     <input type="password" name="password" class="input-medium" placeholder="Password">
@@ -57,6 +57,7 @@
                     <button class="btn btn-info" type="button" onclick="javascript:location.href='account/reg'">注册
                     </button>
                 </form>
+                <% } %>
             </div>
         </div>
     </div>

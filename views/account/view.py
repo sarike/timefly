@@ -41,7 +41,7 @@ def login():
             # Tell Flask-Principal the identity changed
             identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
             template_var['owner'] = user
-            return render_template('todo/index.html', **template_var)
+            return render_template('index.html', **template_var)
     template_var.update({
         'form': form,
         'validate_user_errors': validate_user_errors
