@@ -48,7 +48,8 @@ if(seajs.data.debug){
             "jquery-ui": "gallery/jquery-ui/1.10.3/jquery-ui",
             "form": "jquery-plugin/form/3.36.0/form",
             libs: "/static/js/libs/src/libs",
-            utils: "/static/js/utils/src/utils"
+            utils: "/static/js/utils/src/utils",
+            common: "/static/js/common/src/common"
         }
     })
 }

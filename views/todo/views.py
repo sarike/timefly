@@ -33,6 +33,7 @@ def add_todo():
                     todo_erasable=todo_erasable)
         session.add(todo)
         session.commit()
+        res.update(data=todo.to_dict())
     return jsonify(res)
 
 
@@ -41,7 +42,7 @@ def latest_todos():
     res = ajax_response()
     with session_cm() as session:
         latest_todo_list = session.query(Todo).\
-            filter(Todo.todo_is_deleted == False).order_by(Todo.created_date.desc()).all()
+            filter(Todo.todo_is_deleted == False).order_by(Todo.created_date.asc()).all()
         items = []
         for todo in latest_todo_list:
             items.append(todo.to_dict())

@@ -13,7 +13,7 @@ define(function(require, exports, module) {
                 footer: $("footer"),
                 user: res.data.user
             };
-            require("./src_index/index").init(context);
+            require("./index/index").init(context);
         });
     });
 });

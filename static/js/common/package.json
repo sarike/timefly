@@ -1,0 +1,16 @@
+{
+  "family": "sarike",
+  "name": "common",
+  "version": "1.0.0",
+  "keywords": ["widget"],
+  "licenses": "MIT",
+  "spm": {
+    "output": ["common.js"],
+    "alias": {
+        "$": "$",
+        "jquery-ui": "gallery/jquery-ui/1.10.3/jquery-ui"
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}

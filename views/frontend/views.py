@@ -17,15 +17,7 @@ frontend = Blueprint('frontend', __name__)
 @frontend.route('/')
 @frontend.route('/index')
 def index():
-    with session_cm() as session:
-        user_list = session.query(User).all()
-        todo_list = session.query(Todo).filter_by(todo_visible=True)
-        context = {
-            'user_list': user_list,
-            'todo_list': todo_list,
-            'position': 'index'
-        }
-    return render_template('index.html', **context)
+    return render_template('index.html')
 
 
 @frontend.route('/me')
