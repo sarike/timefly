@@ -16,16 +16,38 @@ define(function(require, exports, module){
 
         boxs: [],
 
-        render: function(){
+        readyCount: 0,
+
+        isReady: function(callback, args){
             this.addBoxs();
+            this.timer = setInterval($.proxy(function(){
+                console.info("interval:" + this.boxs.length);
+                if(this.boxs.length == this.readyCount){
+//                    callback.call(null, args||[]);
+                    clearInterval(this.timer);
+                }
+            }, this), 1000)
+        },
+
+        render: function(){
             return this;
         },
 
         addBoxs: function(){
+            console.info("add box")
             if(!_.isArray(this.boxs) || _.size(this.boxs) <= 0) return;
             this.$el.empty();
             _.each(this.boxs, function(box){
-                this.$el.append(box.render().el);
+                console.info(box);
+                if(box.collection){
+                    box.collection.fetch({
+                        success: $.proxy(function(){
+                            this.$el.append(box.render().el);
+                            this.readyCount ++;
+                        }, this),
+                        reset: true
+                    });
+                }
             }, this);
         }
     });
@@ -44,7 +66,6 @@ define(function(require, exports, module){
         initialize: function(){
             if(this.collection)
                 this.collection.bind("reset", this.addItems, this);
-            console.info(this.collection)
             this.ItemView = this.ItemView || this.options.ItemView;
             this.data = this.options.data || {};
         },
@@ -56,7 +77,6 @@ define(function(require, exports, module){
         },
 
         renderMainContent: function(){
-            console.info("renderMainContent")
             this.$el.html(this.base_template({
                 title: this.title || this.options.title,
                 sub_title: this.sub_title || this.options.sub_title
@@ -65,13 +85,11 @@ define(function(require, exports, module){
 
         renderSubContent: function(){
             this.renderMainContent();
-            console.info("renderSubCOntetn")
             if(this.template)
                 this.$el.append(this.template(this.data))
         },
 
         addItems: function(){
-            console.info("add Items")
             this.renderSubContent();
             if(!this.ItemView) {
                 console.error("No ItemView");
@@ -142,14 +160,11 @@ define(function(require, exports, module){
     });
 
     var initSideBar = function(context, sideBar){
-        if(sideBar.collection)
-            sideBar.collection.fetch({
-                success: function(){
-                    context.sideBar.html(sideBar.render().el);
-                }
-            });
-        else
+        console.info("init side bar")
+        sideBar.isReady(function(){
+            console.info("callback")
             context.sideBar.html(sideBar.render().el);
+        });
     };
 
     var initHeader = function(context, header){
@@ -170,12 +185,12 @@ define(function(require, exports, module){
     };
 
     var initFooter = function(context, footer){
-        context.sideBar.html(footer.render().el);
+        context.footer.html(footer.render().el);
     };
 
     module.exports = {
         Views:{
-            SiderBar: SideBar,
+            SideBar: SideBar,
             Content: Content,
             Header: Header,
             Footer: Footer,
@@ -189,7 +204,6 @@ define(function(require, exports, module){
         },
 
         init: function(context, options) {
-            console.info(options.content.collection);
             initHeader(context, options.header || new Header({
                 user: context.user,
                 contentCollection: options.content.collection

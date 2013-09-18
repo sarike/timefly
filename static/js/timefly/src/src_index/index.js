@@ -6,16 +6,12 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function(require, exports, module){
-    var BootStrap = require('bootstrap');
     var libs = require('libs');
     var $ = require('$')
     var _ = require('underscore');
     var Backbone = require('backbone');
     var Common = require('../src_common/common');
     var Box = require('../src_boxs/box');
-    require("form");
-
-//    var indexSideBarTemplate = require("../templates/side_bars/");
 
     var PassionateUserCollection = Common.Collections.BaseCollection.extend({
         url: "account/passionate_users"
@@ -24,12 +20,10 @@ define(function(require, exports, module){
         url: "todo/latest_todos"
     });
 
-    var passionateUserCollection = new PassionateUserCollection();
-
-    var IndexSideBar = Common.Views.SiderBar.extend({
+    var IndexSideBar = Common.Views.SideBar.extend({
         boxs: [
             new Box.UserBox({
-                collection: passionateUserCollection
+                collection: new PassionateUserCollection()
             })
         ]
     });
@@ -52,9 +46,7 @@ define(function(require, exports, module){
 
     exports.init = function(context){
 
-        var sideBar = new IndexSideBar({
-                collection: passionateUserCollection
-            }),
+        var sideBar = new IndexSideBar(),
             content = new IndexContent({
                 collection: new LatestTodoCollection()
             });

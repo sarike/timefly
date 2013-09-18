@@ -20,9 +20,13 @@
             <label class="control-label" for="inputEmail">用户名</label>
             <div class="controls">
               {{form.username}}
-              <span class="help-inline">
-              	用户名只能由字母、下划线、数字组成，且不能超过20个字符。
-              </span>
+                <span class="help-inline">
+                  {% for error in form.username.errors %}
+                      {{ error }}
+                      {% else %}
+                      用户名只能由字母、下划线、数字组成，且不能超过20个字符。
+                  {% endfor %}
+                </span>
             </div>
           </div>
         <div class="control-group {%if form.nickname.errors%}error{%endif%}">

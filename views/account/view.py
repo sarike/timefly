@@ -71,7 +71,7 @@ def register():
                 identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
                 template_var['owner'] = user
             session.commit()
-            return render_template('todo/index.html', **template_var)
+            return render_template('index.html', **template_var)
     template_var['form'] = form
     return render_template('account/register.html', **template_var)
 
@@ -105,3 +105,13 @@ class RegisterForm(Form):
     password_confirm = PasswordField(u'密码确认',
                                      [validators.Required(message=u"请再次输入密码"),
                                       validators.equal_to('password', message=u'两次输入的密码必须要一致')])
+
+    def validate_email(self, field):
+        with session_cm() as session:
+            if session.query(User).filter(User.email == field.data).first():
+                raise ValueError(u"该邮箱已经存在")
+
+    def validate_username(self, field):
+        with session_cm() as session:
+            if session.query(User).filter(User.username == field.data).first():
+                raise ValueError(u"该用户名已经存在")
