@@ -1,4 +1,4 @@
-define("gallery/jquery-ui/1.10.3/jquery-ui-debug", [ "$-debug" ], function(require, exports, module) {
+define("jquery-plugin/jquery-ui/1.10.3/jquery-ui-debug", [ "$-debug" ], function(require, exports, module) {
     var $ = require("$-debug");
     /*! jQuery UI - v1.10.3 - 2013-05-03
 * http://jqueryui.com

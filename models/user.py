@@ -44,7 +44,10 @@ class User(Base, UserMixin):
     @classmethod
     def validate_user(cls, email, password):
         # TODO: 验证用户是否激活，否则发送激活邮件
-        validate_user_errors = {}
+        validate_user_errors = {
+            'user_error': None,
+            'password_error': None
+        }
         with session_cm() as session:
             user = session.query(User).filter(User.email == email).first()
             if not user:

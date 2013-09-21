@@ -26,6 +26,31 @@ def passionate_users():
         })
     return jsonify(res)
 
+
+@account.route('/ajax_login', methods=['POST'])
+def ajax_login():
+    res = ajax_response()
+    email = request.form.get("email")
+    password = request.form.get("password")
+    remember = True if request.form.get("remember") else False
+    user, validate_user_errors = User.validate_user(email, password)
+    if user:
+        login_user(user, remember)
+        # Tell Flask-Principal the identity changed
+        identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
+        res.update(data={
+            'user': user.to_dict()
+        })
+    else:
+        res.update({
+            'response': 'fail',
+            'type': 'error',
+            'info': validate_user_errors['user_error'] or validate_user_errors['password_error']
+        })
+    return jsonify(res)
+
+
+
 @account.route('/login', methods=['POST'])
 def login():
     template_var = {}

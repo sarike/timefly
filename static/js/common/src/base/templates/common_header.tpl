@@ -47,13 +47,13 @@
                     <i class="nav-new-todo"></i><span></span>
                 </button>
                 <% }else{ %>
-                <form class="form-inline" action="../account/login" method="post">
+                <form id="login-form" class="form-inline" action="account/ajax_login" method="post">
                     <input type="text" name="email" class="input-medium" placeholder="Email">
                     <input type="password" name="password" class="input-medium" placeholder="Password">
                     <label class="checkbox">
-                        <input type="checkbox"> 记住我
+                        <input type="checkbox" name="remember"> 记住我
                     </label>
-                    <button type="submit" class="btn btn-info">登录</button>
+                    <button type="button" id="login-btn" class="btn btn-info">登录</button>
                     <button class="btn btn-info" type="button" onclick="javascript:location.href='account/reg'">注册
                     </button>
                 </form>

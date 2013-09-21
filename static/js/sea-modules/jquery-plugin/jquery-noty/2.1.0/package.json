@@ -1,0 +1,20 @@
+{
+  "family": "jquery-plugin",
+  "name": "jquery-noty",
+  "version": "2.1.0",
+  "keywords": ["widget"],
+  "licenses": "MIT",
+  "spm": {
+    "output": [
+        "jquery.noty.js",
+
+        "layouts/*.js",
+        "themes/default.js"
+    ],
+    "alias": {
+        "$": "$"
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}

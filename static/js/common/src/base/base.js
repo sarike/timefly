@@ -96,7 +96,24 @@ define(function(require, exports, module){
     var Header = Backbone.View.extend({
         template: _.template(require("./templates/common_header.tpl")),
         events: {
-            "click .add-new-todo": "addNewTodo"
+            "click .add-new-todo": "addNewTodo",
+            "click #login-btn": "doLogin",
+            "click #reg-btn": "doReg"
+        },
+
+        doLogin: function(){
+            this.$("#login-form").ajaxSubmit($.proxy(function(res){
+                if(res.response == 'ok'){
+                    this.user = res.data.user;
+                    this.render();
+                }else{
+                    libs.Noty.NotyWithRes(res);
+                }
+            }, this));
+        },
+
+        doReg: function(){
+
         },
 
         addNewTodo: function(){

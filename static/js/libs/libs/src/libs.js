@@ -9,9 +9,10 @@
 define(function (require, exports, module) {
 
     var $ = require("$");
-    var ui = require("jquery-ui");
     var _ = require("underscore");
     var Backbone = require("backbone");
+    var ui = require("jquery-ui");
+    var noty = require("jquery-noty");
 
     /**
      * var dialog = new Dialog({
@@ -67,9 +68,17 @@ define(function (require, exports, module) {
         Dialog: Dialog
     };
 
+    noty.NotyWithRes = function(res){
+        noty({
+            type: res.type,
+            layout: res.layout,
+            text: res.info
+        })
+    };
 
     module.exports = {
-        JQueryUI: JQueryUI
+        JQueryUI: JQueryUI,
+        Noty: noty
     };
 
 });

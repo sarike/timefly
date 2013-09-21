@@ -45,9 +45,10 @@ if(seajs.data.debug){
             underscore: 'gallery/underscore/1.4.4/underscore',
             backbone: 'gallery/backbone/1.0.0/backbone',
             bootstrap: 'gallery/bootstrap/3.0.0/bootstrap',
-            "jquery-ui": "gallery/jquery-ui/1.10.3/jquery-ui",
+            "jquery-ui": "jquery-plugin/jquery-ui/1.10.3/jquery-ui",
+            "jquery-noty": "jquery-plugin/jquery-noty/2.1.0/jquery.noty",
             "form": "jquery-plugin/form/3.36.0/form",
-            libs: "/static/js/libs/src/libs",
+            libs: "/static/js/libs/libs/src/libs",
             utils: "/static/js/utils/src/utils",
             common: "/static/js/common/src/common"
         }
