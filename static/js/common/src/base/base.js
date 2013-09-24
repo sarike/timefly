@@ -1,6 +1,6 @@
 define(function(require, exports, module){
     var libs = require('libs');
-    var $ = require('$')
+    var $ = require('$');
     var _ = require('underscore');
     var Backbone = require('backbone');
 
@@ -31,7 +31,7 @@ define(function(require, exports, module){
             if(this.collection){
                 this.collection.bind("add", this.addItem, this)
             }else
-                console.warn("No collection!")
+                console.warn("No collection!");
             this.ItemView = this.ItemView || this.options.ItemView;
         },
 
@@ -41,7 +41,6 @@ define(function(require, exports, module){
         },
 
         addItems: function(){
-            console.info("add items")
             if(this.itemContainer)
                 this.$(this.itemContainer).empty();
             else
@@ -68,6 +67,19 @@ define(function(require, exports, module){
                 this.$el.prepend(itemView.render().el);
             itemView.$el.fadeIn();
         }
+    });
+
+    var ObjectBox = Backbone.View.extend({
+        className: "box",
+
+        render: function(){
+            this.$el.html(this.template(!this.model? {}:this.model.toJSON()));
+            return this;
+        }
+    });
+
+    var ArrayBox = ItemsContainer.extend({
+        className: "box"
     });
 
     var Content = ItemsContainer.extend({
@@ -169,6 +181,8 @@ define(function(require, exports, module){
         Views: {
             Item: Item,
             ItemsContainer: ItemsContainer,
+            ObjectBox: ObjectBox,
+            ArrayBox: ArrayBox,
             Content: Content,
             Header: Header,
             Footer: Footer

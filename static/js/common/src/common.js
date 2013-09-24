@@ -11,6 +11,8 @@ define(function(require, exports, module){
             if(box.collection){
                 context.sideBar.append(box.render().el);
                 box.collection.fetch();
+            }else{
+                context.sideBar.append(box.render().el);
             }
         }, this)
     };

@@ -1,9 +1,11 @@
 # coding=utf-8
-from flask import Blueprint, render_template, jsonify
+import re
+from flask import Blueprint, render_template, jsonify, redirect
 from flask.ext.login import login_user, logout_user
 from flask.ext.principal import identity_changed, Identity
 from flask.ext.wtf.form import Form
 from flask.globals import request, current_app
+from flask.helpers import url_for
 from wtforms.fields.core import BooleanField
 from wtforms import TextField, PasswordField, validators
 from models.user import User
@@ -94,9 +96,8 @@ def register():
                 login_user(user)
                 # Tell Flask-Principal the identity changed
                 identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
-                template_var['owner'] = user
             session.commit()
-            return render_template('index.html', **template_var)
+            return redirect(url_for('frontend.index'))
     template_var['form'] = form
     return render_template('account/register.html', **template_var)
 
@@ -119,8 +120,7 @@ class RegisterForm(Form):
 
     email = TextField(u'邮箱', [validators.Required(message=u"邮箱不能为空")])
     username = TextField(u'用户名',
-                         [validators.Required(message=u"用户名不能为空"),
-                          validators.length(max=16, message=u'用户名太长了，最长16个字符')])
+                         [validators.Required(message=u"用户名不能为空")])
     nickname = TextField(u'昵称',
                          [validators.Required(message=u"每个响亮的昵称怎么混？"),
                           validators.length(max=10, message=u'要有咱也不能太长呀，最长10个字符')])
@@ -136,7 +136,15 @@ class RegisterForm(Form):
             if session.query(User).filter(User.email == field.data).first():
                 raise ValueError(u"该邮箱已经存在")
 
+    def validate_nickname(self, field):
+        length = len(field.data)
+        if length < 2 or length > 8:
+            raise ValueError(u"昵称字符数应在(2-8)之间")
+
     def validate_username(self, field):
         with session_cm() as session:
+            pattern = re.compile(r'^\w{6,16}$')
+            if pattern.match(field.data) is None:
+                raise ValueError(u"用户名只能由字母、下划线、数字组成，且字符数在(6-16)之间")
             if session.query(User).filter(User.username == field.data).first():
                 raise ValueError(u"该用户名已经存在")

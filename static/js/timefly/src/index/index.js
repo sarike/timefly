@@ -40,7 +40,8 @@ define(function(require, exports, module){
         var sideBarBoxes = [
                 new Common.Box.UserBox({
                     collection: new PassionateUserCollection()
-                })
+                }),
+                new Common.Box.AboutBox()
             ],
             content = new IndexContent({
                 collection: new LatestTodoCollection()

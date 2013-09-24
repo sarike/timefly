@@ -10,13 +10,18 @@ define(function(require, exports, module){
         className: "media"
     });
 
-    var UsersBox = Base.Views.ItemsContainer.extend({
+    var UsersBox = Base.Views.ArrayBox.extend({
         template: _.template(require("./templates/users_box.tpl")),
         ItemView: UserItem,
         itemContainer: '.media-list'
     });
 
+    var AboutBox = Base.Views.ObjectBox.extend({
+        template: _.template(require("./templates/about_box.tpl"))
+    });
+
     module.exports = {
-        UserBox: UsersBox
+        UserBox: UsersBox,
+        AboutBox: AboutBox
     }
 });

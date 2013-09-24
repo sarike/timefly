@@ -11,7 +11,7 @@
                   {% for error in form.email.errors %}
                       {{ error }}
                       {% else %}
-                      请填写正确的邮箱地址，您可以用邮箱来登录。
+                      请填写正确的邮箱地址，您可以用邮箱来登录
                   {% endfor %}
               </span>
             </div>
@@ -24,7 +24,7 @@
                   {% for error in form.username.errors %}
                       {{ error }}
                       {% else %}
-                      用户名只能由字母、下划线、数字组成，且不能超过20个字符。
+                      用户名只能由字母、下划线、数字组成，且字符数在(6-20)之间
                   {% endfor %}
                 </span>
             </div>
@@ -34,7 +34,11 @@
             <div class="controls">
               {{form.nickname}}
               <span class="help-inline">
-              	昵称用作显示，不能超过20个字符。
+                  {% for error in form.nickname.errors %}
+                      {{ error }}
+                      {% else %}
+                      昵称用作显示，且字符数应在(2-8)之间
+                  {% endfor %}
               </span>
             </div>
           </div>
@@ -43,7 +47,7 @@
             <div class="controls">
               {{form.password}}
               <span class="help-inline">
-              	请设置强度比较好的密码，以保证账号安全。
+              	请设置强度比较好的密码，以保证账号安全
               </span>
             </div>
           </div>

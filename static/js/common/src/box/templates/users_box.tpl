@@ -1,4 +1,4 @@
-<div id="friend-list" class="box">
+<div id="friend-list">
     <h3>
         活跃用户 <a href="#">查看全部</a>
     </h3>
