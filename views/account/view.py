@@ -71,6 +71,8 @@ def login():
         user, validate_user_errors = User.validate_user(email, password)
         if user is not None:
             login_user(user, remember)
+            # Tell Flask-Principal the identity changed
+            identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
             template_var['owner'] = user
             return render_template('index.html', **template_var)
     template_var.update({

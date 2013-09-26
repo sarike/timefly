@@ -17,8 +17,9 @@ class User(Base, UserMixin):
     user_id = SA.Column(BIGINT(unsigned=True), default=id_generate, primary_key=True)
     email = SA.Column(VARCHAR(128, charset='latin1', collation='latin1_general_cs'), unique=True, nullable=False)
     username = SA.Column(String(128), unique=True, nullable=False)
-    nick_name = SA.Column(String(128))
+    nickname = SA.Column(String(128))
     active = SA.Column(Boolean, default=True, nullable=False)
+    description = SA.Column(VARCHAR(128))
     is_admin = SA.Column(Boolean, default=False, nullable=False)
     pw_hash = SA.Column(String(128))
 
@@ -37,10 +38,10 @@ class User(Base, UserMixin):
         return {
             "user_id": self.user_id,
             "username": self.username,
-            "nickname": self.nick_name,
+            "nickname": self.nickname,
             "is_authenticated": self.is_authenticated(),
             "avatar_hash": self.get_gravatar_hash(),
-            "description": "",
+            "description": self.description,
             "ing_count": 0,
             "ed_count": 0,
             "fail_count": 0

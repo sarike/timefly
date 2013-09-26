@@ -37,22 +37,29 @@ define(function(require, exports){
 //    });
 
     exports.init = function(context){
-        console.info(context.user)
-        console.info(new Backbone.Model(context.user))
-        var sideBarBoxes = [
-                new Common.Box.UserProfileBox({model: new Backbone.Model(context.user)}),
-                new Common.Box.UserBox({
-                    collection: new PassionateUserCollection()
-                }),
-                new Common.Box.AboutBox()
-            ]
 //            content = new IndexContent({
 //                collection: new LatestTodoCollection()
 //            });
+        context.router.route(":username", "home", function(username){
+            $.get("/" + username, function(res){
+                var owner = res.data.owner;
 
-        Common.init(context, {
-            sideBarBoxes: sideBarBoxes,
-            content: content
-        })
+                var sideBarBoxes = [
+                    new Common.Box.UserProfileBox({model: new Backbone.Model(owner)}),
+                    new Common.Box.UserBox({
+                        collection: new PassionateUserCollection()
+                    }),
+                    new Common.Box.AboutBox()
+                ];
+
+                if(context.user["username"] == owner["username"]){
+                    context.user.self_home = true;
+                }
+
+                Common.init(context, {
+                    sideBarBoxes: sideBarBoxes
+                })
+            })
+        });
     }
 });

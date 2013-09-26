@@ -7,6 +7,7 @@ define(function(require, exports, module){
 
     var initSideBar = function(context, sidebarBoxes){
         if(!sidebarBoxes) return;
+        context.sideBar.empty();
         _.each(sidebarBoxes, function(box){
             if(box.collection){
                 context.sideBar.append(box.render().el);
@@ -39,7 +40,7 @@ define(function(require, exports, module){
         init: function(context, options) {
             initHeader(context, options.header || new Base.Views.Header({
                 user: context.user,
-                contentCollection: options.content.collection
+                contentCollection: options.content ? options.content.collection : null
             }));
             initSideBar(context, options.sideBarBoxes);
             initContent(context, options.content || new Base.Views.Content());

@@ -6,7 +6,7 @@
 
 <div class="media-body">
     <h4 class="media-heading">
-        <a href="./<%=username %>">
+        <a href="./#<%=username %>">
             <%=username %>
         </a>
     </h4>
