@@ -35,11 +35,17 @@ def ajax_login():
     email = request.form.get("email")
     password = request.form.get("password")
     remember = True if request.form.get("remember") else False
+    if not email or not password:
+        res.update({
+            'response': 'fail',
+            'type': 'error',
+            'info': '邮箱不能为空' if not email else '密码不能为空'
+        })
+        return jsonify(res)
+
     user, validate_user_errors = User.validate_user(email, password)
     if user:
         login_user(user, remember)
-        # Tell Flask-Principal the identity changed
-        identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
         res.update(data={
             'user': user.to_dict()
         })
@@ -65,8 +71,6 @@ def login():
         user, validate_user_errors = User.validate_user(email, password)
         if user is not None:
             login_user(user, remember)
-            # Tell Flask-Principal the identity changed
-            identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
             template_var['owner'] = user
             return render_template('index.html', **template_var)
     template_var.update({

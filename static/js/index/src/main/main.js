@@ -5,9 +5,9 @@
  * Time: 下午9:58
  * To change this template use File | Settings | File Templates.
  */
-define(function(require, exports, module){
+define(function(require, exports){
     var libs = require('libs');
-    var $ = require('$')
+    var $ = require('$');
     var _ = require('underscore');
     var Common = require('common');
 

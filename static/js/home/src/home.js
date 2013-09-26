@@ -1,4 +1,4 @@
-define(function(require, exports, module) {
+define(function(require) {
     require("bootstrap");
     require("form");
     require("utils");
@@ -13,7 +13,7 @@ define(function(require, exports, module) {
                 footer: $("footer"),
                 user: res.data.user
             };
-            require("./index/index").init(context);
+            require("./main/main").init(context);
         });
     });
 });

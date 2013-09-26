@@ -66,5 +66,5 @@ def user_home(username):
                 'ed_count': 0,
                 'fail_count': 0
             }
-            return render_template('todo/home.html', **context)
+            return render_template('home.html', **context)
         abort(404)

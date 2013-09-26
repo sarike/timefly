@@ -1,9 +1,9 @@
 {
-    "family": "sarike",
-    "name": "timefly",
+    "family": "sarike_timefly",
+    "name": "home",
     "version": "1.0.0",
     "spm": {
-        "output": ["timefly.js"],
+        "output": ["home.js"],
         "alias": {
             "underscore": "gallery/underscore/1.4.4/underscore",
             "backbone": "gallery/backbone/1.0.0/backbone",

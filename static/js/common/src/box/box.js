@@ -11,7 +11,7 @@ define(function(require, exports, module){
     });
 
     var UsersBox = Base.Views.ArrayBox.extend({
-        template: _.template(require("./templates/users_box.tpl")),
+        template: _.template(require("./templates/user_list_box.tpl")),
         ItemView: UserItem,
         itemContainer: '.media-list'
     });
@@ -20,8 +20,13 @@ define(function(require, exports, module){
         template: _.template(require("./templates/about_box.tpl"))
     });
 
+    var UserProfileBox = Base.Views.ObjectBox.extend({
+        template: _.template(require("./templates/user_profile_box.tpl"))
+    });
+
     module.exports = {
         UserBox: UsersBox,
-        AboutBox: AboutBox
+        AboutBox: AboutBox,
+        UserProfileBox: UserProfileBox
     }
 });

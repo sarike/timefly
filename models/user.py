@@ -37,8 +37,13 @@ class User(Base, UserMixin):
         return {
             "user_id": self.user_id,
             "username": self.username,
+            "nickname": self.nick_name,
             "is_authenticated": self.is_authenticated(),
-            "avatar_hash": self.get_gravatar_hash()
+            "avatar_hash": self.get_gravatar_hash(),
+            "description": "",
+            "ing_count": 0,
+            "ed_count": 0,
+            "fail_count": 0
         }
 
     @classmethod
