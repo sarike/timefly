@@ -8,9 +8,9 @@
                         <span>主页</span>
                     </a>
                 </li>
-                <% if(!!user && user.is_authenticated && user.self_home){ %>
+                <% if(!!user && user.is_authenticated && !user.self_home){ %>
                 <li>
-                    <a href="./<%=user.username %>" class=" clearfix">
+                    <a href="#<%=user.username %>" class=" clearfix">
                         <span><i class="nav-me"></i></span>
                         <span>我</span>
                     </a>

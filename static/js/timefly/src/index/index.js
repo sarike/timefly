@@ -36,8 +36,8 @@ define(function(require, exports){
     });
 
     exports.init = function(context){
-
-        var sideBarBoxes = [
+        context.router.route("", "index", function(){
+            var sideBarBoxes = [
                 new Common.Box.UserBox({
                     collection: new PassionateUserCollection()
                 }),
@@ -47,9 +47,10 @@ define(function(require, exports){
                 collection: new LatestTodoCollection()
             });
 
-        Common.init(context, {
-            sideBarBoxes: sideBarBoxes,
-            content: content
-        })
+            Common.init(context, {
+                sideBarBoxes: sideBarBoxes,
+                content: content
+            })
+        });
     }
 });

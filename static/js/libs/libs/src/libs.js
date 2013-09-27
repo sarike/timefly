@@ -51,7 +51,12 @@ define(function (require, exports, module) {
 
         render: function () {
             this.$el.html(this.template(this.options));
+            this.extraRender();
             return this;
+        },
+
+        extraRender: function(){
+
         },
 
         open: function (config) {

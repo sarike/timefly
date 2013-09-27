@@ -52,9 +52,7 @@ define(function(require, exports){
                     new Common.Box.AboutBox()
                 ];
 
-                if(context.user["username"] == owner["username"]){
-                    context.user.self_home = true;
-                }
+                context.user.self_home = context.user["username"] == owner["username"];
 
                 Common.init(context, {
                     sideBarBoxes: sideBarBoxes
