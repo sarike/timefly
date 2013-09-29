@@ -32,8 +32,8 @@ class Todo(Base):
             'todo_description': self.todo_description,
             'todo_visible': self.todo_visible,
             'todo_erasable': self.todo_erasable,
-            'todo_start': self.todo_start.isoformat(),
-            'todo_end': self.todo_end.isoformat(),
+            'todo_start': self.todo_start,
+            'todo_end': self.todo_end,
             'todo_is_completed': self.todo_is_completed,
             'user': self.user.to_dict()
         }

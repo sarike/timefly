@@ -47,6 +47,8 @@ define(function(require, exports){
                 collection: new LatestTodoCollection()
             });
 
+            context.user.self_home = false;
+
             Common.init(context, {
                 sideBarBoxes: sideBarBoxes,
                 content: content

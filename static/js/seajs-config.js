@@ -46,6 +46,7 @@ if(seajs.data.debug){
             backbone: 'gallery/backbone/1.0.0/backbone',
             bootstrap: 'gallery/bootstrap/3.0.0/bootstrap',
             "jquery-ui": "jquery-plugin/jquery-ui/1.10.3/jquery-ui",
+            "jquery-validate": "jquery-plugin/jquery-validate/1.11.1/jquery.validate",
             "jquery-noty": "jquery-plugin/jquery-noty/2.1.0/jquery.noty",
             "form": "jquery-plugin/form/3.36.0/form",
             libs: "/static/js/libs/libs/src/libs",

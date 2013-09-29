@@ -8,7 +8,9 @@
     "output": ["libs.js"],
     "alias": {
         "$": "$",
-        "jquery-ui": "gallery/jquery-ui/1.10.3/jquery-ui"
+        "jquery-ui": "jquery-plugin/jquery-ui/1.10.3/jquery-ui",
+        "jquery-noty": "jquery-plugin/jquery-noty/2.1.0/jquery.noty",
+        "jquery-validate": "jquery-plugin/jquery-validate/1.11.1/jquery.validate"
     },
     "devAlias": {},
     "engines": {}

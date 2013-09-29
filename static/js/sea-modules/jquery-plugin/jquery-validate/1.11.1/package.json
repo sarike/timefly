@@ -1,0 +1,15 @@
+{
+  "family": "jquery-plugin",
+  "name": "jquery-validate",
+  "version": "1.11.1",
+  "keywords": ["widget"],
+  "licenses": "MIT",
+  "spm": {
+    "output": ["jquery.validate.js"],
+    "alias": {
+        "$": "$"
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}
