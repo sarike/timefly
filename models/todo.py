@@ -35,5 +35,6 @@ class Todo(Base):
             'todo_start': self.todo_start,
             'todo_end': self.todo_end,
             'todo_is_completed': self.todo_is_completed,
-            'user': self.user.to_dict()
+            'user': self.user.to_dict(),
+            'achievement_list': []
         }

@@ -11,7 +11,13 @@ define(function(require, exports, module){
         _.each(sidebarBoxes, function(box){
             if(box.collection){
                 context.sideBar.append(box.render().el);
-                box.collection.fetch();
+                box.collection.fetch({
+                    success: function(collection){
+                        if(collection.length == 0){
+                            box.renderEmpty();
+                        }
+                    }
+                });
             }else{
                 context.sideBar.append(box.render().el);
             }
@@ -25,7 +31,13 @@ define(function(require, exports, module){
     var initContent = function(context, content){
         context.content.html(content.render().el);
         if(content.collection)
-            content.collection.fetch();
+            content.collection.fetch({
+                success: function(collection){
+                    if(collection.length == 0){
+                        content.renderEmpty();
+                    }
+                }
+            });
     };
 
     var initFooter = function(context, footer){

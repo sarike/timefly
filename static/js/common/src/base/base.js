@@ -23,13 +23,28 @@ define(function (require, exports, module) {
         }
     });
 
+    var EmptyView = Backbone.View.extend({
+        template: _.template(require("./templates/common_empty.tpl")),
+
+        render: function(){
+            this.$el.html(this.template());
+            this.$el.show();
+            return this;
+        },
+
+        hide: function(){
+            this.$el.hide();
+        }
+    });
+
     var ItemsContainer = Backbone.View.extend({
 
         itemContainer: null,
+        emptyView: new EmptyView(),
 
         initialize: function () {
             if (this.collection) {
-                this.collection.bind("add", this.addItem, this)
+                this.collection.bind("add", this.addItem, this);
             } else
                 console.warn("No collection!");
             this.ItemView = this.ItemView || this.options.ItemView;
@@ -40,21 +55,14 @@ define(function (require, exports, module) {
             return this;
         },
 
-        addItems: function () {
-            if (this.itemContainer)
-                this.$(this.itemContainer).empty();
-            else
-                this.$el.empty();
-            if (!this.ItemView) {
-                console.warn("No ItemView!");
-                return;
-            }
-            this.collection.each(function (model) {
-                this.addItem(model);
-            }, this);
+        renderEmpty: function(){
+            this.$el.html(this.emptyView.render().el);
         },
 
         addItem: function (model) {
+            if(this.collection.length > 0){
+                this.emptyView.hide();
+            }
             if (!this.ItemView) {
                 console.warn("No ItemView!");
                 return;
@@ -84,6 +92,7 @@ define(function (require, exports, module) {
 
     var Content = ItemsContainer.extend({
         className: "box",
+        has_title: true,
         base_template: _.template(require("./templates/common_content.tpl")),
 
         render: function () {
@@ -94,6 +103,7 @@ define(function (require, exports, module) {
 
         renderMainContent: function () {
             this.$el.html(this.base_template({
+                has_title: this.title,
                 title: this.title || this.options.title,
                 sub_title: this.sub_title || this.options.sub_title
             }));
@@ -102,6 +112,10 @@ define(function (require, exports, module) {
         renderSubContent: function () {
             if (this.template)
                 this.$el.append(this.template(this.options.data))
+        },
+
+        renderEmpty: function(){
+            this.$el.append(this.emptyView.render().el);
         }
     });
 
@@ -116,7 +130,11 @@ define(function (require, exports, module) {
         doLogin: function () {
             this.$("#login-form").ajaxSubmit($.proxy(function (res) {
                 if (res.response == 'ok') {
-                    this.user = res.data.user;
+                    var cur_user = new Backbone.Model(res.data.user);
+                    cur_user.set("self_home", this.user.get("self_home"));
+                    cur_user.set("at_index_page", this.user.get("at_index_page"));
+                    this.user.trigger("login-event", {user: cur_user});
+                    this.user = cur_user;
                     this.render();
                 } else {
                     libs.Noty.NotyWithRes(res);
@@ -248,7 +266,7 @@ define(function (require, exports, module) {
         },
 
         render: function () {
-            this.$el.html(this.template({user: this.user}));
+            this.$el.html(this.template({user: this.user.toJSON()}));
             return this;
         }
     });
@@ -267,6 +285,7 @@ define(function (require, exports, module) {
         Views: {
             Item: Item,
             ItemsContainer: ItemsContainer,
+            EmptyView: EmptyView,
             ObjectBox: ObjectBox,
             ArrayBox: ArrayBox,
             Content: Content,

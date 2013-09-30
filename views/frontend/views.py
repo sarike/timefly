@@ -3,6 +3,7 @@ import datetime
 from flask import jsonify
 from flask.blueprints import Blueprint
 from flask.ext.login import current_user
+from flask.globals import session
 from flask.templating import render_template
 from werkzeug.exceptions import abort
 from models.user import User
@@ -34,12 +35,14 @@ def me():
 def user_home(username):
     res = ajax_response()
 
-    with session_cm() as session:
-        owner = session.query(User).filter_by(username=username).first()
+    with session_cm() as db:
+        owner = db.query(User).filter_by(username=username).first()
         if owner:
+            print "set owner to g: ", owner.email
             res.update(data={
                 'owner': owner.to_dict()
             })
+            session["owner_id"] = owner.user_id
             return jsonify(res)
         else:
             abort(404)

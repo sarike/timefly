@@ -38,21 +38,22 @@ define(function(require, exports){
     exports.init = function(context){
         context.router.route("", "index", function(){
             var sideBarBoxes = [
-                new Common.Box.UserBox({
-                    collection: new PassionateUserCollection()
-                }),
-                new Common.Box.AboutBox()
-            ],
-            content = new IndexContent({
-                collection: new LatestTodoCollection()
-            });
+                    new Common.Box.UserBox({
+                        collection: new PassionateUserCollection()
+                    }),
+                    new Common.Box.AboutBox()
+                ],
+                content = new IndexContent({
+                    collection: new LatestTodoCollection()
+                });
 
-            context.user.self_home = false;
+            context.user.set('self_home', false);
+            context.user.set('at_index_page', true);
 
             Common.init(context, {
                 sideBarBoxes: sideBarBoxes,
                 content: content
-            })
+            });
         });
     }
 });

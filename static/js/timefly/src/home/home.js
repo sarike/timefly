@@ -12,51 +12,58 @@ define(function(require, exports){
     var Backbone = require('backbone');
     var Common = require('common');
 
-    var PassionateUserCollection = Common.Collections.BaseCollection.extend({
-        url: "account/passionate_users"
+    var MyFriendsCollection = Common.Collections.BaseCollection.extend({
+        url: "account/my_friends"
     });
-    var LatestTodoCollection = Common.Collections.BaseCollection.extend({
-        url: "todo/latest_todos"
+    var MyTodosCollection = Common.Collections.BaseCollection.extend({
+        url: "todo/my_todos"
     });
-
-//    var TodoItem = Common.Views.Item.extend({
-//        className: "media",
-//        template: _.template(require("./templates/todo_item.tpl")),
-//        render: function(){
-//            this.$el.html(this.template(this.model.toJSON()));
-//            return this;
-//        }
-//    });
-//
-//    var IndexContent = Common.Views.Content.extend({
-//        title: "最新计划",
-//        sub_title: "时光飞逝网友们最近发布的最新计划，一起来为他们加油吧",
-//        template: _.template(require("./templates/index_content.tpl")),
-//        itemContainer: ".media-list",
-//        ItemView: TodoItem
-//    });
 
     exports.init = function(context){
-//            content = new IndexContent({
-//                collection: new LatestTodoCollection()
-//            });
+
+        var TodoItem = Common.Views.Item.extend({
+            template: _.template(require("./templates/todo_item.tpl")),
+            render: function(){
+                this.$el.html(this.template({
+                    todo: this.model.toJSON(),
+                    user: context.user
+                }));
+                return this;
+            }
+        });
+
+        var HomeContent = Common.Views.Content.extend({
+            className: "",
+            has_title: false,
+            ItemView: TodoItem
+        });
+
         context.router.route(":username", "home", function(username){
             $.get("/" + username, function(res){
                 var owner = res.data.owner;
+                var self_home = context.user.get("username") == owner["username"];
+
+                context.user.set('self_home', self_home);
+                context.user.set('at_index_page', false);
 
                 var sideBarBoxes = [
-                    new Common.Box.UserProfileBox({model: new Backbone.Model(owner)}),
-                    new Common.Box.UserBox({
-                        collection: new PassionateUserCollection()
-                    }),
-                    new Common.Box.AboutBox()
-                ];
-
-                context.user.self_home = context.user["username"] == owner["username"];
+                        new Common.Box.UserProfileBox({model: new Backbone.Model(owner)}),
+                        new Common.Box.UserBox({
+                            collection: new MyFriendsCollection()
+                        }),
+                        new Common.Box.AboutBox()
+                    ],
+                    content = new HomeContent({
+                        data:{
+                            user: context.user
+                        },
+                        collection: new MyTodosCollection()
+                    });
 
                 Common.init(context, {
-                    sideBarBoxes: sideBarBoxes
-                })
+                    sideBarBoxes: sideBarBoxes,
+                    content: content
+                });
             })
         });
     }

@@ -28,6 +28,19 @@ def passionate_users():
         })
     return jsonify(res)
 
+@account.route('/my_friends')
+def my_friends():
+    res = ajax_response()
+    with session_cm() as session:
+        user_list = session.query(User).all()
+        user_dict_list = []
+        for user in user_list:
+            user_dict_list.append(user.to_dict())
+        res.update(data={
+            "items": user_dict_list
+        })
+    return jsonify(res)
+
 
 @account.route('/ajax_login', methods=['POST'])
 def ajax_login():
@@ -46,8 +59,12 @@ def ajax_login():
     user, validate_user_errors = User.validate_user(email, password)
     if user:
         login_user(user, remember)
+
+        user_dict = user.to_dict()
+        user_dict.update(self_home=False)
+
         res.update(data={
-            'user': user.to_dict()
+            'user': user_dict
         })
     else:
         res.update({
@@ -113,7 +130,7 @@ def logout():
     注销用户
     """
     logout_user()
-    return render_template('todo/index.html')
+    return redirect(url_for('frontend.index'))
 
 
 class LoginForm(Form):
@@ -129,7 +146,7 @@ class RegisterForm(Form):
                          [validators.Required(message=u"用户名不能为空")])
     nickname = TextField(u'昵称',
                          [validators.Required(message=u"每个响亮的昵称怎么混？"),
-                          validators.length(max=10, message=u'要有咱也不能太长呀，最长10个字符')])
+                          validators.length(max=4, message=u'要有咱也不能太长呀，最长4个字符')])
     password = PasswordField(u'密码',
                              [validators.Required(message=u"密码不能为空"),
                               validators.length(max=16, message=u'要有咱也不能太长呀，最长16个字符')])
@@ -141,11 +158,6 @@ class RegisterForm(Form):
         with session_cm() as session:
             if session.query(User).filter(User.email == field.data).first():
                 raise ValueError(u"该邮箱已经存在")
-
-    def validate_nickname(self, field):
-        length = len(field.data)
-        if length < 2 or length > 8:
-            raise ValueError(u"昵称字符数应在(2-8)之间")
 
     def validate_username(self, field):
         with session_cm() as session:

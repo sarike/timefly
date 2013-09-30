@@ -3,7 +3,7 @@ import datetime
 from flask import jsonify
 from flask.blueprints import Blueprint
 from flask.ext.login import current_user
-from flask.globals import request
+from flask.globals import request, g, session
 from flask.templating import render_template
 from werkzeug.exceptions import abort
 from models.todo import Todo
@@ -49,4 +49,26 @@ def latest_todos():
         res.update(data={
             'items': items
         })
+    return jsonify(res)
+
+@todo.route('/my_todos')
+def my_todos():
+    res = ajax_response()
+    with session_cm() as db:
+        my_todo_list_query = db.query(Todo). \
+            filter(Todo.todo_is_deleted == False,
+                   Todo.user_id == session["owner_id"])
+
+        if current_user.user_id != session["owner_id"]:
+            my_todo_list_query = my_todo_list_query.filter(Todo.todo_visible == True)
+
+        my_todo_list = my_todo_list_query.all()
+
+        items = []
+        for todo in my_todo_list:
+            items.append(todo.to_dict())
+        res.update(data={
+            'items': items
+        })
+
     return jsonify(res)

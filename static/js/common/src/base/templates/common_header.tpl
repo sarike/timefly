@@ -2,14 +2,14 @@
     <div class="navbar-inner">
         <div class="container">
             <ul class="nav">
-                <li class="active">
+                <li <% if(user.at_index_page){ %>class="active"<% } %>>
                     <a href="#" class=" clearfix">
                         <span><i class="nav-home"></i></span>
                         <span>主页</span>
                     </a>
                 </li>
-                <% if(!!user && user.is_authenticated && !user.self_home){ %>
-                <li>
+                <% if(!!user && user.is_authenticated){ %>
+                <li <% if(user.self_home){ %>class="active"<% } %>>
                     <a href="#<%=user.username %>" class=" clearfix">
                         <span><i class="nav-me"></i></span>
                         <span>我</span>
