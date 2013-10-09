@@ -17,6 +17,11 @@ define(function (require, exports, module) {
 
     // Views
     var Item = Backbone.View.extend({
+
+        initialize: function(){
+            this.model.bind('change', $.proxy(this.render, this));
+        },
+
         render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;

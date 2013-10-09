@@ -99,7 +99,8 @@ define(function (require, exports, module) {
         noty({
             type: res.type,
             layout: res.layout,
-            text: res.info
+            text: res.info,
+            timeout: 2000
         })
     };
 

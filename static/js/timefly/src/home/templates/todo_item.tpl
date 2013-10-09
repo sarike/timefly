@@ -4,7 +4,7 @@
         <% if(user.is_authenticated && user.self_home){ %>
             <span class="pull-right">
                 <a href="javascript:void(0)"
-                   class="markComplete"
+                   class="mark-complete"
                    title="<% if(todo.todo_is_completed){ %>
                            撤销已完成状态
                           <% }else{ %>
@@ -14,14 +14,14 @@
                 </a>
                 <% if(todo.todo_erasable){ %>
                     <a href="javascript:void(0)"
-                       class="deleteTodo"
+                       class="delete-todo"
                        title="删除该计划">
                         <i class=" icon-trash"></i>
                     </a>
                 <% } %>
                 <a href="javascript:void(0)"
-                   class="changeVisibale"
-                   title="<% if(todo.todo_visibale){ %>
+                   class="change-visible"
+                   title="<% if(todo.todo_visible){ %>
                              设置为仅对自己可见
                           <% }else{ %>
                              设置为对所有人可见
@@ -38,7 +38,7 @@
             </span>
         <% } %>
     </h2>
-    <div class="todo_meta shadow <% if(!todo.todo_visibale){ %>todo_private<% } %>">
+    <div class="todo_meta shadow <% if(!todo.todo_visible){ %>todo_private<% } %>">
         <div class="todo_info">
             该计划由 <a href="./#<%=todo.user.username%>"> <%=todo.user.nickname || todo.user.username %> </a>
             开始于  <%=todo.todo_start %> ，计划在

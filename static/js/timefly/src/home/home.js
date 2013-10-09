@@ -23,10 +23,52 @@ define(function(require, exports){
 
         var TodoItem = Common.Views.Item.extend({
             template: _.template(require("./templates/todo_item.tpl")),
+
+            events: {
+                'click a.mark-complete': 'markComplete',
+                'click a.delete-todo': 'deleteTodo',
+                'click a.change-visible': 'changeVisible',
+                'click a.add-new-complete': 'addNewComplete'
+            },
+
+            dealTodo: function(url, callback){
+                var todo_id = this.model.get('todo_id');
+                $.get(url, {todo_id: todo_id}, function(res){
+                    if(!!callback && typeof callback == 'function'){
+                        callback(res.data);
+                    }
+                    libs.Noty.NotyWithRes(res);
+                });
+            },
+
+            markComplete: function(){
+                this.dealTodo('/todo/mark_complete', $.proxy(function(data){
+                    console.info(data)
+                    this.model.set('todo_is_completed', data.todo_is_completed);
+                }, this));
+            },
+
+            deleteTodo: function(){
+                this.dealTodo('/todo/delete_todo',  $.proxy(function(data){
+                    this.$el.fadeOut();
+                }, this));
+            },
+
+            changeVisible: function(){
+                this.dealTodo('/todo/change_visible', $.proxy(function(data){
+                    this.model.set('todo_visible', data.todo_visible);
+                }, this));
+            },
+
+            addNewComplete: function(){
+                this.dealTodo('/add_new_complete');
+            },
+
             render: function(){
+                console.info('render item.........');
                 this.$el.html(this.template({
                     todo: this.model.toJSON(),
-                    user: context.user
+                    user: context.user.toJSON()
                 }));
                 return this;
             }
@@ -64,6 +106,7 @@ define(function(require, exports){
                     sideBarBoxes: sideBarBoxes,
                     content: content
                 });
+                $(document).tooltip();
             })
         });
     }

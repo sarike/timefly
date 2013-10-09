@@ -37,6 +37,49 @@ def add_todo():
     return jsonify(res)
 
 
+@todo.route('/mark_complete')
+def mark_complete():
+    res = ajax_response()
+    todo_id = request.args.get('todo_id')
+    with session_cm() as db:
+        todo = db.query(Todo).get(todo_id)
+        todo.todo_is_completed = not todo.todo_is_completed
+        res['data'] = todo.to_dict()
+        res['info'] = '成功标记该计划为已完成' if todo.todo_is_completed else '成功标记该计划为未完成'
+        db.commit()
+    return jsonify(res)
+
+
+@todo.route('/delete_todo')
+def delete_todo():
+    res = ajax_response()
+    todo_id = request.args.get('todo_id')
+    with session_cm() as db:
+        todo = db.query(Todo).get(todo_id)
+        db.delete(todo)
+        res['info'] = '删除成功'
+        db.commit()
+    return jsonify(res)
+
+
+@todo.route('/change_visible')
+def change_visible():
+    res = ajax_response()
+    todo_id = request.args.get('todo_id')
+    with session_cm() as db:
+        todo = db.query(Todo).get(todo_id)
+        todo.todo_visible = not todo.todo_visible
+        res['data'] = todo.to_dict()
+        res['info'] = '成功设置该计划对所有人可见' if todo.todo_visible else '成功设置该计划为私密计划'
+        db.commit()
+    return jsonify(res)
+
+
+@todo.route('/add_new_complete')
+def add_new_complete():
+    pass
+
+
 @todo.route('/latest_todos')
 def latest_todos():
     res = ajax_response()
@@ -51,6 +94,7 @@ def latest_todos():
         })
     return jsonify(res)
 
+
 @todo.route('/my_todos')
 def my_todos():
     res = ajax_response()
@@ -59,7 +103,7 @@ def my_todos():
             filter(Todo.todo_is_deleted == False,
                    Todo.user_id == session["owner_id"])
 
-        if current_user.user_id != session["owner_id"]:
+        if current_user.is_authenticated() and current_user.user_id != session["owner_id"]:
             my_todo_list_query = my_todo_list_query.filter(Todo.todo_visible == True)
 
         my_todo_list = my_todo_list_query.all()

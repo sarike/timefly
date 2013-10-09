@@ -27,13 +27,13 @@ class Todo(Base):
 
     def to_dict(self):
         return {
-            'todo_id': self.todo_id,
+            'todo_id': str(self.todo_id),
             'todo_name': self.todo_name,
             'todo_description': self.todo_description,
             'todo_visible': self.todo_visible,
             'todo_erasable': self.todo_erasable,
-            'todo_start': self.todo_start,
-            'todo_end': self.todo_end,
+            'todo_start': self.todo_start.strftime("%Y-%m-%d"),
+            'todo_end': self.todo_end.strftime("%Y-%m-%d"),
             'todo_is_completed': self.todo_is_completed,
             'user': self.user.to_dict(),
             'achievement_list': []
