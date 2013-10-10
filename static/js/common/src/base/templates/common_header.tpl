@@ -24,7 +24,7 @@
                     <li>
                         <a href="#" class=" clearfix dropdown-toggle" data-toggle="dropdown">
 									<span>
-                                        <%=user.username %>
+                                        <%=user.nickname || user.username %>
 									</span>
 									<span>
 										<i class="caret"></i>

@@ -100,7 +100,7 @@ define(function (require, exports, module) {
             type: res.type,
             layout: res.layout,
             text: res.info,
-            timeout: 2000
+            timeout: 1000
         })
     };
 

@@ -22,7 +22,7 @@
  .help-inline{
  	margin-bottom: 10px;
  }
- .box,.box-nopadding{	
+ .box,.box-nopadding{
  	border:1px solid $main-color;
  	@include border-radius(5px);
  	@include box-shadow(rgba(0,0,0,.075) 0 1px 2px );
@@ -228,6 +228,11 @@
 }
 .todo>h2>span{
 	padding-top:5px;
+  a{
+    &:hover{
+      text-decoration: none;
+    } 
+  }
 }
 .todo_meta{
 	padding:10px 20px;

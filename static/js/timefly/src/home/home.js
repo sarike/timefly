@@ -43,7 +43,6 @@ define(function(require, exports){
 
             markComplete: function(){
                 this.dealTodo('/todo/mark_complete', $.proxy(function(data){
-                    console.info(data)
                     this.model.set('todo_is_completed', data.todo_is_completed);
                 }, this));
             },
@@ -61,11 +60,70 @@ define(function(require, exports){
             },
 
             addNewComplete: function(){
+                var AddNewAcModal = libs.JQueryUI.Dialog.extend({
+                    template: _.template(require("./templates/add_complete_modal.tpl")),
+
+                    ok: function () {
+                        this.$("#ac-form").submit();
+                    },
+
+                    extraRender: function(){
+                        var ac_form = $("#ac-form");
+                        var self = this;
+                        ac_form.validate({
+							errorClass: "error",
+                            submitHandler: function (form) {
+                                $(form).ajaxSubmit($.proxy(function (res) {
+                                    if (this.options.contentCollection) {
+                                        this.options.contentCollection.add(res.data);
+                                    }
+                                    this.close();
+                                }, self));
+                            },
+							ignore: "input[type='checkbox']",
+							errorPlacement: function(error, element) {
+								element.prev().hide();
+								element.prev().after(error);
+							},
+							success:function(label){
+								label.prev().show();
+								label.remove();
+							},
+							rules: {
+								ac_name: {
+									required:true,
+									maxlength: 20
+								},
+								ac_description: {
+									required:true,
+									maxlength: 100
+								}
+							},
+							messages: {
+								ac_name: {
+									required: "不响亮不要紧，可不能不填哟",
+									maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
+								},
+								ac_description: {
+									required: "你到底是完成了什么呢？",
+									maxlength: jQuery.format("不过不能多于{0}个字符")
+								}
+							}
+						});
+                    }
+                });
+                var addNewAcModal = new AddNewAcModal();
+                addNewAcModal.open({
+                    height: 335,
+                    width: 300,
+                    modal: true,
+                    title:"记录新的突破",
+                    resizable: false
+                });
                 this.dealTodo('/add_new_complete');
             },
 
             render: function(){
-                console.info('render item.........');
                 this.$el.html(this.template({
                     todo: this.model.toJSON(),
                     user: context.user.toJSON()

@@ -152,18 +152,9 @@ define(function (require, exports, module) {
         },
 
         addNewTodo: function () {
-            var addTodoModalTemplate = require("./templates/modals/add_todo_modal.tpl");
+            var addTodoModalTemplate = require("./templates/add_todo_modal.tpl");
             var AddTodoModalView = libs.JQueryUI.Dialog.extend({
                 template: _.template(addTodoModalTemplate),
-
-                submitHandler: function (form) {
-                    $(form).ajaxSubmit($.proxy(function (res) {
-                        if (this.options.contentCollection) {
-                            this.options.contentCollection.add(res.data);
-                        }
-                        this.close();
-                    }, this));
-                },
 
                 ok: function () {
                     this.$("#todo-form").submit();
@@ -255,7 +246,7 @@ define(function (require, exports, module) {
                 contentCollection: this.options.contentCollection
             });
             addTodoModal.open({
-                height: 410,
+                height: 480,
                 width: 310,
                 modal: true,
                 title: "制定一个新的计划",

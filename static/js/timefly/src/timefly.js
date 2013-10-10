@@ -21,8 +21,6 @@ define(function(require) {
 
             context.user.on("login-event", function(data){
                 context.user = data.user;
-                console.info("login-event user: ");
-                console.info(context.user);
             });
             require("./index/index").init(context);
             require("./home/home").init(context);

@@ -311,24 +311,27 @@ a:hover .icon-chevron-right {
 /* line 229, ../sass/screen.scss */
 .todo > h2 > span {
   padding-top: 5px; }
+  /* line 232, ../sass/screen.scss */
+  .todo > h2 > span a:hover {
+    text-decoration: none; }
 
-/* line 232, ../sass/screen.scss */
+/* line 237, ../sass/screen.scss */
 .todo_meta {
   padding: 10px 20px;
   border-top: 1px solid #dddddd; }
 
-/* line 237, ../sass/screen.scss */
+/* line 242, ../sass/screen.scss */
 .todo_info, .todo_desc {
   line-height: 30px; }
 
-/* line 241, ../sass/screen.scss */
+/* line 246, ../sass/screen.scss */
 .todo_private {
   background-image: url("../images/lock.png");
   background-position: bottom right;
   background-size: 67px 80px;
   background-repeat: no-repeat; }
 
-/* line 247, ../sass/screen.scss */
+/* line 252, ../sass/screen.scss */
 .todo_complete {
   border-top: 1px solid #dddddd;
   -moz-border-radius-bottomleft: 6px;
@@ -338,20 +341,20 @@ a:hover .icon-chevron-right {
   -webkit-border-bottom-right-radius: 6px;
   border-bottom-right-radius: 6px; }
 
-/* line 251, ../sass/screen.scss */
+/* line 256, ../sass/screen.scss */
 .todo_complete ul {
   padding: 10px 0px; }
 
-/* line 254, ../sass/screen.scss */
+/* line 259, ../sass/screen.scss */
 .todo_complete ul > li {
   border-bottom: 1px dotted;
   height: 30px;
   line-height: 30px; }
 
-/* line 260, ../sass/screen.scss */
+/* line 265, ../sass/screen.scss */
 .todo_complete .accordion {
   margin-top: 10px; }
-/* line 263, ../sass/screen.scss */
+/* line 268, ../sass/screen.scss */
 .todo_complete .accordion-group {
   border-left: 0;
   border-right: 0;
@@ -362,12 +365,12 @@ a:hover .icon-chevron-right {
   -ms-border-radius: 0px;
   -o-border-radius: 0px;
   border-radius: 0px; }
-/* line 270, ../sass/screen.scss */
+/* line 275, ../sass/screen.scss */
 .todo_complete .accordion-inner {
   background-color: #DDDFFF;
   line-height: 25px; }
 
-/* line 275, ../sass/screen.scss */
+/* line 280, ../sass/screen.scss */
 .form-signin {
   border: 1px solid #dddddd;
   -webkit-border-radius: 5px;
@@ -379,14 +382,14 @@ a:hover .icon-chevron-right {
   -moz-box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px;
   box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px; }
 
-/* line 281, ../sass/screen.scss */
+/* line 286, ../sass/screen.scss */
 [class^="icon-"], [class*=" icon-"] {
   background-image: url("../images/glyphicons-halflings.png"); }
 
-/* line 284, ../sass/screen.scss */
+/* line 289, ../sass/screen.scss */
 .icon-blue {
   background-image: url("../images/glyphicons-halflings-blue.png"); }
 
-/* line 290, ../sass/screen.scss */
+/* line 295, ../sass/screen.scss */
 .nav-list > .active > a > [class^="icon-"], .dropdown-menu > li > a:hover > [class^="icon-"] {
   background-image: url("../images/glyphicons-halflings-white.png"); }
