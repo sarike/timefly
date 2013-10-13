@@ -123,7 +123,7 @@ define(function (require, exports, module) {
                 }
             };
             noty({
-                type: options.type || 'notification',
+                type: options.type || 'information',
                 layout: options.layout || 'center',
                 text: options.text || '你确定吗？',
                 buttons: [ok_button,cancel_button]

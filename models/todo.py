@@ -1,6 +1,7 @@
 from sqlalchemy.dialects.mysql.base import BIGINT
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import String, Boolean, DateTime
+from models.achievement import Achievement
 from models.base import Base, id_generate
 import sqlalchemy as SA
 
@@ -22,6 +23,8 @@ class Todo(Base):
     todo_is_completed = SA.Column(Boolean, default=False)
     todo_is_deleted = SA.Column(Boolean, default=False)
 
+    achievement_list = relationship(Achievement, order_by='desc(Achievement.created_date)')
+
     def __unicode__(self):
         return self.todo_name
 
@@ -36,5 +39,5 @@ class Todo(Base):
             'todo_end': self.todo_end.strftime("%Y-%m-%d"),
             'todo_is_completed': self.todo_is_completed,
             'user': self.user.to_dict(),
-            'achievement_list': []
+            'achievement_list': [ac.to_dict() for ac in self.achievement_list]
         }

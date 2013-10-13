@@ -1,13 +1,10 @@
 #coding:utf-8
-import datetime
 from flask import jsonify
 from flask.blueprints import Blueprint
 from flask.ext.login import current_user
-from flask.globals import request, g, session
-from flask.templating import render_template
-from werkzeug.exceptions import abort
+from flask.globals import request, session
+from models.achievement import Achievement
 from models.todo import Todo
-from models.user import User
 from utils.database_session import session_cm
 from utils.response import ajax_response
 
@@ -23,17 +20,17 @@ def add_todo():
     todo_visible = request.form.get("todo_visible") is not None
     todo_erasable = request.form.get("todo_erasable") is not None
     res = ajax_response()
-    with session_cm() as session:
-        todo = Todo(user_id=current_user.user_id,
-                    todo_name=todo_name,
-                    todo_description=todo_description,
-                    todo_start=todo_start,
-                    todo_end=todo_end,
-                    todo_visible=todo_visible,
-                    todo_erasable=todo_erasable)
-        session.add(todo)
-        session.commit()
-        res.update(data=todo.to_dict())
+    with session_cm() as db:
+        td = Todo(user_id=current_user.user_id,
+                  todo_name=todo_name,
+                  todo_description=todo_description,
+                  todo_start=todo_start,
+                  todo_end=todo_end,
+                  todo_visible=todo_visible,
+                  todo_erasable=todo_erasable)
+        db.add(td)
+        db.commit()
+        res.update(data=td.to_dict())
     return jsonify(res)
 
 
@@ -42,10 +39,10 @@ def mark_complete():
     res = ajax_response()
     todo_id = request.args.get('todo_id')
     with session_cm() as db:
-        todo = db.query(Todo).get(todo_id)
-        todo.todo_is_completed = not todo.todo_is_completed
-        res['data'] = todo.to_dict()
-        res['info'] = '成功标记该计划为已完成' if todo.todo_is_completed else '成功标记该计划为未完成'
+        td = db.query(Todo).get(todo_id)
+        td.todo_is_completed = not td.todo_is_completed
+        res['data'] = td.to_dict()
+        res['info'] = '成功标记该计划为已完成' if td.todo_is_completed else '成功标记该计划为未完成'
         db.commit()
     return jsonify(res)
 
@@ -55,8 +52,8 @@ def delete_todo():
     res = ajax_response()
     todo_id = request.args.get('todo_id')
     with session_cm() as db:
-        todo = db.query(Todo).get(todo_id)
-        db.delete(todo)
+        td = db.query(Todo).get(todo_id)
+        db.delete(td)
         res['info'] = '删除成功'
         db.commit()
     return jsonify(res)
@@ -67,28 +64,40 @@ def change_visible():
     res = ajax_response()
     todo_id = request.args.get('todo_id')
     with session_cm() as db:
-        todo = db.query(Todo).get(todo_id)
-        todo.todo_visible = not todo.todo_visible
-        res['data'] = todo.to_dict()
-        res['info'] = '成功设置该计划对所有人可见' if todo.todo_visible else '成功设置该计划为私密计划'
+        td = db.query(Todo).get(todo_id)
+        td.todo_visible = not td.todo_visible
+        res['data'] = td.to_dict()
+        res['info'] = '成功设置该计划对所有人可见' if td.todo_visible else '成功设置该计划为私密计划'
         db.commit()
     return jsonify(res)
 
 
-@todo.route('/add_new_complete')
+@todo.route('/add_ac', methods=['POST'])
 def add_new_complete():
-    pass
+    res = ajax_response()
+    ac_name = request.form.get('ac_name')
+    ac_description = request.form.get('ac_description')
+    todo_id = request.form.get('todo_id')
+    with session_cm() as db:
+        ac = Achievement(ac_name=ac_name,
+                         ac_description=ac_description,
+                         todo_id=todo_id,
+                         user_id=current_user.user_id)
+        db.add(ac)
+        db.commit()
+        res.update(data=ac.to_dict())
+    return jsonify(res)
 
 
 @todo.route('/latest_todos')
 def latest_todos():
     res = ajax_response()
-    with session_cm() as session:
-        latest_todo_list = session.query(Todo).\
+    with session_cm() as db:
+        latest_todo_list = db.query(Todo).\
             filter(Todo.todo_is_deleted == False).order_by(Todo.created_date.asc()).all()
         items = []
-        for todo in latest_todo_list:
-            items.append(todo.to_dict())
+        for td in latest_todo_list:
+            items.append(td.to_dict())
         res.update(data={
             'items': items
         })
@@ -109,8 +118,8 @@ def my_todos():
         my_todo_list = my_todo_list_query.all()
 
         items = []
-        for todo in my_todo_list:
-            items.append(todo.to_dict())
+        for td in my_todo_list:
+            items.append(td.to_dict())
         res.update(data={
             'items': items
         })

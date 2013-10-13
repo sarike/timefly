@@ -83,11 +83,10 @@ define(function(require, exports){
                         ac_form.validate({
 							errorClass: "error",
                             submitHandler: function (form) {
-                                console.info("submit handler");
                                 $(form).ajaxSubmit($.proxy(function (res) {
-//                                    if (this.options.contentCollection) {
-//                                        this.options.contentCollection.add(res.data);
-//                                    }
+                                    if (this.options.contentCollection) {
+                                        this.options.contentCollection.add(res.data);
+                                    }
                                     this.close();
                                 }, self));
                             },
@@ -123,7 +122,10 @@ define(function(require, exports){
 						});
                     }
                 });
-                var addNewAcModal = new AddNewAcModal();
+                var addNewAcModal = new AddNewAcModal({
+                    contentCollection: this.options.collection,
+                    todo_id: this.model.get('todo_id')
+                });
                 addNewAcModal.open({
                     height: 335,
                     width: 300,

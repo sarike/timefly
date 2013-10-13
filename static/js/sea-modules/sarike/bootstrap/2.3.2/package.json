@@ -1,0 +1,32 @@
+{
+    "family": "sarike",
+    "name": "bootstrap",
+    "version": "2.3.2",
+    "keywords": ["bootstrap", "css"],
+    "author": "Twitter Inc.",
+    "description": "Sleek, intuitive, and powerful front-end framework for faster and easier web development.",
+    "homepage": "https://github.com/twbs/bootstrap",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/twbs/bootstrap"
+    },
+    "licenses": [
+        {
+            "type": "Apache-2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0"
+        }
+    ],
+    "spm": {
+        "alias": {
+            "$": "$"
+        },
+        "output": [
+            "bootstrap.js",
+            "bootstrap-responsive.js",
+            "bootstrap.css",
+
+            "img/glyphicons-halflings.png",
+            "img/glyphicons-halflings-white.png"
+        ]
+    }
+}

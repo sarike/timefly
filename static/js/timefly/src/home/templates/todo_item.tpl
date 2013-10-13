@@ -48,15 +48,16 @@
     </div>
 
     <div class="todo_complete">
-        <div class="accordion" id="todo-completes{{todo.todo_id}}">
+        <div class="accordion" id="todo-completes<%=todo.todo_id %>">
         <% _.each(todo.achievement_list, function(ac, index){ %>
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse"
-                        data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.ac_id %>">
-                        在<%=ac.ac_time %> <%=ac.ac_title %> </a>
+                        data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.id %>">
+                        在 <%=ac.created_date %> <%=ac.ac_name %>
+                    </a>
                 </div>
-                <div id="collapse<%=ac.ac_id %>" class="accordion-body collapse <%if(index==0){ %>in<% } %>">
+                <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==0){ %>in<% } %> collapse ">
                     <div class="accordion-inner"><%=ac.ac_description %></div>
                 </div>
             </div>

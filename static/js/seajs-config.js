@@ -44,7 +44,7 @@ if(seajs.data.debug){
         alias:{
             underscore: 'gallery/underscore/1.4.4/underscore',
             backbone: 'gallery/backbone/1.0.0/backbone',
-            bootstrap: 'gallery/bootstrap/3.0.0/bootstrap',
+            bootstrap: 'sarike/bootstrap/2.3.2/bootstrap',
             "jquery-ui": "jquery-plugin/jquery-ui/1.10.3/jquery-ui",
             "jquery-validate": "jquery-plugin/jquery-validate/1.11.1/jquery.validate",
             "jquery-noty": "jquery-plugin/jquery-noty/2.1.0/jquery.noty",
