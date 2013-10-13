@@ -70,6 +70,7 @@ define(function(require, exports){
             },
 
             addNewComplete: function(){
+                var todo = this;
                 var AddNewAcModal = libs.JQueryUI.Dialog.extend({
                     template: _.template(require("./templates/add_complete_modal.tpl")),
 
@@ -84,10 +85,9 @@ define(function(require, exports){
 							errorClass: "error",
                             submitHandler: function (form) {
                                 $(form).ajaxSubmit($.proxy(function (res) {
-                                    if (this.options.contentCollection) {
-                                        this.options.contentCollection.add(res.data);
-                                    }
                                     this.close();
+                                    todo.model.get('achievement_list').splice(0, 0, res.data);
+                                    todo.render();
                                 }, self));
                             },
 							ignore: "input[type='checkbox']",
