@@ -31,32 +31,42 @@ define(function(require, exports){
                 'click a.add-new-complete': 'addNewComplete'
             },
 
-            dealTodo: function(url, callback){
+            dealTodo: function(url, callback, notification){
                 var todo_id = this.model.get('todo_id');
-                $.get(url, {todo_id: todo_id}, function(res){
-                    if(!!callback && typeof callback == 'function'){
-                        callback(res.data);
+                libs.Noty.Confirm({
+                    text: notification,
+                    ok: function(noty){
+                        noty.close();
+                        $.get(url, {todo_id: todo_id}, function(res){
+                            if(!!callback && typeof callback == 'function'){
+                                callback(res.data);
+                            }
+                            libs.Noty.NotyWithRes(res);
+                        });
                     }
-                    libs.Noty.NotyWithRes(res);
                 });
             },
 
             markComplete: function(){
+                var notification = this.model.get('todo_is_completed') ?
+                    '确定要撤销已完成状态吗？' : '确定要标记为完成吗？';
                 this.dealTodo('/todo/mark_complete', $.proxy(function(data){
                     this.model.set('todo_is_completed', data.todo_is_completed);
-                }, this));
+                }, this), notification);
             },
 
             deleteTodo: function(){
                 this.dealTodo('/todo/delete_todo',  $.proxy(function(data){
                     this.$el.fadeOut();
-                }, this));
+                }, this), '确定要删除吗？');
             },
 
             changeVisible: function(){
+                var notification = this.model.get('todo_visible') ?
+                    '确定要设为私密计划吗？' : '确定要公开该计划吗？';
                 this.dealTodo('/todo/change_visible', $.proxy(function(data){
                     this.model.set('todo_visible', data.todo_visible);
-                }, this));
+                }, this), notification);
             },
 
             addNewComplete: function(){
@@ -68,15 +78,16 @@ define(function(require, exports){
                     },
 
                     extraRender: function(){
-                        var ac_form = $("#ac-form");
+                        var ac_form = this.$("#ac-form");
                         var self = this;
                         ac_form.validate({
 							errorClass: "error",
                             submitHandler: function (form) {
+                                console.info("submit handler");
                                 $(form).ajaxSubmit($.proxy(function (res) {
-                                    if (this.options.contentCollection) {
-                                        this.options.contentCollection.add(res.data);
-                                    }
+//                                    if (this.options.contentCollection) {
+//                                        this.options.contentCollection.add(res.data);
+//                                    }
                                     this.close();
                                 }, self));
                             },
@@ -120,7 +131,6 @@ define(function(require, exports){
                     title:"记录新的突破",
                     resizable: false
                 });
-                this.dealTodo('/add_new_complete');
             },
 
             render: function(){

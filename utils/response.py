@@ -7,5 +7,5 @@ def ajax_response():
         "data": None,
         "type": "success",
         "info": "",
-        "layout": "topCenter"
+        "layout": "center"
     }
