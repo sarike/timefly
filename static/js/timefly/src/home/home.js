@@ -12,9 +12,13 @@ define(function(require, exports){
     var Backbone = require('backbone');
     var Common = require('common');
 
+    var settingFormTemplate = require('./templates/setting_form.tpl'),
+        passwordResetTemplate = require('./templates/password_reset_form.tpl');
+
     var MyFriendsCollection = Common.Collections.BaseCollection.extend({
         url: "account/my_friends"
     });
+
     var MyTodosCollection = Common.Collections.BaseCollection.extend({
         url: "todo/my_todos"
     });
@@ -150,7 +154,92 @@ define(function(require, exports){
             ItemView: TodoItem
         });
 
-        context.router.route(":username", "home", function(username){
+        var SettingContent = Common.Views.ObjectContent.extend({
+            title: '个人描述',
+            sub_title: '写下自己的奋斗宣言',
+            template: _.template(settingFormTemplate),
+
+            events: {
+                'click #updateProfile': 'updateProfile'
+            },
+
+            updateProfile: function(){
+                var desc = this.$('#id_description').val();
+                $.post('/account/update_profile', {desc: desc}, function(res){
+                    libs.Noty.NotyWithRes(res);
+                });
+            }
+        });
+
+        var ResetPasswordContent = Common.Views.ObjectContent.extend({
+            title: '密码重置',
+            sub_title: '修改您的账号密码',
+            template: _.template(passwordResetTemplate),
+            events: {
+                'click #resetPwd': 'resetPwd'
+            },
+
+            resetPwd: function(){
+                var old_password = this.$('#id_old_password').val();
+                var new_password = this.$('#id_new_password').val();
+                var new_password_confirm = this.$('#id_new_password_confirm').val();
+                $.post('/account/reset_password', {
+                    old_password: old_password,
+                    new_password: new_password,
+                    new_password_confirm: new_password_confirm
+                }, function(res){
+                    libs.Noty.NotyWithRes(res);
+                });
+            }
+        });
+
+        var HomeSideNavBox = Common.Box.SideNavBox.extend({
+            side_nav_list: [
+                {
+                    id: 'doing',
+                    caption: '正在努力的计划',
+                    active: true
+                },
+                {
+                    id: 'completed',
+                    caption: '已经完成的计划'
+                },
+                {
+                    id: 'failed',
+                    caption: '半途而废的计划'
+                }
+            ],
+
+            action: function(nav){
+                var nav_id = nav.data('id');
+                this.options.content.refresh({flag: nav_id});
+            }
+        });
+
+        var SettingSideNavBox = Common.Box.SideNavBox.extend({
+            side_nav_list: [
+                {
+                    active: true,
+                    id: 'profile',
+                    caption: '个人资料'
+                },
+                {
+                    id: 'pwd_reset',
+                    caption: '密码设置'
+                }
+            ],
+
+            action: function(nav){
+                var flag = nav.data('id');
+                var settingContent = this.options.content;
+                if(flag == 'profile')
+                    context.content.html(settingContent.render().el);
+                if(flag == 'pwd_reset')
+                    context.content.html(new ResetPasswordContent().render().el);
+            }
+        });
+
+        context.router.route(":username(/:position)", "home", function(username, position){
             $.get("/" + username, function(res){
                 var owner = res.data.owner;
                 var self_home = context.user.get("username") == owner["username"];
@@ -158,19 +247,44 @@ define(function(require, exports){
                 context.user.set('self_home', self_home);
                 context.user.set('at_index_page', false);
 
-                var sideBarBoxes = [
+                var content = null,
+                    sideBarBoxes = null;
+
+                if(!!position && position == 'setting'){
+                    console.info(context.user)
+                    content = new SettingContent({
+                        data: {
+                            user: context.user.toJSON()
+                        }
+                    });
+
+                    sideBarBoxes = [
                         new Common.Box.UserProfileBox({model: new Backbone.Model(owner)}),
-                        new Common.Box.UserBox({
-                            collection: new MyFriendsCollection()
+                        new SettingSideNavBox({
+                            content: content
                         }),
                         new Common.Box.AboutBox()
-                    ],
+                    ];
+                }else{
+
                     content = new HomeContent({
                         data:{
                             user: context.user
                         },
                         collection: new MyTodosCollection()
                     });
+
+                    sideBarBoxes = [
+                        new Common.Box.UserProfileBox({model: new Backbone.Model(owner)}),
+                        new HomeSideNavBox({
+                            content: content
+                        }),
+                        new Common.Box.UserBox({
+                            collection: new MyFriendsCollection()
+                        }),
+                        new Common.Box.AboutBox()
+                    ];
+                }
 
                 Common.init(context, {
                     sideBarBoxes: sideBarBoxes,

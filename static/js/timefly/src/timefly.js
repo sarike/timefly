@@ -6,6 +6,9 @@ define(function(require) {
     var Backbone = require("backbone");
 
     $(function(){
+
+//        $('#sidebar').affix(200);
+
         $.get("me", function(res){
 
             var router = new Backbone.Router(),

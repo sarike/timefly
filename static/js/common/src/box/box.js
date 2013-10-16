@@ -24,9 +24,35 @@ define(function(require, exports, module){
         template: _.template(require("./templates/user_profile_box.tpl"))
     });
 
+    var SideNavBox = Base.Views.PlainBox.extend({
+        template: _.template(require("./templates/side_nav_box.tpl")),
+
+        events: {
+            'click .nav-list>li': 'clickNavItem'
+        },
+
+        clickNavItem: function(e){
+            var nav = $(e.currentTarget);
+            this.$('li').removeClass('active');
+            nav.addClass('active');
+            this.action(nav)
+        },
+
+        action: function(nav){
+        },
+
+        render: function(){
+            this.$el.html(this.template({
+                side_nav_list: this.side_nav_list || this.options.side_nav_list || []
+            }));
+            return this;
+        }
+    });
+
     module.exports = {
         UserBox: UsersBox,
         AboutBox: AboutBox,
-        UserProfileBox: UserProfileBox
+        UserProfileBox: UserProfileBox,
+        SideNavBox: SideNavBox
     }
 });

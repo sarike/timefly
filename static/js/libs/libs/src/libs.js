@@ -98,6 +98,15 @@ define(function (require, exports, module) {
 
     var Noty = {
 
+        noty: function(type, info){
+            noty({
+                type: type,
+                layout: 'center',
+                text: info,
+                timeout: 1000
+            })
+        },
+
         NotyWithRes: function (res) {
             noty({
                 type: res.type,

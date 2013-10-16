@@ -1,4 +1,4 @@
-<a class="pull-left" href="#"> <img
+<a class="pull-left" href="./#<%=username %>"> <img
         class="media-object img-rounded"
         src="http://www.gravatar.com/avatar/<%=avatar_hash %>?d=identicon"
         class="img-rounded" alt="Avatar">

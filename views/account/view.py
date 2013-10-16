@@ -1,7 +1,7 @@
 # coding=utf-8
 import re
 from flask import Blueprint, render_template, jsonify, redirect
-from flask.ext.login import login_user, logout_user
+from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.principal import identity_changed, Identity
 from flask.ext.wtf.form import Form
 from flask.globals import request, current_app
@@ -39,6 +39,44 @@ def my_friends():
         res.update(data={
             "items": user_dict_list
         })
+    return jsonify(res)
+
+
+@account.route('/reset_password', methods=['POST'])
+def reset_password():
+    res = ajax_response()
+    old_password = request.form.get('old_password')
+    new_password = request.form.get('new_password')
+    new_password_confirm = request.form.get('new_password_confirm')
+    if new_password and new_password_confirm and new_password_confirm != new_password:
+        res.update({
+            'info': '两次输入的新密码不一致',
+            'type': 'error'
+        })
+        return jsonify(res)
+    if not current_user.check_password(old_password):
+        res.update({
+            'info': '原始密码错误',
+            'type': 'error'
+        })
+        return jsonify(res)
+    with session_cm() as session:
+        session.query(User).get(current_user.user_id).set_password(new_password)
+        session.commit()
+    res.update(info='密码修改成功')
+    return jsonify(res)
+
+
+@account.route('/update_profile', methods=['POST'])
+def update_profile():
+    res = ajax_response()
+    desc = request.form.get('desc')
+    print desc
+    with session_cm() as session:
+        user = session.query(User).get(current_user.user_id)
+        user.description = desc
+        res['info'] = '更新用户资料成功'
+        session.commit()
     return jsonify(res)
 
 

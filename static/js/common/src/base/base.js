@@ -60,6 +60,19 @@ define(function (require, exports, module) {
             return this;
         },
 
+        refresh: function(data){
+            this.$el.empty();
+            if(this.collection)
+                this.collection.fetch({
+                    success: $.proxy(function(collection){
+                        if(collection.length == 0){
+                            this.renderEmpty();
+                        }
+                    }, this),
+                    data: data || {}
+                });
+        },
+
         renderEmpty: function(){
             this.$el.html(this.emptyView.render().el);
         },
@@ -82,6 +95,10 @@ define(function (require, exports, module) {
         }
     });
 
+    var PlainBox = Backbone.View.extend({
+        className: ""
+    });
+
     var ObjectBox = Backbone.View.extend({
         className: "box",
 
@@ -95,8 +112,32 @@ define(function (require, exports, module) {
         className: "box"
     });
 
-    var Content = ItemsContainer.extend({
-        className: "box",
+    var ObjectContent = ObjectBox.extend({
+
+        has_title: true,
+        base_template: _.template(require("./templates/common_content.tpl")),
+
+        render: function () {
+            this.renderMainContent();
+            this.renderSubContent();
+            return this;
+        },
+
+        renderMainContent: function () {
+            this.$el.html(this.base_template({
+                has_title: this.title,
+                title: this.title || this.options.title,
+                sub_title: this.sub_title || this.options.sub_title
+            }));
+        },
+
+        renderSubContent: function () {
+            if (this.template)
+                this.$el.append(this.template(this.options.data))
+        }
+    });
+
+    var Content = ArrayBox.extend({
         has_title: true,
         base_template: _.template(require("./templates/common_content.tpl")),
 
@@ -284,7 +325,9 @@ define(function (require, exports, module) {
             EmptyView: EmptyView,
             ObjectBox: ObjectBox,
             ArrayBox: ArrayBox,
+            PlainBox: PlainBox,
             Content: Content,
+            ObjectContent: ObjectContent,
             Header: Header,
             Footer: Footer
         }

@@ -32,7 +32,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="">
                             <li role="presentation">
-                                <a role="menuitem" tabindex="-1" href="Setting/userinfo/">
+                                <a role="menuitem" tabindex="-1" href="#<%= user.username %>/setting">
                                     <i class="icon-user "></i> 个人资料
                                 </a>
                             </li>
