@@ -14,8 +14,6 @@ define(function (require, exports, module) {
     var ui = require("jquery-ui");
     var noty = require("jquery-noty");
 
-    require("jquery-validate");
-
     /**
      * var dialog = new Dialog({
      *     content: content,

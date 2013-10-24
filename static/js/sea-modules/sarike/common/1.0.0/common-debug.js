@@ -1,4 +1,4 @@
-define("sarike/common/1.0.0/common-debug", [ "sarike/libs/1.0.0/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "./base/base-debug", "gallery/backbone/1.0.0/backbone-debug", "./base/templates/common_empty-debug.tpl", "./base/templates/common_content-debug.tpl", "./base/templates/common_header-debug.tpl", "./base/templates/add_todo_modal-debug.tpl", "./box/box-debug", "./box/templates/user_item-debug.tpl", "./box/templates/user_list_box-debug.tpl", "./box/templates/about_box-debug.tpl", "./box/templates/user_profile_box-debug.tpl", "./box/templates/side_nav_box-debug.tpl" ], function(require, exports, module) {
+define("sarike/common/1.0.0/common-debug", [ "sarike/libs/1.0.0/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "./base/base-debug", "gallery/backbone/1.0.0/backbone-debug", "jquery-plugin/jquery-validate/1.11.1/jquery-validate-debug", "./base/templates/common_empty-debug.tpl", "./base/templates/common_content-debug.tpl", "./base/templates/common_header-debug.tpl", "./base/templates/add_todo_modal-debug.tpl", "./box/box-debug", "./box/templates/user_item-debug.tpl", "./box/templates/user_list_box-debug.tpl", "./box/templates/about_box-debug.tpl", "./box/templates/user_profile_box-debug.tpl", "./box/templates/side_nav_box-debug.tpl" ], function(require, exports, module) {
     var libs = require("sarike/libs/1.0.0/libs-debug");
     var $ = require("$-debug");
     var _ = require("gallery/underscore/1.4.4/underscore-debug");
@@ -55,11 +55,12 @@ define("sarike/common/1.0.0/common-debug", [ "sarike/libs/1.0.0/libs-debug", "$-
     };
 });
 
-define("sarike/common/1.0.0/base/base-debug", [ "sarike/libs/1.0.0/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug" ], function(require, exports, module) {
+define("sarike/common/1.0.0/base/base-debug", [ "sarike/libs/1.0.0/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "jquery-plugin/jquery-validate/1.11.1/jquery-validate-debug" ], function(require, exports, module) {
     var libs = require("sarike/libs/1.0.0/libs-debug");
     var $ = require("$-debug");
     var _ = require("gallery/underscore/1.4.4/underscore-debug");
     var Backbone = require("gallery/backbone/1.0.0/backbone-debug");
+    require("jquery-plugin/jquery-validate/1.11.1/jquery-validate-debug");
     // Models
     var BaseModel = Backbone.Model.extend({});
     // Collections
@@ -347,7 +348,7 @@ define("sarike/common/1.0.0/base/templates/common_header-debug.tpl", [], '<div c
 
 define("sarike/common/1.0.0/base/templates/add_todo_modal-debug.tpl", [], '<div id="todoModal" class="">\n    <div>\n        <form id="todo-form" action="todo/add_todo" method="post">\n            <label for="id_todo_name">为你的新计划起一个响亮的名字</label>\n            <input type="text" class="input-block-level" id="id_todo_name" name="todo_name"/>\n            <label for="id_todo_description">描述一下该计划打算要完成的事情</label>\n            <textarea rows="5" class="input-block-level" id="id_todo_description" name="todo_description"></textarea>\n            <label for="id_todo_start">你打算什么时候开始这个计划？</label>\n            <input type="text" class="input-block-level" id="id_todo_start" name="todo_start" value=""/>\n            <label for="id_todo_end">这个计划你预计会在什么时候完成呢？</label>\n            <input type="text" class="input-block-level" id="id_todo_end" name="todo_end" value=""/>\n            <ul>\n                <li class="checkbox"><input type="checkbox" name="todo_visible"/>对所有人可见</li>\n                <li class="checkbox"><input type="checkbox" name="todo_erasable"/> 不可删除</li>\n            </ul>\n        </form>\n    </div>\n</div>');
 
-define("sarike/common/1.0.0/box/box-debug", [ "sarike/libs/1.0.0/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/common/1.0.0/base/base-debug", "gallery/backbone/1.0.0/backbone-debug" ], function(require, exports, module) {
+define("sarike/common/1.0.0/box/box-debug", [ "sarike/libs/1.0.0/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/common/1.0.0/base/base-debug", "gallery/backbone/1.0.0/backbone-debug", "jquery-plugin/jquery-validate/1.11.1/jquery-validate-debug" ], function(require, exports, module) {
     var libs = require("sarike/libs/1.0.0/libs-debug");
     var $ = require("$-debug");
     var _ = require("gallery/underscore/1.4.4/underscore-debug");

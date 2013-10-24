@@ -8,7 +8,7 @@
  * Released under the MIT license:
  *   http://www.opensource.org/licenses/mit-license.php
  */
-define("jquery-plugin/jquery-validate/1.11.1/jquery.validate-debug", [ "$-debug" ], function(require) {
+define("jquery-plugin/jquery-validate/1.11.1/jquery-validate-debug", [ "$-debug" ], function(require) {
     var jQuery = require("$-debug");
     (function($) {
         $.extend($.fn, {

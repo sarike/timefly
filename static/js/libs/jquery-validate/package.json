@@ -5,7 +5,7 @@
   "keywords": ["widget"],
   "licenses": "MIT",
   "spm": {
-    "output": ["jquery.validate.js"],
+    "output": ["jquery-validate.js"],
     "alias": {
         "$": "$"
     },

@@ -3,6 +3,7 @@ define(function (require, exports, module) {
     var $ = require('$');
     var _ = require('underscore');
     var Backbone = require('backbone');
+    require("jquery-validate");
 
     // Models
     var BaseModel = Backbone.Model.extend({});

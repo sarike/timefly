@@ -11,7 +11,6 @@ define("sarike/libs/1.0.0/libs-debug", [ "$-debug", "gallery/underscore/1.4.4/un
     var Backbone = require("gallery/backbone/1.0.0/backbone-debug");
     var ui = require("jquery-plugin/jquery-ui/1.10.3/jquery-ui-debug");
     var noty = require("jquery-plugin/jquery-noty/2.1.0/jquery.noty-debug");
-    require("jquery-plugin/jquery-validate/1.11.1/jquery.validate-debug");
     /**
      * var dialog = new Dialog({
      *     content: content,
