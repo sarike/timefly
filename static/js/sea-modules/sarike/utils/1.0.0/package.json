@@ -1,0 +1,10 @@
+{
+    "family": "sarike",
+    "name": "utils",
+    "version": "1.0.0",
+    "spm": {
+        "output": ["utils.js"]
+    },
+    "devAlias": {},
+    "engines": {}
+}

@@ -30,7 +30,7 @@ seajs.config({
   preload: ['seajs/seajs-text/1.0.2/seajs-text'],
 
   // 调试模式
-  debug: true,
+  debug: false,
 
   // Sea.js 的基础路径
   //base: 'http://example.com/path/to/base/',
