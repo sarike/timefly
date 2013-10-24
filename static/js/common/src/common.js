@@ -1,6 +1,6 @@
 define(function(require, exports, module){
     var libs = require('libs');
-    var $ = require('$')
+    var $ = require('$');
     var _ = require('underscore');
     var Base = require('./base/base');
     var Box = require('./box/box');
