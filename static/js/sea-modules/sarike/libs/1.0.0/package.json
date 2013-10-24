@@ -9,7 +9,7 @@
     "alias": {
         "$": "$",
         "jquery-ui": "jquery-plugin/jquery-ui/1.10.3/jquery-ui",
-        "jquery-noty": "jquery-plugin/jquery-noty/2.1.0/jquery.noty",
+        "jquery-noty": "jquery-plugin/jquery-noty/2.1.0/jquery-noty",
         "underscore": "gallery/underscore/1.4.4/underscore",
         "backbone": "gallery/backbone/1.0.0/backbone"
     },

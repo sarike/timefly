@@ -5,12 +5,12 @@
  * Time: 下午8:04
  * To change this template use File | Settings | File Templates.
  */
-define("sarike/libs/1.0.0/libs-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "jquery-plugin/jquery-ui/1.10.3/jquery-ui-debug" ], function(require, exports, module) {
+define("sarike/libs/1.0.0/libs-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "jquery-plugin/jquery-ui/1.10.3/jquery-ui-debug", "jquery-plugin/jquery-noty/2.1.0/jquery-noty-debug" ], function(require, exports, module) {
     var $ = require("$-debug");
     var _ = require("gallery/underscore/1.4.4/underscore-debug");
     var Backbone = require("gallery/backbone/1.0.0/backbone-debug");
     var ui = require("jquery-plugin/jquery-ui/1.10.3/jquery-ui-debug");
-    var noty = require("jquery-plugin/jquery-noty/2.1.0/jquery.noty-debug");
+    var noty = require("jquery-plugin/jquery-noty/2.1.0/jquery-noty-debug");
     /**
      * var dialog = new Dialog({
      *     content: content,
