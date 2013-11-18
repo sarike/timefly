@@ -71,7 +71,6 @@ def reset_password():
 def update_profile():
     res = ajax_response()
     desc = request.form.get('desc')
-    print desc
     with session_cm() as session:
         user = session.query(User).get(current_user.user_id)
         user.description = desc
