@@ -5,6 +5,8 @@ DEBUG = True
 SECRET_KEY = 'time_fly key'
 
 
+ECHO_SQL = False
+
 if 'OPENSHIFT_MYSQL_DB_URL' in os.environ:
     url = urlparse.urlparse(os.environ.get('OPENSHIFT_MYSQL_DB_URL'))
     DB = {
