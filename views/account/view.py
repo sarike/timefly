@@ -151,8 +151,6 @@ def register():
             session.add(user)
             if user is not None:
                 login_user(user)
-                # Tell Flask-Principal the identity changed
-                identity_changed.send(current_app._get_current_object(), identity=Identity(user.user_id))
             session.commit()
             return redirect(url_for('frontend.index'))
     template_var['form'] = form
