@@ -1,4 +1,6 @@
 {% extends "base.html" %}
-{% block seajs %}
-    seajs.use(seajs.data.debug? "/static/js/timefly/src/timefly" : "sarike/timefly/1.0.0/timefly");
+{% block javascript %}
+    <script type="text/javascript">
+        seajs.use(seajs.data.debug? "/static/js/timefly/src/timefly" : "sarike/timefly/1.0.0/timefly");
+    </script>
 {% endblock %}

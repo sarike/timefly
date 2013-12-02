@@ -19,7 +19,7 @@ def add_todo():
     todo_start = request.form.get("todo_start")
     todo_end = request.form.get("todo_end")
     todo_visible = request.form.get("todo_visible") is not None
-    todo_erasable = request.form.get("todo_erasable") is not None
+    todo_erasable = request.form.get("todo_erasable") is None
     res = ajax_response()
     with session_cm() as db:
         td = Todo(user_id=current_user.user_id,

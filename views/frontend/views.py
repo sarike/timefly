@@ -6,6 +6,7 @@ from flask.ext.login import current_user
 from flask.globals import session
 from flask.templating import render_template
 from werkzeug.exceptions import abort
+from config import settings
 from models.user import User
 from utils.database_session import session_cm
 from utils.response import ajax_response
@@ -16,7 +17,10 @@ frontend = Blueprint('frontend', __name__)
 @frontend.route('/')
 @frontend.route('/index')
 def index():
-    return render_template('index.html')
+    context = {
+        'debug': settings.DEBUG
+    }
+    return render_template('index.html', **context)
 
 
 @frontend.route('/me')

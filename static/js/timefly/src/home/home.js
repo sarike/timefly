@@ -6,11 +6,11 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function(require, exports){
-    var libs = require('libs');
     var $ = require('$');
     var _ = require('underscore');
     var Backbone = require('backbone');
-    var Common = require('common');
+    var libs = require('../libs/libs');
+    var Common = require('../common/common');
 
     var settingFormTemplate = require('./templates/setting_form.tpl'),
         passwordResetTemplate = require('./templates/password_reset_form.tpl');
@@ -251,7 +251,6 @@ define(function(require, exports){
                     sideBarBoxes = null;
 
                 if(!!position && position == 'setting'){
-                    console.info(context.user)
                     content = new SettingContent({
                         data: {
                             user: context.user.toJSON()

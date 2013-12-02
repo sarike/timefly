@@ -1,9 +1,9 @@
 define(function(require) {
-    require("bootstrap");
-    require("form");
-    require("utils");
     var $ = require("$");
     var Backbone = require("backbone");
+    require("bootstrap");
+    require("form");
+    require("./utils/utils");
 
     $(function(){
 

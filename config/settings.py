@@ -1,9 +1,20 @@
 import os
+import posixpath
 import urlparse
 
-DEBUG = True
+
+DEBUG = False
+
+if 'TIME_FLY_MODE' in os.environ:
+    time_fly_mode = os.environ.get('TIME_FLY_MODE').lower()
+    if time_fly_mode == 'debug':
+        DEBUG = True
+    if time_fly_mode == 'production':
+        DEBUG = False
+
 SECRET_KEY = 'time_fly key'
 
+PROJECT_PATH = os.path.dirname(posixpath.dirname(__file__.replace('\\', '/')))
 
 ECHO_SQL = False
 

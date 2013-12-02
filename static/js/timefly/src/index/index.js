@@ -6,10 +6,10 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function(require, exports){
-    var libs = require('libs');
     var $ = require('$');
     var _ = require('underscore');
-    var Common = require('common');
+    var libs = require('../libs/libs');
+    var Common = require('../common/common');
 
     var PassionateUserCollection = Common.Collections.BaseCollection.extend({
         url: "account/passionate_users"
