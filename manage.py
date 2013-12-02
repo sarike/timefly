@@ -1,5 +1,6 @@
 from flask.ext.script import Manager
 from utils.build_utils.static_package import package_js
+from utils.database import init_db
 from wsgi import app
 
 manager = Manager(app)
@@ -14,6 +15,11 @@ def hello(name):
 @manager.command
 def build():
     package_js('timefly')
+
+
+@manager.command
+def db_init():
+    init_db()
 
 
 if __name__ == "__main__":

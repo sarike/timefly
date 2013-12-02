@@ -3,7 +3,7 @@ import posixpath
 import urlparse
 
 
-DEBUG = False
+DEBUG = True
 
 if 'TIME_FLY_MODE' in os.environ:
     time_fly_mode = os.environ.get('TIME_FLY_MODE').lower()
@@ -32,7 +32,7 @@ else:
     DB = {
         'host': 'localhost',
         'db_name': 'time_fly',
-        'user': 'root',
-        'password': 'root',
+        'user': 'sarike',
+        'password': 'test',
         'port': '3306'
     }

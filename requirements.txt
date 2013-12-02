@@ -3,3 +3,4 @@ Flask-Login==0.2.4
 SQLAlchemy==0.8.1
 Flask-SQLAlchemy==0.16
 Flask-WTF==0.8.3
+Flask-Script>=0.6.3

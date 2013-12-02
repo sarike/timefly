@@ -4,6 +4,7 @@ define(function(require) {
     require("bootstrap");
     require("form");
     require("./utils/utils");
+    var Common = require("./common/common");
 
     $(function(){
 
@@ -12,7 +13,7 @@ define(function(require) {
         $.get("me", function(res){
 
             var router = new Backbone.Router(),
-                user = new Backbone.Model(res.data.user),
+                user = new Common.Models.BaseUser(res.data.user),
                 context = {
                     header: $("header"),
                     sideBar: $("#sidebar"),
@@ -22,9 +23,6 @@ define(function(require) {
                     router: router
                 };
 
-            context.user.on("login-event", function(data){
-                context.user = data.user;
-            });
             require("./index/index").init(context);
             require("./home/home").init(context);
 

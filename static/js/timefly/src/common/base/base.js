@@ -8,6 +8,16 @@ define(function (require, exports, module) {
     // Models
     var BaseModel = Backbone.Model.extend({});
 
+    var BaseUser = Backbone.Model.extend({
+        initialize: function(){
+            this.on('update-user-event', this.updateUser, this);
+        },
+
+        updateUser: function(data){
+            this.set(data);
+        }
+    });
+
     // Collections
     var BaseCollection = Backbone.Collection.extend({
         model: BaseModel,
@@ -72,6 +82,15 @@ define(function (require, exports, module) {
                     }, this),
                     data: data || {}
                 });
+        },
+
+        reRender: function(){
+            if (this.itemContainer){
+                this.itemContainer.empty();
+            }else{
+                this.$el.empty();
+            }
+            this.collection.each(this.addItem, this);
         },
 
         renderEmpty: function(){
@@ -177,12 +196,13 @@ define(function (require, exports, module) {
         doLogin: function () {
             this.$("#login-form").ajaxSubmit($.proxy(function (res) {
                 if (res.response == 'ok') {
-                    var cur_user = new Backbone.Model(res.data.user);
-                    cur_user.set("self_home", this.user.get("self_home"));
-                    cur_user.set("at_index_page", this.user.get("at_index_page"));
-                    this.user.trigger("login-event", {user: cur_user});
-                    this.user = cur_user;
+                    res.data.user.self_home = res.data.user['username'] == this.user.get("other_home_owner");
+                    res.data.user.at_index_page = !res.data.user.self_home;
+                    this.user.trigger("update-user-event", res.data.user);
                     this.render();
+                    if(res.data.user.self_home){
+                        this.options.content.reRender();
+                    }
                 } else {
                     libs.Noty.NotyWithRes(res);
                 }
@@ -285,7 +305,7 @@ define(function (require, exports, module) {
                 }
             });
             var addTodoModal = new AddTodoModalView({
-                contentCollection: this.options.contentCollection
+                contentCollection: this.options.content.collection
             });
             addTodoModal.open({
                 height: 480,
@@ -315,7 +335,8 @@ define(function (require, exports, module) {
 
     module.exports = {
         Models: {
-            BaseModel: BaseModel
+            BaseModel: BaseModel,
+            BaseUser: BaseUser
         },
         Collections: {
             BaseCollection: BaseCollection

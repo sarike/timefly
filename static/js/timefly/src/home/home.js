@@ -244,9 +244,11 @@ define(function(require, exports){
                 var owner = res.data.owner;
                 var self_home = context.user.get("username") == owner["username"];
 
-                context.user.set('self_home', self_home);
-                context.user.set('at_index_page', false);
-
+                context.user.trigger('update-user-event', {
+                    self_home: self_home,
+                    at_index_page: false,
+                    other_home_owner: owner["username"]
+                });
                 var content = null,
                     sideBarBoxes = null;
 

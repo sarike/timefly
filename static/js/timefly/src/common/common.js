@@ -52,7 +52,7 @@ define(function(require, exports, module){
         init: function(context, options) {
             initHeader(context, options.header || new Base.Views.Header({
                 user: context.user,
-                contentCollection: options.content ? options.content.collection : null
+                content: options.content
             }));
             initSideBar(context, options.sideBarBoxes);
             initContent(context, options.content || new Base.Views.Content());
