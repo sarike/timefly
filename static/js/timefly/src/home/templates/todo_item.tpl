@@ -44,7 +44,7 @@
             开始于  <%=todo.todo_start %> ，计划在
              <%=todo.todo_end %>  完成！
         </div>
-        <div class="todo_desc"><%=todo.todo_description %></div>
+        <div class="todo_desc"><%=markdown.toHTML(todo.todo_description) %></div>
     </div>
 
     <div class="todo_complete">

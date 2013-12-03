@@ -11,6 +11,7 @@ define(function(require, exports){
     var Backbone = require('backbone');
     var libs = require('../libs/libs');
     var Common = require('../common/common');
+    var markdown = require('markdown');
 
     var settingFormTemplate = require('./templates/setting_form.tpl'),
         passwordResetTemplate = require('./templates/password_reset_form.tpl');
@@ -142,7 +143,8 @@ define(function(require, exports){
             render: function(){
                 this.$el.html(this.template({
                     todo: this.model.toJSON(),
-                    user: context.user.toJSON()
+                    user: context.user.toJSON(),
+                    markdown: markdown
                 }));
                 return this;
             }

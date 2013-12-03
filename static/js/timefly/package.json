@@ -19,7 +19,8 @@
       "jquery-ui": "sarike/jquery-ui/1.10.3/jquery-ui",
       "jquery-noty": "sarike/jquery-noty/2.1.0/jquery-noty",
       "themes/default": "sarike/jquery-noty/2.1.0/themes/default",
-      "jquery-validate": "sarike/jquery-validate/1.11.1/jquery-validate"
+      "jquery-validate": "sarike/jquery-validate/1.11.1/jquery-validate",
+      "markdown": "sarike/markdown/0.6.0/markdown"
     }
   }
 }
