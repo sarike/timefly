@@ -1,13 +1,14 @@
-define("sarike/timefly/1.0.0/timefly-debug", [ "$-debug", "gallery/backbone/1.0.0/backbone-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/bootstrap/2.3.2/bootstrap-debug", "jquery-plugin/form/3.44.0/form-debug", "./utils/utils-debug", "./index/index-debug", "./libs/libs-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "./common/common-debug", "./common/base/base-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "./common/base/templates/common_empty-debug.tpl", "./common/base/templates/common_content-debug.tpl", "./common/base/templates/common_header-debug.tpl", "./common/base/templates/add_todo_modal-debug.tpl", "./common/box/box-debug", "./common/box/templates/user_item-debug.tpl", "./common/box/templates/user_list_box-debug.tpl", "./common/box/templates/about_box-debug.tpl", "./common/box/templates/user_profile_box-debug.tpl", "./common/box/templates/side_nav_box-debug.tpl", "./index/templates/todo_item-debug.tpl", "./index/templates/index_content-debug.tpl", "./home/home-debug", "./home/templates/setting_form-debug.tpl", "./home/templates/password_reset_form-debug.tpl", "./home/templates/todo_item-debug.tpl", "./home/templates/add_complete_modal-debug.tpl" ], function(require) {
+define("sarike/timefly/1.0.0/timefly-debug", [ "$-debug", "gallery/backbone/1.0.0/backbone-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/bootstrap/2.3.2/bootstrap-debug", "jquery-plugin/form/3.44.0/form-debug", "./utils/utils-debug", "./common/common-debug", "./libs/libs-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "./common/base/base-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "./common/base/templates/common_empty-debug.tpl", "./common/base/templates/common_content-debug.tpl", "./common/base/templates/common_header-debug.tpl", "./common/base/templates/add_todo_modal-debug.tpl", "./common/box/box-debug", "./common/box/templates/user_item-debug.tpl", "./common/box/templates/user_list_box-debug.tpl", "./common/box/templates/about_box-debug.tpl", "./common/box/templates/user_profile_box-debug.tpl", "./common/box/templates/side_nav_box-debug.tpl", "./index/index-debug", "./index/templates/todo_item-debug.tpl", "./index/templates/index_content-debug.tpl", "./home/home-debug", "./home/templates/setting_form-debug.tpl", "./home/templates/password_reset_form-debug.tpl", "./home/templates/todo_item-debug.tpl", "./home/templates/add_complete_modal-debug.tpl" ], function(require) {
     var $ = require("$-debug");
     var Backbone = require("gallery/backbone/1.0.0/backbone-debug");
     require("sarike/bootstrap/2.3.2/bootstrap-debug");
     require("jquery-plugin/form/3.44.0/form-debug");
     require("./utils/utils-debug");
+    var Common = require("./common/common-debug");
     $(function() {
         //        $('#sidebar').affix(200);
         $.get("me", function(res) {
-            var router = new Backbone.Router(), user = new Backbone.Model(res.data.user), context = {
+            var router = new Backbone.Router(), user = new Common.Models.BaseUser(res.data.user), context = {
                 header: $("header"),
                 sideBar: $("#sidebar"),
                 content: $("#content"),
@@ -15,9 +16,6 @@ define("sarike/timefly/1.0.0/timefly-debug", [ "$-debug", "gallery/backbone/1.0.
                 user: user,
                 router: router
             };
-            context.user.on("login-event", function(data) {
-                context.user = data.user;
-            });
             require("./index/index-debug").init(context);
             require("./home/home-debug").init(context);
             Backbone.history.start();
@@ -54,53 +52,60 @@ define("sarike/timefly/1.0.0/utils/utils-debug", [], function(require, exports, 
     };
 });
 
-/**
- * Created with PyCharm.
- * User: Sarike
- * Date: 13-9-15
- * Time: 下午9:58
- * To change this template use File | Settings | File Templates.
- */
-define("sarike/timefly/1.0.0/index/index-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/timefly/1.0.0/libs/libs-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/1.0.0/common/common-debug", "sarike/timefly/1.0.0/common/base/base-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "sarike/timefly/1.0.0/common/box/box-debug" ], function(require, exports) {
+define("sarike/timefly/1.0.0/common/common-debug", [ "sarike/timefly/1.0.0/libs/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/1.0.0/common/base/base-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "sarike/timefly/1.0.0/common/box/box-debug" ], function(require, exports, module) {
+    var libs = require("sarike/timefly/1.0.0/libs/libs-debug");
     var $ = require("$-debug");
     var _ = require("gallery/underscore/1.4.4/underscore-debug");
-    var libs = require("sarike/timefly/1.0.0/libs/libs-debug");
-    var Common = require("sarike/timefly/1.0.0/common/common-debug");
-    var PassionateUserCollection = Common.Collections.BaseCollection.extend({
-        url: "account/passionate_users"
-    });
-    var LatestTodoCollection = Common.Collections.BaseCollection.extend({
-        url: "todo/latest_todos"
-    });
-    var TodoItem = Common.Views.Item.extend({
-        className: "media",
-        template: _.template(require("sarike/timefly/1.0.0/index/templates/todo_item-debug.tpl")),
-        render: function() {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        }
-    });
-    var IndexContent = Common.Views.Content.extend({
-        title: "最新计划",
-        sub_title: "时光飞逝网友们最近发布的最新计划，一起来为他们加油吧",
-        template: _.template(require("sarike/timefly/1.0.0/index/templates/index_content-debug.tpl")),
-        itemContainer: ".media-list",
-        ItemView: TodoItem
-    });
-    exports.init = function(context) {
-        context.router.route("", "index", function() {
-            var sideBarBoxes = [ new Common.Box.UserBox({
-                collection: new PassionateUserCollection()
-            }), new Common.Box.AboutBox() ], content = new IndexContent({
-                collection: new LatestTodoCollection()
-            });
-            context.user.set("self_home", false);
-            context.user.set("at_index_page", true);
-            Common.init(context, {
-                sideBarBoxes: sideBarBoxes,
-                content: content
-            });
+    var Base = require("sarike/timefly/1.0.0/common/base/base-debug");
+    var Box = require("sarike/timefly/1.0.0/common/box/box-debug");
+    var initSideBar = function(context, sidebarBoxes) {
+        if (!sidebarBoxes) return;
+        context.sideBar.empty();
+        _.each(sidebarBoxes, function(box) {
+            if (box.collection) {
+                context.sideBar.append(box.render().el);
+                box.collection.fetch({
+                    success: function(collection) {
+                        if (collection.length == 0) {
+                            box.renderEmpty();
+                        }
+                    }
+                });
+            } else {
+                context.sideBar.append(box.render().el);
+            }
+        }, this);
+    };
+    var initHeader = function(context, header) {
+        context.header.html(header.render().el);
+    };
+    var initContent = function(context, content) {
+        context.content.html(content.render().el);
+        if (content.collection) content.collection.fetch({
+            success: function(collection) {
+                if (collection.length == 0) {
+                    content.renderEmpty();
+                }
+            }
         });
+    };
+    var initFooter = function(context, footer) {
+        context.footer.html(footer.render().el);
+    };
+    module.exports = {
+        Models: Base.Models,
+        Collections: Base.Collections,
+        Views: Base.Views,
+        Box: Box,
+        init: function(context, options) {
+            initHeader(context, options.header || new Base.Views.Header({
+                user: context.user,
+                content: options.content
+            }));
+            initSideBar(context, options.sideBarBoxes);
+            initContent(context, options.content || new Base.Views.Content());
+            initFooter(context, options.footer || new Base.Views.Footer());
+        }
     };
 });
 
@@ -224,63 +229,6 @@ define("sarike/timefly/1.0.0/libs/libs-debug", [ "$-debug", "gallery/underscore/
     };
 });
 
-define("sarike/timefly/1.0.0/common/common-debug", [ "sarike/timefly/1.0.0/libs/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/1.0.0/common/base/base-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "sarike/timefly/1.0.0/common/box/box-debug" ], function(require, exports, module) {
-    var libs = require("sarike/timefly/1.0.0/libs/libs-debug");
-    var $ = require("$-debug");
-    var _ = require("gallery/underscore/1.4.4/underscore-debug");
-    var Base = require("sarike/timefly/1.0.0/common/base/base-debug");
-    var Box = require("sarike/timefly/1.0.0/common/box/box-debug");
-    var initSideBar = function(context, sidebarBoxes) {
-        if (!sidebarBoxes) return;
-        context.sideBar.empty();
-        _.each(sidebarBoxes, function(box) {
-            if (box.collection) {
-                context.sideBar.append(box.render().el);
-                box.collection.fetch({
-                    success: function(collection) {
-                        if (collection.length == 0) {
-                            box.renderEmpty();
-                        }
-                    }
-                });
-            } else {
-                context.sideBar.append(box.render().el);
-            }
-        }, this);
-    };
-    var initHeader = function(context, header) {
-        context.header.html(header.render().el);
-    };
-    var initContent = function(context, content) {
-        context.content.html(content.render().el);
-        if (content.collection) content.collection.fetch({
-            success: function(collection) {
-                if (collection.length == 0) {
-                    content.renderEmpty();
-                }
-            }
-        });
-    };
-    var initFooter = function(context, footer) {
-        context.footer.html(footer.render().el);
-    };
-    module.exports = {
-        Models: Base.Models,
-        Collections: Base.Collections,
-        Views: Base.Views,
-        Box: Box,
-        init: function(context, options) {
-            initHeader(context, options.header || new Base.Views.Header({
-                user: context.user,
-                contentCollection: options.content ? options.content.collection : null
-            }));
-            initSideBar(context, options.sideBarBoxes);
-            initContent(context, options.content || new Base.Views.Content());
-            initFooter(context, options.footer || new Base.Views.Footer());
-        }
-    };
-});
-
 define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/libs/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug" ], function(require, exports, module) {
     var libs = require("sarike/timefly/1.0.0/libs/libs-debug");
     var $ = require("$-debug");
@@ -289,6 +237,14 @@ define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/li
     require("sarike/jquery-validate/1.11.1/jquery-validate-debug");
     // Models
     var BaseModel = Backbone.Model.extend({});
+    var BaseUser = Backbone.Model.extend({
+        initialize: function() {
+            this.on("update-user-event", this.updateUser, this);
+        },
+        updateUser: function(data) {
+            this.set(data);
+        }
+    });
     // Collections
     var BaseCollection = Backbone.Collection.extend({
         model: BaseModel,
@@ -340,6 +296,14 @@ define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/li
                 }, this),
                 data: data || {}
             });
+        },
+        reRender: function() {
+            if (this.itemContainer) {
+                this.itemContainer.empty();
+            } else {
+                this.$el.empty();
+            }
+            this.collection.each(this.addItem, this);
         },
         renderEmpty: function() {
             this.$el.html(this.emptyView.render().el);
@@ -424,14 +388,13 @@ define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/li
         doLogin: function() {
             this.$("#login-form").ajaxSubmit($.proxy(function(res) {
                 if (res.response == "ok") {
-                    var cur_user = new Backbone.Model(res.data.user);
-                    cur_user.set("self_home", this.user.get("self_home"));
-                    cur_user.set("at_index_page", this.user.get("at_index_page"));
-                    this.user.trigger("login-event", {
-                        user: cur_user
-                    });
-                    this.user = cur_user;
+                    res.data.user.self_home = res.data.user["username"] == this.user.get("other_home_owner");
+                    res.data.user.at_index_page = !res.data.user.self_home;
+                    this.user.trigger("update-user-event", res.data.user);
                     this.render();
+                    if (res.data.user.self_home) {
+                        this.options.content.reRender();
+                    }
                 } else {
                     libs.Noty.NotyWithRes(res);
                 }
@@ -523,7 +486,7 @@ define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/li
                 }
             });
             var addTodoModal = new AddTodoModalView({
-                contentCollection: this.options.contentCollection
+                contentCollection: this.options.content.collection
             });
             addTodoModal.open({
                 height: 480,
@@ -546,7 +509,8 @@ define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/li
     var Footer = Backbone.View.extend({});
     module.exports = {
         Models: {
-            BaseModel: BaseModel
+            BaseModel: BaseModel,
+            BaseUser: BaseUser
         },
         Collections: {
             BaseCollection: BaseCollection
@@ -631,6 +595,56 @@ define("sarike/timefly/1.0.0/common/box/templates/about_box-debug.tpl", [], '<sp
 define("sarike/timefly/1.0.0/common/box/templates/user_profile_box-debug.tpl", [], '<div id="user-profile">\n        <div class="clearfix">\n            <div id="avatar" class="pull-left">\n                <img src="http://www.gravatar.com/avatar/<%=avatar_hash %>?d=identicon" class="img-rounded" alt="Avatar">\n            </div>\n            <div id="user-info" class="pull-left">\n                <h2>\n                    <%=nickname %>\n                </h2>\n                <ul>\n                    <li>努力中 <span class="badge badge-info"><%=ing_count %></span></li>\n                    <li>已完成 <span class="badge badge-success"><%=ed_count %></span></li>\n                    <li>未完成 <span class="badge badge-important"><%=fail_count %></span></li>\n                </ul>\n            </div>\n        </div>\n        <div id="user-desc"><%=description %></div>\n</div>');
 
 define("sarike/timefly/1.0.0/common/box/templates/side_nav_box-debug.tpl", [], '<div id="menu">\n    <ul class="nav nav-list">\n        <% _.each(side_nav_list, function(nav){ %>\n        <li data-id="<%=nav.id %>" <% if(nav.active){ %>class="active"<% } %>>\n            <a href="javascript: void(0)"><%=nav.caption %><i class="icon-chevron-right pull-right"></i></a>\n        </li>\n        <% });%>\n    </ul>\n</div>');
+
+/**
+ * Created with PyCharm.
+ * User: Sarike
+ * Date: 13-9-15
+ * Time: 下午9:58
+ * To change this template use File | Settings | File Templates.
+ */
+define("sarike/timefly/1.0.0/index/index-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/timefly/1.0.0/libs/libs-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/1.0.0/common/common-debug", "sarike/timefly/1.0.0/common/base/base-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "sarike/timefly/1.0.0/common/box/box-debug" ], function(require, exports) {
+    var $ = require("$-debug");
+    var _ = require("gallery/underscore/1.4.4/underscore-debug");
+    var libs = require("sarike/timefly/1.0.0/libs/libs-debug");
+    var Common = require("sarike/timefly/1.0.0/common/common-debug");
+    var PassionateUserCollection = Common.Collections.BaseCollection.extend({
+        url: "account/passionate_users"
+    });
+    var LatestTodoCollection = Common.Collections.BaseCollection.extend({
+        url: "todo/latest_todos"
+    });
+    var TodoItem = Common.Views.Item.extend({
+        className: "media",
+        template: _.template(require("sarike/timefly/1.0.0/index/templates/todo_item-debug.tpl")),
+        render: function() {
+            this.$el.html(this.template(this.model.toJSON()));
+            return this;
+        }
+    });
+    var IndexContent = Common.Views.Content.extend({
+        title: "最新计划",
+        sub_title: "时光飞逝网友们最近发布的最新计划，一起来为他们加油吧",
+        template: _.template(require("sarike/timefly/1.0.0/index/templates/index_content-debug.tpl")),
+        itemContainer: ".media-list",
+        ItemView: TodoItem
+    });
+    exports.init = function(context) {
+        context.router.route("", "index", function() {
+            var sideBarBoxes = [ new Common.Box.UserBox({
+                collection: new PassionateUserCollection()
+            }), new Common.Box.AboutBox() ], content = new IndexContent({
+                collection: new LatestTodoCollection()
+            });
+            context.user.set("self_home", false);
+            context.user.set("at_index_page", true);
+            Common.init(context, {
+                sideBarBoxes: sideBarBoxes,
+                content: content
+            });
+        });
+    };
+});
 
 define("sarike/timefly/1.0.0/index/templates/todo_item-debug.tpl", [], '  <a class="pull-left" href="./#<%=user.username %>">\n    <img class="media-object img-rounded"\n         src="http://www.gravatar.com/avatar/<%=user.avatar_hash %>?d=identicon">\n  </a>\n  <div class="media-body" style="font-size:14px;line-height: 20px;">\n    <h4 class="media-heading"><%=todo_name %></h4>\n        该计划由 <a href="./#<%=user.username %>"><%=user.nickname || user.username %></a>\n        开始于 <%=new Date(todo_start).format("yyyy-MM-dd") %> ，\n        计划在 <%=new Date(todo_end).format("yyyy-MM-dd") %> 完成！\n        <br>\n        <%=todo_description %>\n  </div>');
 
@@ -850,8 +864,11 @@ define("sarike/timefly/1.0.0/home/home-debug", [ "$-debug", "gallery/underscore/
             $.get("/" + username, function(res) {
                 var owner = res.data.owner;
                 var self_home = context.user.get("username") == owner["username"];
-                context.user.set("self_home", self_home);
-                context.user.set("at_index_page", false);
+                context.user.trigger("update-user-event", {
+                    self_home: self_home,
+                    at_index_page: false,
+                    other_home_owner: owner["username"]
+                });
                 var content = null, sideBarBoxes = null;
                 if (!!position && position == "setting") {
                     content = new SettingContent({

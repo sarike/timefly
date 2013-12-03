@@ -28,7 +28,7 @@ if 'OPENSHIFT_MYSQL_DB_URL' in os.environ:
         'port': url.port,
     }
 
-elif 'TIME_FLY_MYSQL_DB_USER' in os .environ and 'TIME_FLY_MYSQL_DB_PWD' in os .environ:
+elif 'TIME_FLY_MYSQL_DB_USER' in os.environ and 'TIME_FLY_MYSQL_DB_PWD' in os.environ:
     DB = {
         'db_name': os.environ.get('TIME_FLY_MYSQL_DB_NAME', 'timefly'),
         'user': os.environ.get('TIME_FLY_MYSQL_DB_USER'),
