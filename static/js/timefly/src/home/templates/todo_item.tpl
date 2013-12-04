@@ -49,7 +49,7 @@
 
     <div class="todo_complete">
         <div class="accordion" id="todo-completes<%=todo.todo_id %>">
-        <% _.each(todo.achievement_list, function(ac, index){ %>
+        <% _.each(todo.achievement_list, function(ac, index, list){ %>
             <div class="accordion-group">
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse"
@@ -57,7 +57,7 @@
                         在 <%=ac.created_date %> 记录: <%=ac.ac_name %>
                     </a>
                 </div>
-                <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==0){ %>in<% } %> collapse ">
+                <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==list.length-1){ %>in<% } %> collapse ">
                     <div class="accordion-inner markdown"><%=markdown.toHTML(ac.ac_description) %></div>
                 </div>
             </div>
