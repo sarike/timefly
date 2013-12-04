@@ -451,10 +451,7 @@ define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/li
                                 required: true,
                                 maxlength: 20
                             },
-                            todo_description: {
-                                required: true,
-                                maxlength: 100
-                            },
+                            todo_description: "required",
                             todo_start: {
                                 required: true,
                                 date: true
@@ -469,10 +466,7 @@ define("sarike/timefly/1.0.0/common/base/base-debug", [ "sarike/timefly/1.0.0/li
                                 required: "不响亮不要紧，可不能不填哟",
                                 maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
                             },
-                            todo_description: {
-                                required: "该计划到底想完成什么事情呢",
-                                maxlength: jQuery.format("不过不能多于{0}个字符")
-                            },
+                            todo_description: "该计划到底想完成什么事情呢",
                             todo_start: {
                                 required: "记得为该计划设定一个起始时间哟",
                                 date: "我要的是日期，你输入的是火星文吗？"
@@ -750,20 +744,14 @@ define("sarike/timefly/1.0.0/home/home-debug", [ "$-debug", "gallery/underscore/
                                     required: true,
                                     maxlength: 20
                                 },
-                                ac_description: {
-                                    required: true,
-                                    maxlength: 100
-                                }
+                                ac_description: "required"
                             },
                             messages: {
                                 ac_name: {
                                     required: "不响亮不要紧，可不能不填哟",
                                     maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
                                 },
-                                ac_description: {
-                                    required: "你到底是完成了什么呢？",
-                                    maxlength: jQuery.format("不过不能多于{0}个字符")
-                                }
+                                ac_description: "你到底是完成了什么呢？"
                             }
                         });
                     }
@@ -915,6 +903,6 @@ define("sarike/timefly/1.0.0/home/templates/setting_form-debug.tpl", [], '    <d
 
 define("sarike/timefly/1.0.0/home/templates/password_reset_form-debug.tpl", [], '<div class="form-horizontal text-left" method="post">\n        <div class="control-group">\n            <label class="control-label" for="inputEmail">原始密码</label>\n            <div class="controls">\n                <input id="id_old_password" maxlength="30" name="old_password" size="30" type="password">\n                <span class="inline label label-important"></span>\n                <!-- <span class="help-block"><a href="#">你竟然把密码给忘记了？</a></span> -->\n            </div>\n        </div>\n        <div class="control-group">\n            <label class="control-label" for="inputEmail">新密码</label>\n            <div class="controls">\n            <input id="id_new_password" maxlength="30" name="new_password" size="30" type="password">\n            <span class="inline label label-important"></span>\n            </div>\n        </div>\n        <div class="control-group">\n            <label class="control-label" for="inputEmail">确认密码</label>\n            <div class="controls">\n                <input id="id_new_password_confirm" maxlength="30" name="new_password_confirm" size="30" type="password">\n                <span class="inline label label-important"></span>\n            </div>\n        </div>\n        <div class="control-group">\n            <div class="controls">\n                <button id="resetPwd" class="btn btn-info">保存更改</button>\n            </div>\n        </div>\n    </div>');
 
-define("sarike/timefly/1.0.0/home/templates/todo_item-debug.tpl", [], '<div class="todo">\n    <h2>\n        <%=todo.todo_name %>\n        <% if(user.is_authenticated && user.self_home){ %>\n            <span class="pull-right">\n                <a href="javascript:void(0)"\n                   class="mark-complete"\n                   title="<% if(todo.todo_is_completed){ %>\n                           撤销已完成状态\n                          <% }else{ %>\n                           设置为已完成\n                          <% } %>">\n                    <i class=" icon-ok"></i>\n                </a>\n                <% if(todo.todo_erasable){ %>\n                    <a href="javascript:void(0)"\n                       class="delete-todo"\n                       title="删除该计划">\n                        <i class=" icon-trash"></i>\n                    </a>\n                <% } %>\n                <a href="javascript:void(0)"\n                   class="change-visible"\n                   title="<% if(todo.todo_visible){ %>\n                             设置为仅对自己可见\n                          <% }else{ %>\n                             设置为对所有人可见\n                          <% } %>">\n                    <i class=" icon-eye-open"></i>\n                </a>\n                <% if(!todo.todo_is_completed){ %>\n                    <a href="javascript:void(0)"\n                       class="add-new-complete"\n                       title="添加新的进度">\n                        <i class="icon-plus"></i>\n                    </a>\n                <% } %>\n            </span>\n        <% } %>\n    </h2>\n    <div class="todo_meta shadow <% if(!todo.todo_visible){ %>todo_private<% } %>">\n        <div class="todo_info">\n            该计划由 <a href="./#<%=todo.user.username%>"> <%=todo.user.nickname || todo.user.username %> </a>\n            开始于  <%=todo.todo_start %> ，计划在\n             <%=todo.todo_end %>  完成！\n        </div>\n        <div class="todo_desc markdown"><%=markdown.toHTML(todo.todo_description) %></div>\n    </div>\n\n    <div class="todo_complete">\n        <div class="accordion" id="todo-completes<%=todo.todo_id %>">\n        <% _.each(todo.achievement_list, function(ac, index){ %>\n            <div class="accordion-group">\n                <div class="accordion-heading">\n                    <a class="accordion-toggle" data-toggle="collapse"\n                        data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.id %>">\n                        在 <%=ac.created_date %> <%=ac.ac_name %>\n                    </a>\n                </div>\n                <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==0){ %>in<% } %> collapse ">\n                    <div class="accordion-inner markdown"><%=markdown.toHTML(ac.ac_description) %></div>\n                </div>\n            </div>\n        <% }); %>\n        </div>\n    </div>\n</div>');
+define("sarike/timefly/1.0.0/home/templates/todo_item-debug.tpl", [], '<div class="todo">\n    <h2>\n        <%=todo.todo_name %>\n        <% if(user.is_authenticated && user.self_home){ %>\n            <span class="pull-right">\n                <a href="javascript:void(0)"\n                   class="mark-complete"\n                   title="<% if(todo.todo_is_completed){ %>\n                           撤销已完成状态\n                          <% }else{ %>\n                           设置为已完成\n                          <% } %>">\n                    <i class=" icon-ok"></i>\n                </a>\n                <% if(todo.todo_erasable){ %>\n                    <a href="javascript:void(0)"\n                       class="delete-todo"\n                       title="删除该计划">\n                        <i class=" icon-trash"></i>\n                    </a>\n                <% } %>\n                <a href="javascript:void(0)"\n                   class="change-visible"\n                   title="<% if(todo.todo_visible){ %>\n                             设置为仅对自己可见\n                          <% }else{ %>\n                             设置为对所有人可见\n                          <% } %>">\n                    <i class=" icon-eye-open"></i>\n                </a>\n                <% if(!todo.todo_is_completed){ %>\n                    <a href="javascript:void(0)"\n                       class="add-new-complete"\n                       title="添加新的进度">\n                        <i class="icon-plus"></i>\n                    </a>\n                <% } %>\n            </span>\n        <% } %>\n    </h2>\n    <div class="todo_meta shadow <% if(!todo.todo_visible){ %>todo_private<% } %>">\n        <div class="todo_info">\n            该计划由 <a href="./#<%=todo.user.username%>"> <%=todo.user.nickname || todo.user.username %> </a>\n            开始于  <%=todo.todo_start %> ，计划在\n             <%=todo.todo_end %>  完成！\n        </div>\n        <div class="todo_desc markdown"><%=markdown.toHTML(todo.todo_description) %></div>\n    </div>\n\n    <div class="todo_complete">\n        <div class="accordion" id="todo-completes<%=todo.todo_id %>">\n        <% _.each(todo.achievement_list, function(ac, index){ %>\n            <div class="accordion-group">\n                <div class="accordion-heading">\n                    <a class="accordion-toggle" data-toggle="collapse"\n                        data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.id %>">\n                        在 <%=ac.created_date %> 记录: <%=ac.ac_name %>\n                    </a>\n                </div>\n                <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==0){ %>in<% } %> collapse ">\n                    <div class="accordion-inner markdown"><%=markdown.toHTML(ac.ac_description) %></div>\n                </div>\n            </div>\n        <% }); %>\n        </div>\n    </div>\n</div>');
 
 define("sarike/timefly/1.0.0/home/templates/add_complete_modal-debug.tpl", [], '<div id="acModal">\n    <div>\n        <form id="ac-form" action="todo/add_ac" method="post">\n            <input type="hidden" name="todo_id" value="<%=todo_id %>"/>\n            <label for="id_ac_name">为你这一重大突破起一个响亮的名字</label>\n            <input id="id_ac_name" maxlength="20" name="ac_name" type="text" class="input-block-level">\n            <label for="id_ac_description">描述一下你这次又做了哪些努力</label>\n            <textarea cols="40" id="id_ac_description" name="ac_description" rows="5" class="input-block-level"></textarea>\n        </form>\n    </div>\n</div>');
