@@ -44,7 +44,7 @@
             开始于  <%=todo.todo_start %> ，计划在
              <%=todo.todo_end %>  完成！
         </div>
-        <div class="todo_desc"><%=markdown.toHTML(todo.todo_description) %></div>
+        <div class="todo_desc markdown"><%=markdown.toHTML(todo.todo_description) %></div>
     </div>
 
     <div class="todo_complete">
@@ -58,7 +58,7 @@
                     </a>
                 </div>
                 <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==0){ %>in<% } %> collapse ">
-                    <div class="accordion-inner"><%=ac.ac_description %></div>
+                    <div class="accordion-inner markdown"><%=markdown.toHTML(ac.ac_description) %></div>
                 </div>
             </div>
         <% }); %>

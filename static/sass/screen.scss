@@ -295,3 +295,30 @@
 .nav-list>.active>a>[class^="icon-"],.dropdown-menu>li>a:hover>[class^="icon-"]{
  		background-image:url("../images/glyphicons-halflings-white.png");
  }
+
+// markdown style
+.markdown{
+  h1, h2, h3{
+    font-weight: bold;
+  }
+  h1{
+    font-size: 18px;
+  }
+  h2{
+    font-size: 15px;
+  }
+  ol{
+    list-style-type: decimal;
+  }
+  ul{
+    list-style-type: disc;
+  }
+  ol, ul{
+    margin-left: 25px;
+    &>li{
+      border-bottom: inherit;
+      height: auto;
+      line-height: inherit;
+    }
+  }
+}
