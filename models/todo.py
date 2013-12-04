@@ -1,4 +1,4 @@
-from sqlalchemy.dialects.mysql.base import BIGINT
+from sqlalchemy.dialects.mysql.base import BIGINT, TEXT
 from sqlalchemy.orm import relationship
 from sqlalchemy.types import String, Boolean, DateTime
 from models.achievement import Achievement
@@ -14,7 +14,7 @@ class Todo(Base):
     todo_id = SA.Column(BIGINT(unsigned=True), default=id_generate, primary_key=True)
     user_id = SA.Column(BIGINT(unsigned=True), SA.ForeignKey("user.user_id"))
     todo_name = SA.Column(String(128))
-    todo_description = SA.Column(String(2000))
+    todo_description = SA.Column(TEXT)
     todo_visible = SA.Column(Boolean, default=True)
     todo_start = SA.Column(DateTime)
     todo_end = SA.Column(DateTime)

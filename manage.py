@@ -1,6 +1,6 @@
 from flask.ext.script import Manager
 from utils.build_utils.static_package import package_js
-from utils.database import init_db, alter_db
+from utils.database import init_db
 from wsgi import app
 
 manager = Manager(app)
@@ -20,11 +20,6 @@ def build():
 @manager.command
 def db_init():
     init_db()
-
-
-@manager.command
-def db_alter():
-    alter_db()
 
 
 if __name__ == "__main__":
