@@ -23,7 +23,7 @@ class Todo(Base):
     todo_is_completed = SA.Column(Boolean, default=False)
     todo_is_deleted = SA.Column(Boolean, default=False)
 
-    achievement_list = relationship(Achievement, order_by='desc(Achievement.created_date)')
+    achievement_list = relationship(Achievement, order_by='asc(Achievement.created_date)')
 
     def __unicode__(self):
         return self.todo_name

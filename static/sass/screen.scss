@@ -298,6 +298,7 @@
 
 // markdown style
 .markdown{
+  // h1 ---- h6
   h1, h2, h3{
     font-weight: bold;
   }
@@ -307,6 +308,7 @@
   h2{
     font-size: 15px;
   }
+  // ol, ul
   ol{
     list-style-type: decimal;
   }
@@ -320,5 +322,11 @@
       height: auto;
       line-height: inherit;
     }
+  }
+
+  // image
+  img{
+    height: auto;
+    width: auto;
   }
 }

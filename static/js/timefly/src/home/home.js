@@ -109,20 +109,14 @@ define(function(require, exports){
 									required:true,
 									maxlength: 20
 								},
-								ac_description: {
-									required:true,
-									maxlength: 100
-								}
+								ac_description: 'required'
 							},
 							messages: {
 								ac_name: {
 									required: "不响亮不要紧，可不能不填哟",
 									maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
 								},
-								ac_description: {
-									required: "你到底是完成了什么呢？",
-									maxlength: jQuery.format("不过不能多于{0}个字符")
-								}
+								ac_description:  "你到底是完成了什么呢？"
 							}
 						});
                     }

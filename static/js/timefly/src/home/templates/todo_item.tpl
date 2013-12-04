@@ -54,7 +54,7 @@
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse"
                         data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.id %>">
-                        在 <%=ac.created_date %> <%=ac.ac_name %>
+                        在 <%=ac.created_date %> 记录: <%=ac.ac_name %>
                     </a>
                 </div>
                 <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==0){ %>in<% } %> collapse ">

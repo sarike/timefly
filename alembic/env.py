@@ -1,11 +1,18 @@
 from __future__ import with_statement
+import os
+import sys
 from alembic import context
 from logging.config import fileConfig
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
+
+root = os.path.dirname(__file__) + '/../'
+sys.path.append(root)
+
 from models.base import Base
 from utils.database_session import db_engine, db_url
+
 
 config = context.config
 

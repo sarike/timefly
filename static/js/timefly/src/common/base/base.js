@@ -270,10 +270,7 @@ define(function (require, exports, module) {
                                 required: true,
                                 maxlength: 20
                             },
-                            todo_description: {
-                                required: true,
-                                maxlength: 100
-                            },
+                            todo_description: 'required',
                             todo_start: {
                                 required: true,
                                 date: true
@@ -288,10 +285,7 @@ define(function (require, exports, module) {
                                 required: "不响亮不要紧，可不能不填哟",
                                 maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
                             },
-                            todo_description: {
-                                required: "该计划到底想完成什么事情呢",
-                                maxlength: jQuery.format("不过不能多于{0}个字符")
-                            },
+                            todo_description:  "该计划到底想完成什么事情呢",
                             todo_start: {
                                 required: "记得为该计划设定一个起始时间哟",
                                 date: "我要的是日期，你输入的是火星文吗？"

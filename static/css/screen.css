@@ -1,1 +1,423 @@
-html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;font:inherit;font-size:100%;vertical-align:baseline}html{line-height:1}ol,ul{list-style:none}table{border-collapse:collapse;border-spacing:0}caption,th,td{text-align:left;font-weight:normal;vertical-align:middle}q,blockquote{quotes:none}q:before,q:after,blockquote:before,blockquote:after{content:"";content:none}a img{border:none}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary{display:block}body{font-size:14px}#wrapper{margin-top:40px}#avatar>img{width:100px;height:100px}form .error{color:#b94a48}.help-inline{margin-bottom:10px}.box,.box-nopadding{border:1px solid #ddd;-webkit-border-radius:5px;-moz-border-radius:5px;-ms-border-radius:5px;-o-border-radius:5px;border-radius:5px;-webkit-box-shadow:rgba(0,0,0,0.075) 0 1px 2px;-moz-box-shadow:rgba(0,0,0,0.075) 0 1px 2px;box-shadow:rgba(0,0,0,0.075) 0 1px 2px;margin-top:20px}.box{padding:10px}.box h3{padding-bottom:10px}.box h3 a{font-size:12px}.box .box-header{text-align:left;padding:10px;border-bottom:1px solid #ddd;margin-bottom:20px}.box .box-header h2{font-weight:bold}.box .box-header .box-subheader{color:#999;padding:10px 0}#todoModal label,#acModal label{margin:5px 0px}#todoModal .checkbox,#acModal .checkbox{float:left;margin-right:20px}#menu{margin-top:20px}#user-info{padding-left:10px}#user-info h2{font-size:20px;font-weight:bold;padding-bottom:5px}#user-info ul li{margin-top:8px}#user-desc{margin-top:10px;line-height:25px}#friend-list img{width:50px;height:50px}.navbar .nav i[class^="nav-"]{background-image:url("../images/twitter_web_sprite_icons.png");width:21px;height:22px;display:block}.navbar .nav .active>a,.navbar .nav .active>a:hover,.navbar .nav a:hover{background-color:transparent}.navbar .nav .active>a i.nav-home,.navbar .nav .active>a:hover i.nav-home,.navbar .nav a:hover i.nav-home{background-position:0 -110px}.navbar .nav .active>a i.nav-me,.navbar .nav .active>a:hover i.nav-me,.navbar .nav a:hover i.nav-me{background-position:-120px -110px}.navbar .nav .active>a i.nav-setting,.navbar .nav .active>a:hover i.nav-setting,.navbar .nav a:hover i.nav-setting{background-position:-160px -110px}.navbar .nav>li>a{padding:10px 15px}.navbar .nav>li>a span{float:left;display:block}.navbar .nav>li>a span:not(.caret){height:22px;line-height:22px;padding:0 3px;font-weight:bold}.checkbox{line-height:20px}.navbar form.form-inline{padding:6px 0px}.navbar form.form-inline .btn{margin:0px}.nav-home{background-position:0 -50px}.nav-me{background-position:-120px -50px}.nav-setting{background-position:-160px -50px}.nav-new-todo{background-position:-200px -50px;width:21px;height:22px;display:block;background-image:url("../images/twitter_web_sprite_icons.png")}.nav-list{padding:0px}.nav-list>li{padding:0px 15px}.nav-list>li:not(:first-child)>a{border-top:1px solid #ddd}.nav-list>li:last-child>a{border-bottom:1px solid #ddd;-moz-border-radius-bottomleft:5px;-webkit-border-bottom-left-radius:5px;border-bottom-left-radius:5px;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;border-bottom-right-radius:5px}.nav-list>li:first-child>a{border-top:1px solid #ddd;-moz-border-radius-topleft:5px;-webkit-border-top-left-radius:5px;border-top-left-radius:5px;-moz-border-radius-topright:5px;-webkit-border-top-right-radius:5px;border-top-right-radius:5px}.nav-list>li.active>a{border-left:1px solid #08c;border-right:1px solid #08c}.nav-list>li.active:first-child>a{-moz-border-radius-topleft:5px;-webkit-border-top-left-radius:5px;border-top-left-radius:5px;-moz-border-radius-topright:5px;-webkit-border-top-right-radius:5px;border-top-right-radius:5px}.nav-list>li.active:last-child>a{-moz-border-radius-bottomleft:5px;-webkit-border-bottom-left-radius:5px;border-bottom-left-radius:5px;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;border-bottom-right-radius:5px}.nav-list>li>a{padding:10px 20px;border-left:1px solid #ddd;border-right:1px solid #ddd}.media img{width:80px;height:80px}.media-body{line-height:14px;font-size:12px}.media-body h4.media-heading{font-weight:bold;font-size:14px}.copyright{font-family:Arial,sans-serif}a:hover .icon-chevron-right{background-image:url(../images/glyphicons-halflings-blue.png);opacity:1}.todo{border:1px solid #ddd;-webkit-border-radius:6px;-moz-border-radius:6px;-ms-border-radius:6px;-o-border-radius:6px;border-radius:6px;margin:20px 0px}.todo>h2{text-decoration:none;height:50px;line-height:50px;padding:0px 20px;font-weight:bold;font-size:25px}.todo>h2>span{padding-top:5px}.todo>h2>span a:hover{text-decoration:none}.todo_meta{padding:10px 20px;border-top:1px solid #ddd}.todo_info,.todo_desc{line-height:30px}.todo_private{background-image:url("../images/lock.png");background-position:bottom right;background-size:67px 80px;background-repeat:no-repeat}.todo_complete{border-top:1px solid #ddd;-moz-border-radius-bottomleft:6px;-webkit-border-bottom-left-radius:6px;border-bottom-left-radius:6px;-moz-border-radius-bottomright:6px;-webkit-border-bottom-right-radius:6px;border-bottom-right-radius:6px}.todo_complete ul{padding:10px 0px}.todo_complete ul>li{border-bottom:1px dotted;height:30px;line-height:30px}.todo_complete .accordion{margin-top:10px}.todo_complete .accordion-group{border-left:0;border-right:0;border-top:0;border-style:dotted;-webkit-border-radius:0px;-moz-border-radius:0px;-ms-border-radius:0px;-o-border-radius:0px;border-radius:0px}.todo_complete .accordion-inner{background-color:#DDDFFF;line-height:25px}.form-signin{border:1px solid #ddd;-webkit-border-radius:5px;-moz-border-radius:5px;-ms-border-radius:5px;-o-border-radius:5px;border-radius:5px;-webkit-box-shadow:rgba(0,0,0,0.075) 0 1px 2px;-moz-box-shadow:rgba(0,0,0,0.075) 0 1px 2px;box-shadow:rgba(0,0,0,0.075) 0 1px 2px}[class^="icon-"],[class*=" icon-"]{background-image:url("../images/glyphicons-halflings.png")}.icon-blue{background-image:url("../images/glyphicons-halflings-blue.png")}.nav-list>.active>a>[class^="icon-"],.dropdown-menu>li>a:hover>[class^="icon-"]{background-image:url("../images/glyphicons-halflings-white.png")}.markdown h1,.markdown h2,.markdown h3{font-weight:bold}.markdown h1{font-size:18px}.markdown h2{font-size:15px}.markdown ol{list-style-type:decimal}.markdown ul{list-style-type:disc}.markdown ol,.markdown ul{margin-left:25px}.markdown ol>li,.markdown ul>li{border-bottom:inherit;height:auto;line-height:inherit}
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+/* line 17, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline; }
+
+/* line 22, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+html {
+  line-height: 1; }
+
+/* line 24, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+ol, ul {
+  list-style: none; }
+
+/* line 26, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+/* line 28, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  vertical-align: middle; }
+
+/* line 30, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+q, blockquote {
+  quotes: none; }
+  /* line 103, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+  q:before, q:after, blockquote:before, blockquote:after {
+    content: "";
+    content: none; }
+
+/* line 32, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+a img {
+  border: none; }
+
+/* line 116, D:/Dev/Koala/rubygems/gems/compass-0.12.2/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
+  display: block; }
+
+/* line 15, ../sass/_base.scss */
+body {
+  font-size: 14px; }
+
+/* line 7, ../sass/screen.scss */
+#wrapper {
+  margin-top: 40px; }
+
+/* line 12, ../sass/screen.scss */
+#avatar > img {
+  width: 100px;
+  height: 100px; }
+
+/* line 18, ../sass/screen.scss */
+form .error {
+  color: #b94a48; }
+
+/* line 22, ../sass/screen.scss */
+.help-inline {
+  margin-bottom: 10px; }
+
+/* line 25, ../sass/screen.scss */
+.box, .box-nopadding {
+  border: 1px solid #dddddd;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px;
+  box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px;
+  margin-top: 20px; }
+
+/* line 31, ../sass/screen.scss */
+.box {
+  padding: 10px; }
+  /* line 33, ../sass/screen.scss */
+  .box h3 {
+    padding-bottom: 10px; }
+    /* line 36, ../sass/screen.scss */
+    .box h3 a {
+      font-size: 12px; }
+
+/* line 41, ../sass/screen.scss */
+.box .box-header {
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #dddddd;
+  margin-bottom: 20px; }
+  /* line 46, ../sass/screen.scss */
+  .box .box-header h2 {
+    font-weight: bold; }
+  /* line 49, ../sass/screen.scss */
+  .box .box-header .box-subheader {
+    color: #999999;
+    padding: 10px 0; }
+
+/* line 55, ../sass/screen.scss */
+#todoModal label, #acModal label {
+  margin: 5px 0px; }
+/* line 58, ../sass/screen.scss */
+#todoModal .checkbox, #acModal .checkbox {
+  float: left;
+  margin-right: 20px; }
+
+/* line 63, ../sass/screen.scss */
+#menu {
+  margin-top: 20px; }
+
+/* line 66, ../sass/screen.scss */
+#user-info {
+  padding-left: 10px; }
+  /* line 68, ../sass/screen.scss */
+  #user-info h2 {
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 5px; }
+  /* line 73, ../sass/screen.scss */
+  #user-info ul li {
+    margin-top: 8px; }
+
+/* line 77, ../sass/screen.scss */
+#user-desc {
+  margin-top: 10px;
+  line-height: 25px; }
+
+/* line 82, ../sass/screen.scss */
+#friend-list img {
+  width: 50px;
+  height: 50px; }
+
+/* line 89, ../sass/screen.scss */
+.navbar .nav i[class^="nav-"] {
+  background-image: url("../images/twitter_web_sprite_icons.png");
+  width: 21px;
+  height: 22px;
+  display: block; }
+/* line 95, ../sass/screen.scss */
+.navbar .nav .active > a, .navbar .nav .active > a:hover, .navbar .nav a:hover {
+  background-color: transparent; }
+  /* line 97, ../sass/screen.scss */
+  .navbar .nav .active > a i.nav-home, .navbar .nav .active > a:hover i.nav-home, .navbar .nav a:hover i.nav-home {
+    background-position: 0 -110px; }
+  /* line 100, ../sass/screen.scss */
+  .navbar .nav .active > a i.nav-me, .navbar .nav .active > a:hover i.nav-me, .navbar .nav a:hover i.nav-me {
+    background-position: -120px -110px; }
+  /* line 103, ../sass/screen.scss */
+  .navbar .nav .active > a i.nav-setting, .navbar .nav .active > a:hover i.nav-setting, .navbar .nav a:hover i.nav-setting {
+    background-position: -160px -110px; }
+/* line 108, ../sass/screen.scss */
+.navbar .nav > li > a {
+  padding: 10px 15px; }
+  /* line 110, ../sass/screen.scss */
+  .navbar .nav > li > a span {
+    float: left;
+    display: block; }
+    /* line 113, ../sass/screen.scss */
+    .navbar .nav > li > a span:not(.caret) {
+      height: 22px;
+      line-height: 22px;
+      padding: 0 3px;
+      font-weight: bold; }
+
+/* line 125, ../sass/screen.scss */
+.checkbox {
+  line-height: 20px; }
+
+/* line 129, ../sass/screen.scss */
+.navbar form.form-inline {
+  padding: 6px 0px; }
+  /* line 131, ../sass/screen.scss */
+  .navbar form.form-inline .btn {
+    margin: 0px; }
+
+/* line 137, ../sass/screen.scss */
+.nav-home {
+  background-position: 0 -50px; }
+
+/* line 140, ../sass/screen.scss */
+.nav-me {
+  background-position: -120px -50px; }
+
+/* line 143, ../sass/screen.scss */
+.nav-setting {
+  background-position: -160px -50px; }
+
+/* line 146, ../sass/screen.scss */
+.nav-new-todo {
+  background-position: -200px -50px;
+  width: 21px;
+  height: 22px;
+  display: block;
+  background-image: url("../images/twitter_web_sprite_icons.png"); }
+
+/* line 153, ../sass/screen.scss */
+.nav-list {
+  padding: 0px; }
+  /* line 155, ../sass/screen.scss */
+  .nav-list > li {
+    padding: 0px 15px; }
+    /* line 157, ../sass/screen.scss */
+    .nav-list > li:not(:first-child) > a {
+      border-top: 1px solid #dddddd; }
+    /* line 160, ../sass/screen.scss */
+    .nav-list > li:last-child > a {
+      border-bottom: 1px solid #dddddd;
+      -moz-border-radius-bottomleft: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      border-bottom-right-radius: 5px; }
+    /* line 164, ../sass/screen.scss */
+    .nav-list > li:first-child > a {
+      border-top: 1px solid #dddddd;
+      -moz-border-radius-topleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      border-top-left-radius: 5px;
+      -moz-border-radius-topright: 5px;
+      -webkit-border-top-right-radius: 5px;
+      border-top-right-radius: 5px; }
+    /* line 169, ../sass/screen.scss */
+    .nav-list > li.active > a {
+      border-left: 1px solid #08c;
+      border-right: 1px solid #08c; }
+    /* line 173, ../sass/screen.scss */
+    .nav-list > li.active:first-child > a {
+      -moz-border-radius-topleft: 5px;
+      -webkit-border-top-left-radius: 5px;
+      border-top-left-radius: 5px;
+      -moz-border-radius-topright: 5px;
+      -webkit-border-top-right-radius: 5px;
+      border-top-right-radius: 5px; }
+    /* line 176, ../sass/screen.scss */
+    .nav-list > li.active:last-child > a {
+      -moz-border-radius-bottomleft: 5px;
+      -webkit-border-bottom-left-radius: 5px;
+      border-bottom-left-radius: 5px;
+      -moz-border-radius-bottomright: 5px;
+      -webkit-border-bottom-right-radius: 5px;
+      border-bottom-right-radius: 5px; }
+    /* line 180, ../sass/screen.scss */
+    .nav-list > li > a {
+      padding: 10px 20px;
+      border-left: 1px solid #dddddd;
+      border-right: 1px solid #dddddd; }
+
+/* line 188, ../sass/screen.scss */
+.media img {
+  width: 80px;
+  height: 80px; }
+
+/* line 194, ../sass/screen.scss */
+.media-body {
+  line-height: 14px;
+  font-size: 12px; }
+  /* line 197, ../sass/screen.scss */
+  .media-body h4.media-heading {
+    font-weight: bold;
+    font-size: 14px; }
+
+/* line 202, ../sass/screen.scss */
+.copyright {
+  font-family: Arial,sans-serif; }
+
+/* line 205, ../sass/screen.scss */
+a:hover .icon-chevron-right {
+  background-image: url(../images/glyphicons-halflings-blue.png);
+  opacity: 1; }
+
+/* line 211, ../sass/screen.scss */
+.todo {
+  border: 1px solid #dddddd;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  margin: 20px 0px; }
+
+/* line 216, ../sass/screen.scss */
+.todo > h2 {
+  text-decoration: none;
+  height: 50px;
+  line-height: 50px;
+  padding: 0px 20px;
+  font-weight: bold;
+  font-size: 25px; }
+
+/* line 229, ../sass/screen.scss */
+.todo > h2 > span {
+  padding-top: 5px; }
+  /* line 232, ../sass/screen.scss */
+  .todo > h2 > span a:hover {
+    text-decoration: none; }
+
+/* line 237, ../sass/screen.scss */
+.todo_meta {
+  padding: 10px 20px;
+  border-top: 1px solid #dddddd; }
+
+/* line 242, ../sass/screen.scss */
+.todo_info, .todo_desc {
+  line-height: 30px; }
+
+/* line 246, ../sass/screen.scss */
+.todo_private {
+  background-image: url("../images/lock.png");
+  background-position: bottom right;
+  background-size: 67px 80px;
+  background-repeat: no-repeat; }
+
+/* line 252, ../sass/screen.scss */
+.todo_complete {
+  border-top: 1px solid #dddddd;
+  -moz-border-radius-bottomleft: 6px;
+  -webkit-border-bottom-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+  -moz-border-radius-bottomright: 6px;
+  -webkit-border-bottom-right-radius: 6px;
+  border-bottom-right-radius: 6px; }
+
+/* line 256, ../sass/screen.scss */
+.todo_complete ul {
+  padding: 10px 0px; }
+
+/* line 259, ../sass/screen.scss */
+.todo_complete ul > li {
+  border-bottom: 1px dotted;
+  height: 30px;
+  line-height: 30px; }
+
+/* line 265, ../sass/screen.scss */
+.todo_complete .accordion {
+  margin-top: 10px; }
+/* line 268, ../sass/screen.scss */
+.todo_complete .accordion-group {
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-style: dotted;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px; }
+/* line 275, ../sass/screen.scss */
+.todo_complete .accordion-inner {
+  background-color: #DDDFFF;
+  line-height: 25px; }
+
+/* line 280, ../sass/screen.scss */
+.form-signin {
+  border: 1px solid #dddddd;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px;
+  box-shadow: rgba(0, 0, 0, 0.075) 0 1px 2px; }
+
+/* line 286, ../sass/screen.scss */
+[class^="icon-"], [class*=" icon-"] {
+  background-image: url("../images/glyphicons-halflings.png"); }
+
+/* line 289, ../sass/screen.scss */
+.icon-blue {
+  background-image: url("../images/glyphicons-halflings-blue.png"); }
+
+/* line 295, ../sass/screen.scss */
+.nav-list > .active > a > [class^="icon-"], .dropdown-menu > li > a:hover > [class^="icon-"] {
+  background-image: url("../images/glyphicons-halflings-white.png"); }
+
+/* line 302, ../sass/screen.scss */
+.markdown h1, .markdown h2, .markdown h3 {
+  font-weight: bold; }
+/* line 305, ../sass/screen.scss */
+.markdown h1 {
+  font-size: 18px; }
+/* line 308, ../sass/screen.scss */
+.markdown h2 {
+  font-size: 15px; }
+/* line 312, ../sass/screen.scss */
+.markdown ol {
+  list-style-type: decimal; }
+/* line 315, ../sass/screen.scss */
+.markdown ul {
+  list-style-type: disc; }
+/* line 318, ../sass/screen.scss */
+.markdown ol, .markdown ul {
+  margin-left: 25px; }
+  /* line 320, ../sass/screen.scss */
+  .markdown ol > li, .markdown ul > li {
+    border-bottom: inherit;
+    height: auto;
+    line-height: inherit; }
+/* line 328, ../sass/screen.scss */
+.markdown img {
+  height: auto;
+  width: auto; }
