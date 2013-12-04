@@ -14,7 +14,7 @@ class Todo(Base):
     todo_id = SA.Column(BIGINT(unsigned=True), default=id_generate, primary_key=True)
     user_id = SA.Column(BIGINT(unsigned=True), SA.ForeignKey("user.user_id"))
     todo_name = SA.Column(String(128))
-    todo_description = SA.Column(String(256))
+    todo_description = SA.Column(String(2000))
     todo_visible = SA.Column(Boolean, default=True)
     todo_start = SA.Column(DateTime)
     todo_end = SA.Column(DateTime)
