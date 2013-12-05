@@ -264,6 +264,12 @@
 .todo_complete {
 	.accordion{
 		margin-top:10px;
+      .accordion-heading{
+        font-weight: bold;
+        a:hover{
+          text-decoration: none;
+        }
+      }
 	}
 	.accordion-group{
 		border-left:0;
@@ -274,7 +280,7 @@
 	}
 	.accordion-inner{
 		background-color: #DDDFFF;
-		line-height: 25px;
+		line-height: 30px;
 	}
 }
 .form-signin{
@@ -328,5 +334,20 @@
   img{
     height: auto;
     width: auto;
+  }
+
+  // em, strong
+  em, strong{
+    font-weight: bold;
+  }
+
+  // code
+  code{
+    padding: 2px 4px;
+  }
+
+  //p
+  p{
+    margin-bottom: 5px;
   }
 }

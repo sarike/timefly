@@ -11,7 +11,6 @@ define(function(require, exports){
     var Backbone = require('backbone');
     var libs = require('../libs/libs');
     var Common = require('../common/common');
-    var markdown = require('markdown');
 
     var settingFormTemplate = require('./templates/setting_form.tpl'),
         passwordResetTemplate = require('./templates/password_reset_form.tpl');
@@ -91,7 +90,7 @@ define(function(require, exports){
                             submitHandler: function (form) {
                                 $(form).ajaxSubmit($.proxy(function (res) {
                                     this.close();
-                                    todo.model.get('achievement_list').splice(0, 0, res.data);
+                                    todo.model.get('achievement_list').push(res.data);
                                     todo.render();
                                 }, self));
                             },
@@ -137,8 +136,7 @@ define(function(require, exports){
             render: function(){
                 this.$el.html(this.template({
                     todo: this.model.toJSON(),
-                    user: context.user.toJSON(),
-                    markdown: markdown
+                    user: context.user.toJSON()
                 }));
                 return this;
             }

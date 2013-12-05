@@ -1,0 +1,21 @@
+{
+  "family": "sarike",
+  "name": "moment",
+  "version": "2.4.0",
+  "keywords": ["moment"],
+  "licenses": "MIT",
+  "author": "Tim Wood, Iskren Chernev, Moment.js contributors",
+  "description": "A javascript date library for parsing, validating, manipulating, and formatting dates.",
+  "homepage": "http://momentjs.com/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/moment/moment.git"
+  },
+  "spm": {
+    "output": ["moment.js"],
+    "alias": {
+    },
+    "devAlias": {},
+    "engines": {}
+  }
+}

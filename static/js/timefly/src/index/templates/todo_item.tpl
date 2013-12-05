@@ -6,10 +6,10 @@
     <h4 class="media-heading"><%=todo_name %></h4>
           <div class="todo_info">
               该计划由 <a href="./#<%=user.username %>"><%=user.nickname || user.username %></a>
-                开始于 <%=new Date(todo_start).format("yyyy-MM-dd") %> ，
-                计划在 <%=new Date(todo_end).format("yyyy-MM-dd") %> 完成！
+                开始于 <%=todo_start %> ，
+                计划在 <%=todo_end %> 完成！
           </div>
-        <div class="markdown">
-            <%=markdown.toHTML(todo_description) %>
+        <div class="markdown todo_desc">
+            <%=tf.md.toHTML(todo_description) %>
         </div>
   </div>

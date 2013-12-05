@@ -44,7 +44,7 @@
             开始于  <%=todo.todo_start %> ，计划在
              <%=todo.todo_end %>  完成！
         </div>
-        <div class="todo_desc markdown"><%=markdown.toHTML(todo.todo_description) %></div>
+        <div class="todo_desc markdown"><%=tf.md.toHTML(todo.todo_description) %></div>
     </div>
 
     <div class="todo_complete">
@@ -54,11 +54,11 @@
                 <div class="accordion-heading">
                     <a class="accordion-toggle" data-toggle="collapse"
                         data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.id %>">
-                        在 <%=ac.created_date %> 记录: <%=ac.ac_name %>
+                        在<%=tf.mm.utc2local(ac.created_date) %> 记录: <%=ac.ac_name %>
                     </a>
                 </div>
                 <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==list.length-1){ %>in<% } %> collapse ">
-                    <div class="accordion-inner markdown"><%=markdown.toHTML(ac.ac_description) %></div>
+                    <div class="accordion-inner markdown"><%=tf.md.toHTML(ac.ac_description) %></div>
                 </div>
             </div>
         <% }); %>

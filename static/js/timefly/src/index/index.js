@@ -10,7 +10,6 @@ define(function(require, exports){
     var _ = require('underscore');
     var libs = require('../libs/libs');
     var Common = require('../common/common');
-    var markdown = require('markdown');
 
     var PassionateUserCollection = Common.Collections.BaseCollection.extend({
         url: "account/passionate_users"
@@ -23,7 +22,7 @@ define(function(require, exports){
         className: "media",
         template: _.template(require("./templates/todo_item.tpl")),
         render: function(){
-            this.$el.html(this.template(_.extend(this.model.toJSON(), {markdown: markdown})));
+            this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
     });

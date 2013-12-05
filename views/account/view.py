@@ -3,12 +3,12 @@ import re
 from flask import Blueprint, render_template, jsonify, redirect
 from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.wtf.form import Form
-from flask.globals import request, current_app
+from flask.globals import request
 from flask.helpers import url_for
 from wtforms.fields.core import BooleanField
 from wtforms import TextField, PasswordField, validators
 from models.user import User
-from utils.database_session import session_cm
+from utils.db_utils.database_session import session_cm
 from utils.response import ajax_response
 
 account = Blueprint('views', __name__, template_folder='templates')

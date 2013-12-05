@@ -1,5 +1,4 @@
 #coding:utf-8
-import datetime
 from flask import jsonify
 from flask.blueprints import Blueprint
 from flask.ext.login import current_user
@@ -8,7 +7,7 @@ from flask.templating import render_template
 from werkzeug.exceptions import abort
 from config import settings
 from models.user import User
-from utils.database_session import session_cm
+from utils.db_utils.database_session import session_cm
 from utils.response import ajax_response
 
 frontend = Blueprint('frontend', __name__)

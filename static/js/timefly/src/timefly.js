@@ -1,10 +1,12 @@
-define(function(require) {
+define(function(require, exports) {
     var $ = require("$");
     var Backbone = require("backbone");
     require("bootstrap");
     require("form");
-    require("./utils/utils");
     var Common = require("./common/common");
+
+    exports.mm = require('moment-timezone');
+    exports.md = require('markdown');
 
     $(function(){
 

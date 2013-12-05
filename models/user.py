@@ -1,13 +1,15 @@
 #coding=utf-8
 import hashlib
+
 from flask.ext.login import UserMixin
 from sqlalchemy.dialects.mysql import BIGINT, VARCHAR
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy.orm import relationship
 from sqlalchemy.types import String, Boolean
 from werkzeug.security import generate_password_hash, check_password_hash
-from models.base import Base, id_generate
 import sqlalchemy as SA
-from utils.database_session import session_cm
+
+from models.base import Base, id_generate
+from utils.db_utils.database_session import session_cm
 
 
 class User(Base, UserMixin):

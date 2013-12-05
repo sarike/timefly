@@ -1,6 +1,14 @@
 {% extends "base.html" %}
 {% block javascript %}
     <script type="text/javascript">
-        seajs.use(seajs.data.debug? "/static/js/timefly/src/timefly" : "sarike/timefly/1.0.0/timefly");
+        seajs.use(seajs.data.debug? "/static/js/timefly/src/timefly" : "sarike/timefly/1.0.0/timefly",
+                function(timefly){
+                    //timefly.mm.lang('zh-cn');
+                    timefly.mm.utc2local = function(string, format){
+                        if(!format) format = 'YYYY-MM-DD HH:mm';
+                        return this.utc(string).local().format(format);
+                    };
+                    window.tf = timefly;
+                });
     </script>
 {% endblock %}

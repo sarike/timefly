@@ -6,7 +6,7 @@ from flask.ext.login import current_user
 from flask.globals import request, session
 from models.achievement import Achievement
 from models.todo import Todo
-from utils.database_session import session_cm
+from utils.db_utils.database_session import session_cm
 from utils.response import ajax_response
 
 todo = Blueprint('todo', __name__)
