@@ -10,8 +10,8 @@ import time
 class tBase(object):
     session = property(lambda self: object_session(self))
 
-    created_date = SA.Column(SA.DateTime, default=datetime.datetime.now)
-    modified_date = SA.Column(SA.DateTime, default=datetime.datetime.now, onupdate=SA.text('current_timestamp'))
+    created_date = SA.Column(SA.DateTime, default=datetime.datetime.utcnow)
+    modified_date = SA.Column(SA.DateTime, default=datetime.datetime.utcnow, onupdate=SA.text('current_timestamp'))
 
 Base = declarative_base(cls=tBase)
 

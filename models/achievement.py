@@ -24,5 +24,5 @@ class Achievement(Base):
             'id': str(self.ac_id),
             'ac_name': self.ac_name,
             'ac_description': self.ac_description,
-            'created_date': self.created_date.strftime("%Y-%m-%d  %H:%M"),
+            'created_date': self.created_date.strftime("%Y-%m-%d %H:%M"),
         }
