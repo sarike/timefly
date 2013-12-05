@@ -21,8 +21,7 @@
       "themes/default": "sarike/jquery-noty/2.1.0/themes/default",
       "jquery-validate": "sarike/jquery-validate/1.11.1/jquery-validate",
       "markdown": "sarike/markdown/0.6.0/markdown",
-      "moment-timezone": "sarike/moment-timezone/0.0.3/moment-timezone",
-      "moment": "sarike/moment/2.4.0/moment"
+      "moment-timezone": "sarike/moment-timezone/0.0.3/moment-timezone"
     }
   }
 }
