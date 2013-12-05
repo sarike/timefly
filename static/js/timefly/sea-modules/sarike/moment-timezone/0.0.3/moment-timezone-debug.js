@@ -3,8 +3,8 @@
 // author : Tim Wood
 // license : MIT
 // github.com/timrwood/moment-timezone
-define("sarike/moment-timezone/0.0.3/moment-timezone-debug", [ "moment-debug" ], function(require) {
-    var moment = require("moment-debug");
+define("sarike/moment-timezone/0.0.3/moment-timezone-debug", [ "sarike/moment/2.4.0/moment-debug" ], function(require) {
+    var moment = require("sarike/moment/2.4.0/moment-debug");
     var VERSION = "0.0.3";
     var oldZoneName = moment.fn.zoneName, oldZoneAbbr = moment.fn.zoneAbbr, defaultRule, rules = {}, ruleSets = {}, zones = {}, zoneSets = {}, links = {}, TIME_RULE_WALL_CLOCK = 0, TIME_RULE_UTC = 1, TIME_RULE_STANDARD = 2, DAY_RULE_DAY_OF_MONTH = 7, DAY_RULE_LAST_WEEKDAY = 8;
     // converts time in the HH:mm:ss format to absolute number of minutes

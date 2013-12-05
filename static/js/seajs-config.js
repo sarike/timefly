@@ -47,8 +47,7 @@ if(seajs.data.debug){
             "jquery-noty": "sarike/jquery-noty/2.1.0/jquery-noty",
             "form": "jquery-plugin/form/3.44.0/form",
             "markdown": "sarike/markdown/0.6.0/markdown",
-            "moment-timezone": "sarike/moment-timezone/0.0.3/moment-timezone",
-            "moment": "sarike/moment/2.4.0/moment"
+            "moment-timezone": "sarike/moment-timezone/0.0.3/moment-timezone"
         }
     })
 }

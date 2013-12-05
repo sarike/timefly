@@ -14,6 +14,7 @@
   "spm": {
     "output": ["moment-timezone.js"],
     "alias": {
+        "moment": "sarike/moment/2.4.0/moment"
     },
     "devAlias": {},
     "engines": {}
