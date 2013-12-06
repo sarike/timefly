@@ -29,8 +29,11 @@ define(function (require, exports, module) {
         },
 
         defaultConfig: {
-            show: true
+            show: true,
+            resizable: true
         },
+
+        tpl_data: {},
 
         initialize: function () {
             var okButton = this._getButton("确定", $.proxy(this.ok, this));
@@ -39,7 +42,10 @@ define(function (require, exports, module) {
                 okButton,
                 cancelButton
             ];
+            this.extraInitialize();
         },
+
+        extraInitialize: function(){},
 
         ok: function () {
             console.warn("This is the default okClick, maybe you shoud override ok Func!")
@@ -50,7 +56,7 @@ define(function (require, exports, module) {
         },
 
         render: function () {
-            this.$el.html(this.template(this.options));
+            this.$el.html(this.template(this.tpl_data));
             this.extraRender();
             return this;
         },

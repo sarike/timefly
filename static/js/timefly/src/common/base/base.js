@@ -1,5 +1,6 @@
 define(function (require, exports, module) {
     var libs = require('../../libs/libs');
+    var Editor = require('../../editor/editor');
     var $ = require('$');
     var _ = require('underscore');
     var Backbone = require('backbone');
@@ -214,6 +215,12 @@ define(function (require, exports, module) {
         },
 
         addNewTodo: function () {
+
+            var TodoEditor = Editor.extend({
+                text_area_name: 'todo_description',
+                editor_label: '描述一下该计划打算要完成的事情'
+            });
+
             var addTodoModalTemplate = require("./templates/add_todo_modal.tpl");
             var AddTodoModalView = libs.JQueryUI.Dialog.extend({
                 template: _.template(addTodoModalTemplate),
@@ -226,6 +233,8 @@ define(function (require, exports, module) {
                     var start_date = this.$("#id_todo_start"),
                         end_date = this.$("#id_todo_end"),
                         todo_form = this.$("#todo-form");
+
+                    this.$('.editor-field').html(new TodoEditor().render().el);
 
                     start_date.datepicker({
                         defaultDate: "+1w",

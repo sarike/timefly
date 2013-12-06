@@ -301,6 +301,23 @@
 .nav-list>.active>a>[class^="icon-"],.dropdown-menu>li>a:hover>[class^="icon-"]{
  		background-image:url("../images/glyphicons-halflings-white.png");
  }
+//markdown editor
+.md-editor{
+  position: relative;
+  .md-editor-ops{
+    position: absolute;
+    right: 24px;
+    top: 28px;
+    &>i{
+      cursor: pointer;
+    }
+  }
+  .preview-content{
+    padding: 8px 7px;
+    min-height: 200px;
+  }
+}
+
 
 // markdown style
 .markdown{

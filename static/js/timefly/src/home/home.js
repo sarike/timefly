@@ -6,11 +6,17 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function(require, exports){
-    var $ = require('$');
-    var _ = require('underscore');
-    var Backbone = require('backbone');
-    var libs = require('../libs/libs');
-    var Common = require('../common/common');
+    var $ = require('$'),
+        _ = require('underscore'),
+        Backbone = require('backbone'),
+        libs = require('../libs/libs'),
+        Common = require('../common/common'),
+        Editor = require('../editor/editor');
+
+    var AcContentEditor = Editor.extend({
+        text_area_name: 'ac_description',
+        editor_label: '描述一下你这次又做了哪些努力'
+    });
 
     var settingFormTemplate = require('./templates/setting_form.tpl'),
         passwordResetTemplate = require('./templates/password_reset_form.tpl');
@@ -23,7 +29,63 @@ define(function(require, exports){
         url: "todo/my_todos"
     });
 
+    var AddNewAcModal = libs.JQueryUI.Dialog.extend({
+        template: _.template(require("./templates/add_complete_modal.tpl")),
+
+        ok: function () {
+            this.$("#ac-form").submit();
+        },
+
+        extraInitialize: function(){
+            this.todoView = this.options.todoView;
+            _.extend(this.tpl_data, {
+                todo_id: this.todoView.model.get('todo_id')
+            });
+        },
+
+        extraRender: function(){
+            this.$('.editor-field').html(this.options.editor.render().el);
+            var ac_form = this.$("#ac-form");
+            var self = this;
+            ac_form.validate({
+                errorClass: "error",
+                submitHandler: function (form) {
+                    $(form).ajaxSubmit($.proxy(function (res) {
+                        this.close();
+                        this.todoView.model.get('achievement_list').push(res.data);
+                        this.todoView.render();
+                    }, self));
+                },
+                ignore: "input[type='checkbox']",
+                errorPlacement: function(error, element) {
+                    element.prev().hide();
+                    element.prev().after(error);
+                },
+                success:function(label){
+                    label.prev().show();
+                    label.remove();
+                },
+                rules: {
+                    ac_name: {
+                        required:true,
+                        maxlength: 20
+                    },
+                    ac_description: 'required'
+                },
+                messages: {
+                    ac_name: {
+                        required: "不响亮不要紧，可不能不填哟",
+                        maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
+                    },
+                    ac_description:  "你到底是完成了什么呢？"
+                }
+            });
+        }
+    });
+
     exports.init = function(context){
+
+        var editor = new AcContentEditor();
 
         var TodoItem = Common.Views.Item.extend({
             template: _.template(require("./templates/todo_item.tpl")),
@@ -74,58 +136,11 @@ define(function(require, exports){
             },
 
             addNewComplete: function(){
-                var todo = this;
-                var AddNewAcModal = libs.JQueryUI.Dialog.extend({
-                    template: _.template(require("./templates/add_complete_modal.tpl")),
-
-                    ok: function () {
-                        this.$("#ac-form").submit();
-                    },
-
-                    extraRender: function(){
-                        var ac_form = this.$("#ac-form");
-                        var self = this;
-                        ac_form.validate({
-							errorClass: "error",
-                            submitHandler: function (form) {
-                                $(form).ajaxSubmit($.proxy(function (res) {
-                                    this.close();
-                                    todo.model.get('achievement_list').push(res.data);
-                                    todo.render();
-                                }, self));
-                            },
-							ignore: "input[type='checkbox']",
-							errorPlacement: function(error, element) {
-								element.prev().hide();
-								element.prev().after(error);
-							},
-							success:function(label){
-								label.prev().show();
-								label.remove();
-							},
-							rules: {
-								ac_name: {
-									required:true,
-									maxlength: 20
-								},
-								ac_description: 'required'
-							},
-							messages: {
-								ac_name: {
-									required: "不响亮不要紧，可不能不填哟",
-									maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
-								},
-								ac_description:  "你到底是完成了什么呢？"
-							}
-						});
-                    }
-                });
                 var addNewAcModal = new AddNewAcModal({
-                    contentCollection: this.options.collection,
-                    todo_id: this.model.get('todo_id')
+                    editor: editor,
+                    todoView: this
                 });
                 addNewAcModal.open({
-                    height: 435,
                     width: $(window).width() * 0.6,
                     modal: true,
                     title:"记录新的突破",
