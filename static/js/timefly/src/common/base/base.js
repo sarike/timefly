@@ -302,8 +302,8 @@ define(function (require, exports, module) {
                 contentCollection: this.options.content.collection
             });
             addTodoModal.open({
-                height: 480,
-                width: 310,
+                height: 580,
+                width: $(window).width() * 0.6,
                 modal: true,
                 title: "制定一个新的计划",
                 resizable: false

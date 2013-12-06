@@ -125,8 +125,8 @@ define(function(require, exports){
                     todo_id: this.model.get('todo_id')
                 });
                 addNewAcModal.open({
-                    height: 335,
-                    width: 300,
+                    height: 435,
+                    width: $(window).width() * 0.6,
                     modal: true,
                     title:"记录新的突破",
                     resizable: false

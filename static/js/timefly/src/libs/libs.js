@@ -29,6 +29,7 @@ define(function (require, exports, module) {
         },
 
         defaultConfig: {
+            show: true
         },
 
         initialize: function () {
