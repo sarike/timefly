@@ -55,7 +55,7 @@
                     在<%=tf.mm.utc2local(ac.created_date) %> 记录: <%=ac.ac_name %>
                 </a>
             </div>
-            <div id="collapse<%=ac.id %>" class="accordion-body <%if(index==list.length-1){ %>in<% } %> collapse ">
+            <div id="collapse<%=ac.id %>" class="accordion-body collapse ">
                 <div class="accordion-inner markdown"><%=tf.md.toHTML(ac.ac_description) %></div>
             </div>
         </div>
