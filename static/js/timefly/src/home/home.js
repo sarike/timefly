@@ -90,6 +90,8 @@ define(function(require, exports){
         var TodoItem = Common.Views.Item.extend({
             template: _.template(require("./templates/todo_item.tpl")),
 
+            className: 'todo',
+
             events: {
                 'click a.mark-complete': 'markComplete',
                 'click a.delete-todo': 'deleteTodo',
