@@ -235,7 +235,6 @@ define(function (require, exports, module) {
         },
 
         addNewTodo: function () {
-            console.info(this.user.get('self_home'))
             if(this.user.get('self_home')){
                 var addOrEditNewTodoView = new AddOrEditTodoView();
                 addOrEditNewTodoView.$el.hide();
