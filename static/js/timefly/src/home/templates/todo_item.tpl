@@ -1,7 +1,7 @@
 <h2>
     <%=todo.todo_name %>
     <% if(user.is_authenticated && user.self_home){ %>
-        <span class="pull-right">
+        <span class="pull-right todo-ops hide">
             <a href="javascript:void(0)"
                class="mark-complete"
                title="<% if(todo.todo_is_completed){ %>

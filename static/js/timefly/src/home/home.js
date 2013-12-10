@@ -99,6 +99,10 @@ define(function(require, exports){
                 'click a.add-new-complete': 'addNewComplete'
             },
 
+            toggleOps: function(){
+                this.$(".todo-ops").toggle();
+            },
+
             dealTodo: function(url, callback, notification){
                 var todo_id = this.model.get('todo_id');
                 libs.Noty.Confirm({
@@ -155,6 +159,11 @@ define(function(require, exports){
                     todo: this.model.toJSON(),
                     user: context.user.toJSON()
                 }));
+                this.$el.mouseover($.proxy(function(){
+                    this.toggleOps();
+                },this)).mouseout($.proxy(function(){
+                        this.toggleOps();
+                    }, this));
                 return this;
             }
         });
