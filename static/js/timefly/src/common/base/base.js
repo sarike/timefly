@@ -217,11 +217,11 @@ define(function (require, exports, module) {
             this.$el.remove();
         },
 
-        cancel: function(e){
+        cancel: function(){
             this.$el.slideUp($.proxy(function(){
                 this.destroy();
             }, this));
-            e.preventDefault();
+            return false;
         },
 
         initFormValidation: function(){
@@ -317,19 +317,17 @@ define(function (require, exports, module) {
         },
 
         addNewTodo: function () {
-            if(this.user.get('self_home')){
-                var addOrEditNewTodoView = new AddOrEditTodoView({
-                    contentView: this.contentView
-                });
-                addOrEditNewTodoView.$el.hide();
-                if (this.contentView.itemContainer)
-                    this.$(this.contentView.itemContainer).prepend(addOrEditNewTodoView.render().el);
-                else
-                    this.contentView.$el.prepend(addOrEditNewTodoView.render().el);
-                addOrEditNewTodoView.$el.slideDown();
-            }else{
-
+            if(this.addOrEditNewTodoView){
+                this.addOrEditNewTodoView.cancel();
+                delete this.addOrEditNewTodoView;
+                return;
             }
+            this.addOrEditNewTodoView = new AddOrEditTodoView({
+                contentView: this.contentView
+            });
+            this.addOrEditNewTodoView.$el.hide();
+            $("#content").prepend(this.addOrEditNewTodoView.render().el);
+            this.addOrEditNewTodoView.$el.slideDown();
         },
 
         initialize: function () {
