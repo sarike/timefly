@@ -41,7 +41,6 @@ def user_home(username):
     with session_cm() as db:
         owner = db.query(User).filter_by(username=username).first()
         if owner:
-            print "set owner to g: ", owner.email
             res.update(data={
                 'owner': owner.to_dict()
             })

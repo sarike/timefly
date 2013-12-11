@@ -4,6 +4,7 @@ from flask import jsonify
 from flask.blueprints import Blueprint
 from flask.ext.login import current_user
 from flask.globals import request, session
+from sqlalchemy.orm import joinedload
 from models.achievement import Achievement
 from models.todo import Todo
 from utils.db_utils.database_session import session_cm
@@ -109,7 +110,7 @@ def latest_todos():
 @todo.route('/my_todos')
 def my_todos():
     res = ajax_response()
-    flag = request.args.get('flag')
+    flag = request.args.get('flag', 'doing')
     with session_cm() as db:
         my_todo_list_query = db.query(Todo). \
             filter(Todo.todo_is_deleted == False,
@@ -133,7 +134,7 @@ def my_todos():
                 filter(Todo.todo_is_completed == False,
                        Todo.todo_end < datetime.date.today())
 
-        my_todo_list = my_todo_list_query.all()
+        my_todo_list = my_todo_list_query.options(joinedload('achievement_list')).all()
 
         items = []
         for td in my_todo_list:
