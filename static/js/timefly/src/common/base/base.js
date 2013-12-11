@@ -193,7 +193,7 @@ define(function (require, exports, module) {
 
     var AddOrEditTodoView = Backbone.View.extend({
         template: _.template(require("./templates/add_edit_todo.tpl")),
-        className: 'todo',
+        className: 'box',
 
         events: {
             "click button.submit": 'submitTodoForm',
@@ -218,9 +218,7 @@ define(function (require, exports, module) {
         },
 
         cancel: function(){
-            this.$el.slideUp($.proxy(function(){
-                this.destroy();
-            }, this));
+            this.$el.slideUp();
             return false;
         },
 
@@ -317,17 +315,14 @@ define(function (require, exports, module) {
         },
 
         addNewTodo: function () {
-            if(this.addOrEditNewTodoView){
-                this.addOrEditNewTodoView.cancel();
-                delete this.addOrEditNewTodoView;
-                return;
+            if(!this.addOrEditNewTodoView){
+                this.addOrEditNewTodoView = new AddOrEditTodoView({
+                    contentView: this.contentView
+                });
+                this.addOrEditNewTodoView.$el.hide();
+                $("#content").prepend(this.addOrEditNewTodoView.render().el);
             }
-            this.addOrEditNewTodoView = new AddOrEditTodoView({
-                contentView: this.contentView
-            });
-            this.addOrEditNewTodoView.$el.hide();
-            $("#content").prepend(this.addOrEditNewTodoView.render().el);
-            this.addOrEditNewTodoView.$el.slideDown();
+            this.addOrEditNewTodoView.$el.slideToggle();
         },
 
         initialize: function () {
