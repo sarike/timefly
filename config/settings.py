@@ -5,6 +5,9 @@ import urlparse
 
 DEBUG = True
 
+RECAPTCHA_PUBLIC_KEY = '6LfJr-sSAAAAAEFMby-eIiGDxxRAo-TuWaKP8pPZ'
+RECAPTCHA_PRIVATE_KEY = '6LfJr-sSAAAAAC1mbnMkP1hfGQlt53YBVwMWQR0R'
+
 if 'TIME_FLY_MODE' in os.environ:
     time_fly_mode = os.environ.get('TIME_FLY_MODE').lower()
     if time_fly_mode == 'debug':

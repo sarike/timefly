@@ -3,6 +3,8 @@ import re
 from flask import Blueprint, render_template, jsonify, redirect
 from flask.ext.login import login_user, logout_user, current_user
 from flask.ext.wtf.form import Form
+from flask.ext.wtf.recaptcha.fields import RecaptchaField
+from flask.ext.wtf.recaptcha.validators import Recaptcha
 from flask.globals import request
 from flask.helpers import url_for
 from wtforms.fields.core import BooleanField
@@ -185,6 +187,7 @@ class RegisterForm(Form):
     password_confirm = PasswordField(u'密码确认',
                                      [validators.Required(message=u"请再次输入密码"),
                                       validators.equal_to('password', message=u'两次输入的密码必须要一致')])
+    recaptcha = RecaptchaField(u'验证码', [Recaptcha(message=u'验证码不正确')])
 
     def validate_email(self, field):
         with session_cm() as session:

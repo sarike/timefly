@@ -60,6 +60,17 @@
               </span>
             </div>
           </div>
+        <div class="control-group {%if form.recaptcha.errors%}error{%endif%}">
+            <label class="control-label" for="inputEmail">验证码</label>
+            <div class="controls">
+              {{form.recaptcha}}
+               <span class="help-inline">
+                {% for error in form.recaptcha.errors %}
+                    {{ error }}
+                {% endfor %}
+              </span>
+            </div>
+          </div>
       </div>
 
         <div class="form-signin-footer text-center"><button class="btn btn-info" type="submit">注册</button> 
