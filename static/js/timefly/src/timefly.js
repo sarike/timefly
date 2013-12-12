@@ -10,7 +10,7 @@ define(function(require, exports) {
 
     $(function(){
 
-//        $('#sidebar').affix(200);
+//        $('#sidebar').affix();
 
         $.get("me", function(res){
 

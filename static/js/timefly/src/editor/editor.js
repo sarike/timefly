@@ -40,7 +40,6 @@ define(function(require){
                 text_area_name: this.text_area_name,
                 editor_label: this.editor_label
             }));
-            console.info(this.$("#md-editor-content").height());
             return this;
         },
 

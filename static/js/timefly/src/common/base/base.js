@@ -210,6 +210,7 @@ define(function (require, exports, module) {
 
         submitTodoForm: function(e){
             this.$("#add_todo_form").submit();
+            delete this.options.header.addOrEditNewTodoView;
             e.preventDefault();
         },
 
@@ -317,7 +318,8 @@ define(function (require, exports, module) {
         addNewTodo: function () {
             if(!this.addOrEditNewTodoView){
                 this.addOrEditNewTodoView = new AddOrEditTodoView({
-                    contentView: this.contentView
+                    contentView: this.contentView,
+                    header: this
                 });
                 this.addOrEditNewTodoView.$el.hide();
                 $("#content").prepend(this.addOrEditNewTodoView.render().el);
