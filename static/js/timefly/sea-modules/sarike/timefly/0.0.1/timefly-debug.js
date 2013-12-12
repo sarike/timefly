@@ -6,8 +6,17 @@ define("sarike/timefly/0.0.1/timefly-debug", [ "$-debug", "gallery/backbone/1.0.
     var Common = require("./common/common-debug");
     exports.mm = require("sarike/moment-timezone/0.0.3/moment-timezone-debug");
     exports.md = require("sarike/markdown/0.6.0/markdown-debug");
+    $.ajaxSetup({
+        global: true,
+        beforeSend: function() {
+            $("#loading").fadeIn();
+        },
+        complete: function() {
+            $("#loading").fadeOut();
+        }
+    });
     $(function() {
-        //        $('#sidebar').affix(200);
+        //        $('#sidebar').affix();
         $.get("me", function(res) {
             var router = new Backbone.Router(), user = new Common.Models.BaseUser(res.data.user), context = {
                 header: $("header"),
@@ -377,6 +386,7 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
         },
         submitTodoForm: function(e) {
             this.$("#add_todo_form").submit();
+            delete this.options.header.addOrEditNewTodoView;
             e.preventDefault();
         },
         destroy: function() {
@@ -469,7 +479,8 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
         addNewTodo: function() {
             if (!this.addOrEditNewTodoView) {
                 this.addOrEditNewTodoView = new AddOrEditTodoView({
-                    contentView: this.contentView
+                    contentView: this.contentView,
+                    header: this
                 });
                 this.addOrEditNewTodoView.$el.hide();
                 $("#content").prepend(this.addOrEditNewTodoView.render().el);
@@ -543,7 +554,6 @@ define("sarike/timefly/0.0.1/editor/editor-debug", [ "$-debug", "gallery/backbon
                 text_area_name: this.text_area_name,
                 editor_label: this.editor_label
             }));
-            console.info(this.$("#md-editor-content").height());
             return this;
         },
         getValue: function() {
