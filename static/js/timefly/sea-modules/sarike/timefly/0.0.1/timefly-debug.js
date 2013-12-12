@@ -1,9 +1,8 @@
-define("sarike/timefly/0.0.1/timefly-debug", [ "$-debug", "gallery/backbone/1.0.0/backbone-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/bootstrap/2.3.2/bootstrap-debug", "jquery-plugin/form/3.44.0/form-debug", "./common/common-debug", "./libs/libs-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "./common/base/base-debug", "./editor/editor-debug", "./editor/templates/editor-debug.tpl", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "./common/base/templates/common_empty-debug.tpl", "./common/base/templates/common_content-debug.tpl", "./common/base/templates/add_edit_todo-debug.tpl", "./common/base/templates/common_header-debug.tpl", "./common/box/box-debug", "./common/box/templates/user_item-debug.tpl", "./common/box/templates/user_list_box-debug.tpl", "./common/box/templates/about_box-debug.tpl", "./common/box/templates/user_profile_box-debug.tpl", "./common/box/templates/side_nav_box-debug.tpl", "sarike/moment-timezone/0.0.3/moment-timezone-debug", "sarike/moment/2.4.0/moment-debug", "sarike/markdown/0.6.0/markdown-debug", "./index/index-debug", "./index/templates/todo_item-debug.tpl", "./index/templates/index_content-debug.tpl", "./home/home-debug", "./home/templates/setting_form-debug.tpl", "./home/templates/password_reset_form-debug.tpl", "./home/templates/add_complete_modal-debug.tpl", "./home/templates/todo_item-debug.tpl" ], function(require, exports) {
-    var $ = require("$-debug");
-    var Backbone = require("gallery/backbone/1.0.0/backbone-debug");
+define("sarike/timefly/0.0.1/timefly-debug", [ "sarike/bootstrap/2.3.2/bootstrap-debug", "$-debug", "jquery-plugin/form/3.44.0/form-debug", "gallery/backbone/1.0.0/backbone-debug", "gallery/underscore/1.4.4/underscore-debug", "./common/common-debug", "./libs/libs-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "./common/base/base-debug", "./editor/editor-debug", "./editor/templates/editor-debug.tpl", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "./common/base/templates/common_empty-debug.tpl", "./common/base/templates/common_content-debug.tpl", "./common/base/templates/add_edit_todo-debug.tpl", "./common/base/templates/common_header-debug.tpl", "./common/box/box-debug", "./common/box/templates/user_item-debug.tpl", "./common/box/templates/user_list_box-debug.tpl", "./common/box/templates/about_box-debug.tpl", "./common/box/templates/user_profile_box-debug.tpl", "./common/box/templates/side_nav_box-debug.tpl", "sarike/moment-timezone/0.0.3/moment-timezone-debug", "sarike/moment/2.4.0/moment-debug", "sarike/markdown/0.6.0/markdown-debug", "./index/index-debug", "./index/templates/todo_item-debug.tpl", "./index/templates/index_content-debug.tpl", "./home/home-debug", "./home/templates/setting_form-debug.tpl", "./home/templates/password_reset_form-debug.tpl", "./home/templates/add_complete_modal-debug.tpl", "./home/templates/todo_item-debug.tpl" ], function(require, exports) {
+    "use strict";
     require("sarike/bootstrap/2.3.2/bootstrap-debug");
     require("jquery-plugin/form/3.44.0/form-debug");
-    var Common = require("./common/common-debug");
+    var $ = require("$-debug"), Backbone = require("gallery/backbone/1.0.0/backbone-debug"), Common = require("./common/common-debug");
     exports.mm = require("sarike/moment-timezone/0.0.3/moment-timezone-debug");
     exports.md = require("sarike/markdown/0.6.0/markdown-debug");
     $.ajaxSetup({
@@ -34,20 +33,19 @@ define("sarike/timefly/0.0.1/timefly-debug", [ "$-debug", "gallery/backbone/1.0.
 });
 
 define("sarike/timefly/0.0.1/common/common-debug", [ "sarike/timefly/0.0.1/libs/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/0.0.1/common/base/base-debug", "sarike/timefly/0.0.1/editor/editor-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "sarike/timefly/0.0.1/common/box/box-debug" ], function(require, exports, module) {
-    var libs = require("sarike/timefly/0.0.1/libs/libs-debug");
-    var $ = require("$-debug");
-    var _ = require("gallery/underscore/1.4.4/underscore-debug");
-    var Base = require("sarike/timefly/0.0.1/common/base/base-debug");
-    var Box = require("sarike/timefly/0.0.1/common/box/box-debug");
+    "use strict";
+    var libs = require("sarike/timefly/0.0.1/libs/libs-debug"), $ = require("$-debug"), _ = require("gallery/underscore/1.4.4/underscore-debug"), Base = require("sarike/timefly/0.0.1/common/base/base-debug"), Box = require("sarike/timefly/0.0.1/common/box/box-debug");
     var initSideBar = function(context, sidebarBoxes) {
-        if (!sidebarBoxes) return;
+        if (!sidebarBoxes) {
+            return;
+        }
         context.sideBar.empty();
         _.each(sidebarBoxes, function(box) {
             if (box.collection) {
                 context.sideBar.append(box.render().el);
                 box.collection.fetch({
                     success: function(collection) {
-                        if (collection.length == 0) {
+                        if (collection.length === 0) {
                             box.renderEmpty();
                         }
                     }
@@ -62,13 +60,15 @@ define("sarike/timefly/0.0.1/common/common-debug", [ "sarike/timefly/0.0.1/libs/
     };
     var initContent = function(context, content) {
         context.content.html(content.render().el);
-        if (content.collection) content.collection.fetch({
-            success: function(collection) {
-                if (collection.length == 0) {
-                    content.renderEmpty();
+        if (content.collection) {
+            content.collection.fetch({
+                success: function(collection) {
+                    if (collection.length === 0) {
+                        content.renderEmpty();
+                    }
                 }
-            }
-        });
+            });
+        }
     };
     var initFooter = function(context, footer) {
         context.footer.html(footer.render().el);
@@ -98,18 +98,15 @@ define("sarike/timefly/0.0.1/common/common-debug", [ "sarike/timefly/0.0.1/libs/
  * To change this template use File | Settings | File Templates.
  */
 define("sarike/timefly/0.0.1/libs/libs-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug" ], function(require, exports, module) {
-    var $ = require("$-debug");
-    var _ = require("gallery/underscore/1.4.4/underscore-debug");
-    var Backbone = require("gallery/backbone/1.0.0/backbone-debug");
-    var ui = require("sarike/jquery-ui/1.10.3/jquery-ui-debug");
-    var noty = require("sarike/jquery-noty/2.1.0/jquery-noty-debug");
+    "use strict";
+    var Noty, JQueryUI, Dialog, $ = require("$-debug"), _ = require("gallery/underscore/1.4.4/underscore-debug"), Backbone = require("gallery/backbone/1.0.0/backbone-debug"), ui = require("sarike/jquery-ui/1.10.3/jquery-ui-debug"), noty = require("sarike/jquery-noty/2.1.0/jquery-noty-debug");
     /**
      * var dialog = new Dialog({
      *     content: content,
      *     config: { }
      * })
      */
-    var Dialog = Backbone.View.extend({
+    Dialog = Backbone.View.extend({
         _getButton: function(text, click) {
             return {
                 text: text,
@@ -122,8 +119,7 @@ define("sarike/timefly/0.0.1/libs/libs-debug", [ "$-debug", "gallery/underscore/
         },
         tpl_data: {},
         initialize: function() {
-            var okButton = this._getButton("确定", $.proxy(this.ok, this));
-            var cancelButton = this._getButton("取消", $.proxy(this.cancel, this));
+            var okButton = this._getButton("确定", $.proxy(this.ok, this)), cancelButton = this._getButton("取消", $.proxy(this.cancel, this));
             this.defaultConfig.buttons = [ okButton, cancelButton ];
             this.extraInitialize();
         },
@@ -167,10 +163,10 @@ define("sarike/timefly/0.0.1/libs/libs-debug", [ "$-debug", "gallery/underscore/
         showMonthAfterYear: true,
         yearSuffix: "年"
     });
-    var JQueryUI = {
+    JQueryUI = {
         Dialog: Dialog
     };
-    var Noty = {
+    Noty = {
         noty: function(type, info) {
             noty({
                 type: type,
@@ -188,14 +184,15 @@ define("sarike/timefly/0.0.1/libs/libs-debug", [ "$-debug", "gallery/underscore/
             });
         },
         Confirm: function(options) {
-            var ok_button = {
+            var ok_button, cancel_button;
+            ok_button = {
                 addClass: "btn btn-primary",
                 text: "Ok",
                 onClick: options.ok || function(noty) {
                     noty.close();
                 }
             };
-            var cancel_button = {
+            cancel_button = {
                 addClass: "btn btn-danger",
                 text: "Cancel",
                 onClick: options.cancel || function(noty) {
@@ -217,11 +214,8 @@ define("sarike/timefly/0.0.1/libs/libs-debug", [ "$-debug", "gallery/underscore/
 });
 
 define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/libs/libs-debug", "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/0.0.1/editor/editor-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug" ], function(require, exports, module) {
-    var libs = require("sarike/timefly/0.0.1/libs/libs-debug");
-    var Editor = require("sarike/timefly/0.0.1/editor/editor-debug");
-    var $ = require("$-debug");
-    var _ = require("gallery/underscore/1.4.4/underscore-debug");
-    var Backbone = require("gallery/backbone/1.0.0/backbone-debug");
+    "use strict";
+    var libs = require("sarike/timefly/0.0.1/libs/libs-debug"), Editor = require("sarike/timefly/0.0.1/editor/editor-debug"), $ = require("$-debug"), _ = require("gallery/underscore/1.4.4/underscore-debug"), Backbone = require("gallery/backbone/1.0.0/backbone-debug");
     require("sarike/jquery-validate/1.11.1/jquery-validate-debug");
     // Models
     var BaseModel = Backbone.Model.extend({});
@@ -267,7 +261,9 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
         initialize: function() {
             if (this.collection) {
                 this.collection.bind("add", this.addItem, this);
-            } else console.warn("No collection!");
+            } else {
+                console.error("No collection!");
+            }
             this.ItemView = this.ItemView || this.options.ItemView;
         },
         render: function() {
@@ -276,14 +272,16 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
         },
         refresh: function(data) {
             this.$el.empty();
-            if (this.collection) this.collection.fetch({
-                success: $.proxy(function(collection) {
-                    if (collection.length == 0) {
-                        this.renderEmpty();
-                    }
-                }, this),
-                data: data || {}
-            });
+            if (this.collection) {
+                this.collection.fetch({
+                    success: $.proxy(function(collection) {
+                        if (collection.length === 0) {
+                            this.renderEmpty();
+                        }
+                    }, this),
+                    data: data || {}
+                });
+            }
         },
         reRender: function() {
             if (this.itemContainer) {
@@ -308,7 +306,11 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
                 model: model
             });
             itemView.$el.hide();
-            if (this.itemContainer) this.$(this.itemContainer).prepend(itemView.render().el); else this.$el.prepend(itemView.render().el);
+            if (this.itemContainer) {
+                this.$(this.itemContainer).prepend(itemView.render().el);
+            } else {
+                this.$el.prepend(itemView.render().el);
+            }
             itemView.$el.fadeIn();
         }
     });
@@ -341,7 +343,9 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
             }));
         },
         renderSubContent: function() {
-            if (this.template) this.$el.append(this.template(this.options.data));
+            if (this.template) {
+                this.$el.append(this.template(this.options.data));
+            }
         }
     });
     var Content = ArrayBox.extend({
@@ -360,7 +364,9 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
             }));
         },
         renderSubContent: function() {
-            if (this.template) this.$el.append(this.template(this.options.data));
+            if (this.template) {
+                this.$el.append(this.template(this.options.data));
+            }
         },
         renderEmpty: function() {
             this.$el.append(this.emptyView.render().el);
@@ -450,7 +456,6 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
         initialize: function() {
             this.editor = new TodoEditor();
             this.contentView = this.options.contentView;
-            console.info(this.contentView.collection);
         }
     });
     var Header = Backbone.View.extend({
@@ -462,8 +467,8 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
         },
         doLogin: function() {
             this.$("#login-form").ajaxSubmit($.proxy(function(res) {
-                if (res.response == "ok") {
-                    res.data.user.self_home = res.data.user["username"] == this.user.get("other_home_owner");
+                if (res.response === "ok") {
+                    res.data.user.self_home = res.data.user.username === this.user.get("other_home_owner");
                     res.data.user.at_index_page = !res.data.user.self_home;
                     this.user.trigger("update-user-event", res.data.user);
                     this.render();
@@ -488,7 +493,7 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
             this.addOrEditNewTodoView.$el.slideToggle();
         },
         initialize: function() {
-            if (!this.options.user) console.warn("you should pass a user obj when init header"); else this.user = this.options.user;
+            this.user = this.options.user;
             this.contentView = this.options.content;
         },
         render: function() {
@@ -526,6 +531,7 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
  * Created by Sarike on 13-12-6.
  */
 define("sarike/timefly/0.0.1/editor/editor-debug", [ "$-debug", "gallery/backbone/1.0.0/backbone-debug", "gallery/underscore/1.4.4/underscore-debug" ], function(require) {
+    "use strict";
     var $ = require("$-debug"), Backbone = require("gallery/backbone/1.0.0/backbone-debug"), _ = require("gallery/underscore/1.4.4/underscore-debug");
     var editorTemplate = require("sarike/timefly/0.0.1/editor/templates/editor-debug.tpl");
     var EditorView = Backbone.View.extend({
@@ -574,10 +580,8 @@ define("sarike/timefly/0.0.1/common/base/templates/add_edit_todo-debug.tpl", [],
 define("sarike/timefly/0.0.1/common/base/templates/common_header-debug.tpl", [], '<div class="navbar navbar-fixed-top">\n    <div class="navbar-inner">\n        <div class="container">\n            <ul class="nav">\n                <li <% if(user.at_index_page){ %>class="active"<% } %>>\n                    <a href="#" class=" clearfix">\n                        <span><i class="nav-home"></i></span>\n                        <span>主页</span>\n                    </a>\n                </li>\n                <% if(!!user && user.is_authenticated){ %>\n                <li <% if(user.self_home){ %>class="active"<% } %>>\n                    <a href="#<%=user.username %>" class=" clearfix">\n                        <span><i class="nav-me"></i></span>\n                        <span>我</span>\n                    </a>\n                </li>\n                <% } %>\n            </ul>\n\n            <div class="pull-right">\n                <% if(!!user && user.is_authenticated){ %>\n                <ul class="nav">\n                    <li>\n                        <a href="#" class=" clearfix dropdown-toggle" data-toggle="dropdown">\n									<span>\n                                        <%=user.nickname || user.username %>\n									</span>\n									<span>\n										<i class="caret"></i>\n									</span>\n                        </a>\n                        <ul class="dropdown-menu" role="menu" aria-labelledby="">\n                            <li role="presentation">\n                                <a role="menuitem" tabindex="-1" href="#<%= user.username %>/setting">\n                                    <i class="icon-user "></i> 个人资料\n                                </a>\n                            </li>\n                            <li role="presentation" class="divider"></li>\n                            <li role="presentation">\n                                <a role="menuitem" tabindex="-1" href="../account/logout">\n                                    <i class="icon-off"></i> 退出登录</a></li>\n                        </ul>\n                    </li>\n                </ul>\n                <button title="制定新计划" class="add-new-todo btn btn-info">\n                    <i class="nav-new-todo"></i><span></span>\n                </button>\n                <% }else{ %>\n                <form id="login-form" class="form-inline" action="account/ajax_login" method="post">\n                    <input type="text" name="email" class="input-medium" placeholder="Email">\n                    <input type="password" name="password" class="input-medium" placeholder="Password">\n                    <label class="checkbox">\n                        <input type="checkbox" name="remember"> 记住我\n                    </label>\n                    <button type="button" id="login-btn" class="btn btn-info">登录</button>\n                    <button class="btn btn-info" type="button" onclick="javascript:location.href=\'account/reg\'">注册\n                    </button>\n                </form>\n                <% } %>\n            </div>\n        </div>\n    </div>\n</div>');
 
 define("sarike/timefly/0.0.1/common/box/box-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/timefly/0.0.1/libs/libs-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/0.0.1/common/base/base-debug", "sarike/timefly/0.0.1/editor/editor-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug" ], function(require, exports, module) {
-    var $ = require("$-debug");
-    var _ = require("gallery/underscore/1.4.4/underscore-debug");
-    var libs = require("sarike/timefly/0.0.1/libs/libs-debug");
-    var Base = require("sarike/timefly/0.0.1/common/base/base-debug");
+    "use strict";
+    var $ = require("$-debug"), _ = require("gallery/underscore/1.4.4/underscore-debug"), libs = require("sarike/timefly/0.0.1/libs/libs-debug"), Base = require("sarike/timefly/0.0.1/common/base/base-debug");
     var UserItem = Base.Views.Item.extend({
         template: _.template(require("sarike/timefly/0.0.1/common/box/templates/user_item-debug.tpl")),
         tagName: "li",
@@ -639,10 +643,8 @@ define("sarike/timefly/0.0.1/common/box/templates/side_nav_box-debug.tpl", [], '
  * To change this template use File | Settings | File Templates.
  */
 define("sarike/timefly/0.0.1/index/index-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "sarike/timefly/0.0.1/libs/libs-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/0.0.1/common/common-debug", "sarike/timefly/0.0.1/common/base/base-debug", "sarike/timefly/0.0.1/editor/editor-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "sarike/timefly/0.0.1/common/box/box-debug" ], function(require, exports) {
-    var $ = require("$-debug");
-    var _ = require("gallery/underscore/1.4.4/underscore-debug");
-    var libs = require("sarike/timefly/0.0.1/libs/libs-debug");
-    var Common = require("sarike/timefly/0.0.1/common/common-debug");
+    "use strict";
+    var $ = require("$-debug"), _ = require("gallery/underscore/1.4.4/underscore-debug"), libs = require("sarike/timefly/0.0.1/libs/libs-debug"), Common = require("sarike/timefly/0.0.1/common/common-debug");
     var PassionateUserCollection = Common.Collections.BaseCollection.extend({
         url: "account/passionate_users"
     });
@@ -693,6 +695,7 @@ define("sarike/timefly/0.0.1/index/templates/index_content-debug.tpl", [], '<ul 
  * To change this template use File | Settings | File Templates.
  */
 define("sarike/timefly/0.0.1/home/home-debug", [ "$-debug", "gallery/underscore/1.4.4/underscore-debug", "gallery/backbone/1.0.0/backbone-debug", "sarike/timefly/0.0.1/libs/libs-debug", "sarike/jquery-ui/1.10.3/jquery-ui-debug", "sarike/jquery-noty/2.1.0/jquery-noty-debug", "sarike/timefly/0.0.1/common/common-debug", "sarike/timefly/0.0.1/common/base/base-debug", "sarike/timefly/0.0.1/editor/editor-debug", "sarike/jquery-validate/1.11.1/jquery-validate-debug", "sarike/timefly/0.0.1/common/box/box-debug" ], function(require, exports) {
+    "use strict";
     var $ = require("$-debug"), _ = require("gallery/underscore/1.4.4/underscore-debug"), Backbone = require("gallery/backbone/1.0.0/backbone-debug"), libs = require("sarike/timefly/0.0.1/libs/libs-debug"), Common = require("sarike/timefly/0.0.1/common/common-debug"), Editor = require("sarike/timefly/0.0.1/editor/editor-debug");
     var AcContentEditor = Editor.extend({
         text_area_name: "ac_description",
@@ -778,7 +781,7 @@ define("sarike/timefly/0.0.1/home/home-debug", [ "$-debug", "gallery/underscore/
                         $.get(url, {
                             todo_id: todo_id
                         }, function(res) {
-                            if (!!callback && typeof callback == "function") {
+                            if (!!callback && typeof callback === "function") {
                                 callback(res.data);
                             }
                             libs.Noty.NotyWithRes(res);
@@ -898,23 +901,26 @@ define("sarike/timefly/0.0.1/home/home-debug", [ "$-debug", "gallery/underscore/
                 caption: "密码设置"
             } ],
             action: function(nav) {
-                var flag = nav.data("id");
-                var settingContent = this.options.content;
-                if (flag == "profile") context.content.html(settingContent.render().el);
-                if (flag == "pwd_reset") context.content.html(new ResetPasswordContent().render().el);
+                var flag = nav.data("id"), settingContent = this.options.content;
+                if (flag === "profile") {
+                    context.content.html(settingContent.render().el);
+                }
+                if (flag === "pwd_reset") {
+                    context.content.html(new ResetPasswordContent().render().el);
+                }
             }
         });
         context.router.route(":username(/:position)", "home", function(username, position) {
             $.get("/" + username, function(res) {
                 var owner = res.data.owner;
-                var self_home = context.user.get("username") == owner["username"];
+                var self_home = context.user.get("username") === owner.username;
                 context.user.trigger("update-user-event", {
                     self_home: self_home,
                     at_index_page: false,
-                    other_home_owner: owner["username"]
+                    other_home_owner: owner.username
                 });
                 var content = null, sideBarBoxes = null;
-                if (!!position && position == "setting") {
+                if (!!position && position === "setting") {
                     content = new SettingContent({
                         data: {
                             user: context.user.toJSON()
