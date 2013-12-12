@@ -209,9 +209,23 @@
 
 
  .todo{
+    position: relative;
  	border:1px solid $main-color;
  	@include border-radius(6px);
  	margin:20px 0px;
+   .vote-btns{
+      border: 1px solid $main-color;
+      position: absolute;
+      top: 50px;
+      right: -50px;
+      .up-vote, .down-vote{
+        padding: 5px 10px;
+        cursor: pointer;
+      }
+     .up-vote{
+       border-bottom: 1px solid $main-color;
+     }
+   }
  }
  .todo>h2{
 	//@include border-top-radius(6px);

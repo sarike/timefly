@@ -1,3 +1,13 @@
+<div class="vote-btns">
+    <div class="up-vote" title="看好你哟">
+        <span class="icon-thumbs-up"></span>
+        <span class="up-vote-count">0</span>
+    </div>
+    <div class="down-vote" title="拉倒吧你">
+        <span class="icon-thumbs-down"></span>
+        <span class="down-vote-count">0</span>
+    </div>
+</div>
 <h2>
     <%=todo.todo_name %>
     <% if(user.is_authenticated && user.self_home){ %>

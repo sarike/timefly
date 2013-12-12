@@ -97,7 +97,17 @@ define(function (require, exports) {
                 'click a.mark-complete': 'markComplete',
                 'click a.delete-todo': 'deleteTodo',
                 'click a.change-visible': 'changeVisible',
-                'click a.add-new-complete': 'addNewComplete'
+                'click a.add-new-complete': 'addNewComplete',
+                'click .down-vote': 'downVote',
+                'click .up-vote': 'upVote'
+            },
+
+            downVote: function () {
+                
+            },
+
+            upVote: function () {
+
             },
 
             toggleOps: function () {
