@@ -8,6 +8,16 @@ define(function(require, exports) {
     exports.mm = require('moment-timezone');
     exports.md = require('markdown');
 
+    $.ajaxSetup({
+        global: true,
+        beforeSend: function(){
+            $("#loading").fadeIn();
+        },
+        complete: function(){
+            $("#loading").fadeOut();
+        }
+    });
+
     $(function(){
 
 //        $('#sidebar').affix();
