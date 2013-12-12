@@ -1,20 +1,22 @@
 define(function (require, exports, module) {
-    var libs = require('../../libs/libs');
-    var Editor = require('../../editor/editor');
-    var $ = require('$');
-    var _ = require('underscore');
-    var Backbone = require('backbone');
+    "use strict";
+    var libs = require('../../libs/libs'),
+        Editor = require('../../editor/editor'),
+        $ = require('$'),
+        _ = require('underscore'),
+        Backbone = require('backbone');
+
     require("jquery-validate");
 
     // Models
     var BaseModel = Backbone.Model.extend({});
 
     var BaseUser = Backbone.Model.extend({
-        initialize: function(){
+        initialize: function () {
             this.on('update-user-event', this.updateUser, this);
         },
 
-        updateUser: function(data){
+        updateUser: function (data) {
             this.set(data);
         }
     });
@@ -30,7 +32,7 @@ define(function (require, exports, module) {
     // Views
     var Item = Backbone.View.extend({
 
-        initialize: function(){
+        initialize: function () {
             this.model.bind('change', $.proxy(this.render, this));
         },
 
@@ -43,13 +45,13 @@ define(function (require, exports, module) {
     var EmptyView = Backbone.View.extend({
         template: _.template(require("./templates/common_empty.tpl")),
 
-        render: function(){
+        render: function () {
             this.$el.html(this.template());
             this.$el.show();
             return this;
         },
 
-        hide: function(){
+        hide: function () {
             this.$el.hide();
         }
     });
@@ -72,34 +74,35 @@ define(function (require, exports, module) {
             return this;
         },
 
-        refresh: function(data){
+        refresh: function (data) {
             this.$el.empty();
-            if(this.collection)
+            if (this.collection) {
                 this.collection.fetch({
-                    success: $.proxy(function(collection){
-                        if(collection.length == 0){
+                    success: $.proxy(function (collection) {
+                        if (collection.length === 0) {
                             this.renderEmpty();
                         }
                     }, this),
                     data: data || {}
                 });
+            }
         },
 
-        reRender: function(){
-            if (this.itemContainer){
+        reRender: function () {
+            if (this.itemContainer) {
                 this.itemContainer.empty();
-            }else{
+            } else {
                 this.$el.empty();
             }
             this.collection.each(this.addItem, this);
         },
 
-        renderEmpty: function(){
+        renderEmpty: function () {
             this.$el.html(this.emptyView.render().el);
         },
 
         addItem: function (model) {
-            if(this.collection.length > 0){
+            if (this.collection.length > 0) {
                 this.emptyView.hide();
             }
             if (!this.ItemView) {
@@ -108,10 +111,11 @@ define(function (require, exports, module) {
             }
             var itemView = new this.ItemView({model: model});
             itemView.$el.hide();
-            if (this.itemContainer)
+            if (this.itemContainer) {
                 this.$(this.itemContainer).prepend(itemView.render().el);
-            else
+            } else {
                 this.$el.prepend(itemView.render().el);
+            }
             itemView.$el.fadeIn();
         }
     });
@@ -153,8 +157,9 @@ define(function (require, exports, module) {
         },
 
         renderSubContent: function () {
-            if (this.template)
-                this.$el.append(this.template(this.options.data))
+            if (this.template) {
+                this.$el.append(this.template(this.options.data));
+            }
         }
     });
 
@@ -177,11 +182,12 @@ define(function (require, exports, module) {
         },
 
         renderSubContent: function () {
-            if (this.template)
-                this.$el.append(this.template(this.options.data))
+            if (this.template) {
+                this.$el.append(this.template(this.options.data));
+            }
         },
 
-        renderEmpty: function(){
+        renderEmpty: function () {
             this.$el.append(this.emptyView.render().el);
         }
     });
@@ -200,7 +206,7 @@ define(function (require, exports, module) {
             "click button.cancel": "cancel"
         },
 
-        render: function(){
+        render: function () {
             this.$el.html(this.template());
             this.$('.editor-field').html(this.editor.render().el);
             this.initFormValidation();
@@ -208,22 +214,22 @@ define(function (require, exports, module) {
             return this;
         },
 
-        submitTodoForm: function(e){
+        submitTodoForm: function (e) {
             this.$("#add_todo_form").submit();
             delete this.options.header.addOrEditNewTodoView;
             e.preventDefault();
         },
 
-        destroy: function(){
+        destroy: function () {
             this.$el.remove();
         },
 
-        cancel: function(){
+        cancel: function () {
             this.$el.slideUp();
             return false;
         },
 
-        initFormValidation: function(){
+        initFormValidation: function () {
             var todo_form = this.$("#add_todo_form");
             var self = this;
             todo_form.validate({
@@ -257,7 +263,7 @@ define(function (require, exports, module) {
             });
         },
 
-        initDatePicker: function(){
+        initDatePicker: function () {
             var start_date = this.$("#id_todo_start"),
                 end_date = this.$("#id_todo_end");
 
@@ -280,10 +286,9 @@ define(function (require, exports, module) {
             });
         },
 
-        initialize: function(){
+        initialize: function () {
             this.editor = new TodoEditor();
             this.contentView = this.options.contentView;
-            console.info(this.contentView.collection)
         }
     });
 
@@ -297,12 +302,12 @@ define(function (require, exports, module) {
 
         doLogin: function () {
             this.$("#login-form").ajaxSubmit($.proxy(function (res) {
-                if (res.response == 'ok') {
-                    res.data.user.self_home = res.data.user['username'] == this.user.get("other_home_owner");
+                if (res.response === 'ok') {
+                    res.data.user.self_home = res.data.user.username === this.user.get("other_home_owner");
                     res.data.user.at_index_page = !res.data.user.self_home;
                     this.user.trigger("update-user-event", res.data.user);
                     this.render();
-                    if(res.data.user.self_home){
+                    if (res.data.user.self_home) {
                         this.contentView.reRender();
                     }
                 } else {
@@ -316,7 +321,7 @@ define(function (require, exports, module) {
         },
 
         addNewTodo: function () {
-            if(!this.addOrEditNewTodoView){
+            if (!this.addOrEditNewTodoView) {
                 this.addOrEditNewTodoView = new AddOrEditTodoView({
                     contentView: this.contentView,
                     header: this
@@ -328,10 +333,7 @@ define(function (require, exports, module) {
         },
 
         initialize: function () {
-            if (!this.options.user)
-                console.warn("you should pass a user obj when init header");
-            else
-                this.user = this.options.user;
+            this.user = this.options.user;
             this.contentView = this.options.content;
         },
 
@@ -365,5 +367,5 @@ define(function (require, exports, module) {
             Header: Header,
             Footer: Footer
         }
-    }
+    };
 });

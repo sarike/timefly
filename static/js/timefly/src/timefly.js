@@ -1,28 +1,29 @@
-define(function(require, exports) {
-    var $ = require("$");
-    var Backbone = require("backbone");
+define(function (require, exports) {
+    "use strict";
     require("bootstrap");
     require("form");
-    var Common = require("./common/common");
+    var $ = require("$"),
+        Backbone = require("backbone"),
+        Common = require("./common/common");
 
     exports.mm = require('moment-timezone');
     exports.md = require('markdown');
 
     $.ajaxSetup({
         global: true,
-        beforeSend: function(){
+        beforeSend: function () {
             $("#loading").fadeIn();
         },
-        complete: function(){
+        complete: function () {
             $("#loading").fadeOut();
         }
     });
 
-    $(function(){
+    $(function () {
 
 //        $('#sidebar').affix();
 
-        $.get("me", function(res){
+        $.get("me", function (res) {
 
             var router = new Backbone.Router(),
                 user = new Common.Models.BaseUser(res.data.user),

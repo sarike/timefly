@@ -5,21 +5,21 @@
  * Time: 下午8:04
  * To change this template use File | Settings | File Templates.
  */
-
 define(function (require, exports, module) {
-    var $ = require("$");
-    var _ = require("underscore");
-    var Backbone = require("backbone");
-    var ui = require("jquery-ui");
-    var noty = require("jquery-noty");
-
+    "use strict";
+    var Noty, JQueryUI, Dialog,
+        $ = require("$"),
+        _ = require("underscore"),
+        Backbone = require("backbone"),
+        ui = require("jquery-ui"),
+        noty = require("jquery-noty");
     /**
      * var dialog = new Dialog({
      *     content: content,
      *     config: { }
      * })
      */
-    var Dialog = Backbone.View.extend({
+    Dialog = Backbone.View.extend({
 
         _getButton: function (text, click) {
             return {
@@ -36,8 +36,8 @@ define(function (require, exports, module) {
         tpl_data: {},
 
         initialize: function () {
-            var okButton = this._getButton("确定", $.proxy(this.ok, this));
-            var cancelButton = this._getButton("取消", $.proxy(this.cancel, this));
+            var okButton = this._getButton("确定", $.proxy(this.ok, this)),
+                cancelButton = this._getButton("取消", $.proxy(this.cancel, this));
             this.defaultConfig.buttons = [
                 okButton,
                 cancelButton
@@ -45,10 +45,11 @@ define(function (require, exports, module) {
             this.extraInitialize();
         },
 
-        extraInitialize: function(){},
+        extraInitialize: function () {
+        },
 
         ok: function () {
-            console.warn("This is the default okClick, maybe you shoud override ok Func!")
+            console.warn("This is the default okClick, maybe you shoud override ok Func!");
         },
 
         cancel: function () {
@@ -96,19 +97,19 @@ define(function (require, exports, module) {
         yearSuffix: '年'
     });
 
-    var JQueryUI = {
+    JQueryUI = {
         Dialog: Dialog
     };
 
-    var Noty = {
+    Noty = {
 
-        noty: function(type, info){
+        noty: function (type, info) {
             noty({
                 type: type,
                 layout: 'center',
                 text: info,
                 timeout: 1000
-            })
+            });
         },
 
         NotyWithRes: function (res) {
@@ -117,29 +118,30 @@ define(function (require, exports, module) {
                 layout: res.layout,
                 text: res.info,
                 timeout: 1000
-            })
+            });
         },
 
         Confirm: function (options) {
-            var ok_button = {
+            var ok_button, cancel_button;
+            ok_button = {
                 addClass: 'btn btn-primary',
                 text: 'Ok',
-                onClick: options.ok || function(noty){
-                     noty.close();
+                onClick: options.ok || function (noty) {
+                    noty.close();
                 }
             };
-            var cancel_button = {
+            cancel_button = {
                 addClass: 'btn btn-danger',
                 text: 'Cancel',
-                onClick: options.cancel || function(noty){
-                     noty.close();
+                onClick: options.cancel || function (noty) {
+                    noty.close();
                 }
             };
             noty({
                 type: options.type || 'information',
                 layout: options.layout || 'center',
                 text: options.text || '你确定吗？',
-                buttons: [ok_button,cancel_button]
+                buttons: [ok_button, cancel_button]
             });
         }
     };

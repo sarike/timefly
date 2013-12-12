@@ -1,8 +1,9 @@
-define(function(require, exports, module){
-    var $ = require('$');
-    var _ = require('underscore');
-    var libs = require('../../libs/libs');
-    var Base = require('../base/base');
+define(function (require, exports, module) {
+    "use strict";
+    var $ = require('$'),
+        _ = require('underscore'),
+        libs = require('../../libs/libs'),
+        Base = require('../base/base');
 
     var UserItem = Base.Views.Item.extend({
         template: _.template(require("./templates/user_item.tpl")),
@@ -31,17 +32,17 @@ define(function(require, exports, module){
             'click .nav-list>li': 'clickNavItem'
         },
 
-        clickNavItem: function(e){
+        clickNavItem: function (e) {
             var nav = $(e.currentTarget);
             this.$('li').removeClass('active');
             nav.addClass('active');
-            this.action(nav)
+            this.action(nav);
         },
 
-        action: function(nav){
+        action: function (nav) {
         },
 
-        render: function(){
+        render: function () {
             this.$el.html(this.template({
                 side_nav_list: this.side_nav_list || this.options.side_nav_list || []
             }));
@@ -54,5 +55,5 @@ define(function(require, exports, module){
         AboutBox: AboutBox,
         UserProfileBox: UserProfileBox,
         SideNavBox: SideNavBox
-    }
+    };
 });

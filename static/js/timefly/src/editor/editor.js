@@ -1,7 +1,8 @@
 /**
  * Created by Sarike on 13-12-6.
  */
-define(function(require){
+define(function (require) {
+    "use strict";
     var $ = require('$'),
         Backbone = require('backbone'),
         _ = require('underscore');
@@ -21,21 +22,21 @@ define(function(require){
             "click .op-edit": "edit"
         },
 
-        preView: function(){
+        preView: function () {
             this.$(".preview-content").html(window.tf.md.toHTML(this.getValue())).show();
             this.$(".op-edit").show();
             this.$(".op-preview").hide();
             this.$("#md-editor-content").hide();
         },
 
-        edit: function(){
+        edit: function () {
             this.$(".preview-content").empty().hide();
             this.$(".op-edit").hide();
             this.$(".op-preview").show();
             this.$("#md-editor-content").show();
         },
 
-        render: function(){
+        render: function () {
             this.$el.html(this.template({
                 text_area_name: this.text_area_name,
                 editor_label: this.editor_label
@@ -43,10 +44,10 @@ define(function(require){
             return this;
         },
 
-        getValue: function(){
+        getValue: function () {
             return this.$('#md-editor-content').val();
         }
     });
 
-    return EditorView
+    return EditorView;
 });

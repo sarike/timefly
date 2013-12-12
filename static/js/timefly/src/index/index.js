@@ -6,6 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 define(function(require, exports){
+    "use strict";
     var $ = require('$');
     var _ = require('underscore');
     var libs = require('../libs/libs');
