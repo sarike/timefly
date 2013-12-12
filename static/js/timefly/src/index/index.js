@@ -5,12 +5,12 @@
  * Time: 下午9:58
  * To change this template use File | Settings | File Templates.
  */
-define(function(require, exports){
+define(function (require, exports) {
     "use strict";
-    var $ = require('$');
-    var _ = require('underscore');
-    var libs = require('../libs/libs');
-    var Common = require('../common/common');
+    var $ = require('$'),
+        _ = require('underscore'),
+        libs = require('../libs/libs'),
+        Common = require('../common/common');
 
     var PassionateUserCollection = Common.Collections.BaseCollection.extend({
         url: "account/passionate_users"
@@ -22,7 +22,7 @@ define(function(require, exports){
     var TodoItem = Common.Views.Item.extend({
         className: "media",
         template: _.template(require("./templates/todo_item.tpl")),
-        render: function(){
+        render: function () {
             this.$el.html(this.template(this.model.toJSON()));
             return this;
         }
@@ -36,8 +36,8 @@ define(function(require, exports){
         ItemView: TodoItem
     });
 
-    exports.init = function(context){
-        context.router.route("", "index", function(){
+    exports.init = function (context) {
+        context.router.route("", "index", function () {
             var sideBarBoxes = [
                     new Common.Box.UserBox({
                         collection: new PassionateUserCollection()
@@ -56,5 +56,5 @@ define(function(require, exports){
                 content: content
             });
         });
-    }
+    };
 });

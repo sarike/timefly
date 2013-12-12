@@ -5,7 +5,7 @@
  * Time: 下午20:09
  * To change this template use File | Settings | File Templates.
  */
-define(function(require, exports){
+define(function (require, exports) {
     "use strict";
     var $ = require('$'),
         _ = require('underscore'),
@@ -37,14 +37,14 @@ define(function(require, exports){
             this.$("#ac-form").submit();
         },
 
-        extraInitialize: function(){
+        extraInitialize: function () {
             this.todoView = this.options.todoView;
             _.extend(this.tpl_data, {
                 todo_id: this.todoView.model.get('todo_id')
             });
         },
 
-        extraRender: function(){
+        extraRender: function () {
             this.$('.editor-field').html(this.options.editor.render().el);
             var ac_form = this.$("#ac-form");
             var self = this;
@@ -58,17 +58,17 @@ define(function(require, exports){
                     }, self));
                 },
                 ignore: "input[type='checkbox']",
-                errorPlacement: function(error, element) {
+                errorPlacement: function (error, element) {
                     element.prev().hide();
                     element.prev().after(error);
                 },
-                success:function(label){
+                success: function (label) {
                     label.prev().show();
                     label.remove();
                 },
                 rules: {
                     ac_name: {
-                        required:true,
+                        required: true,
                         maxlength: 20
                     },
                     ac_description: 'required'
@@ -78,13 +78,13 @@ define(function(require, exports){
                         required: "不响亮不要紧，可不能不填哟",
                         maxlength: jQuery.format("够响亮了，不过不能多于{0}个字符")
                     },
-                    ac_description:  "你到底是完成了什么呢？"
+                    ac_description: "你到底是完成了什么呢？"
                 }
             });
         }
     });
 
-    exports.init = function(context){
+    exports.init = function (context) {
 
         var editor = new AcContentEditor();
 
@@ -100,18 +100,18 @@ define(function(require, exports){
                 'click a.add-new-complete': 'addNewComplete'
             },
 
-            toggleOps: function(){
+            toggleOps: function () {
                 this.$(".todo-ops").toggle();
             },
 
-            dealTodo: function(url, callback, notification){
+            dealTodo: function (url, callback, notification) {
                 var todo_id = this.model.get('todo_id');
                 libs.Noty.Confirm({
                     text: notification,
-                    ok: function(noty){
+                    ok: function (noty) {
                         noty.close();
-                        $.get(url, {todo_id: todo_id}, function(res){
-                            if(!!callback && typeof callback == 'function'){
+                        $.get(url, {todo_id: todo_id}, function (res) {
+                            if (!!callback && typeof callback === 'function') {
                                 callback(res.data);
                             }
                             libs.Noty.NotyWithRes(res);
@@ -120,29 +120,27 @@ define(function(require, exports){
                 });
             },
 
-            markComplete: function(){
-                var notification = this.model.get('todo_is_completed') ?
-                    '确定要撤销已完成状态吗？' : '确定要标记为完成吗？';
-                this.dealTodo('/todo/mark_complete', $.proxy(function(data){
+            markComplete: function () {
+                var notification = this.model.get('todo_is_completed') ? '确定要撤销已完成状态吗？' : '确定要标记为完成吗？';
+                this.dealTodo('/todo/mark_complete', $.proxy(function (data) {
                     this.model.set('todo_is_completed', data.todo_is_completed);
                 }, this), notification);
             },
 
-            deleteTodo: function(){
-                this.dealTodo('/todo/delete_todo',  $.proxy(function(data){
+            deleteTodo: function () {
+                this.dealTodo('/todo/delete_todo', $.proxy(function (data) {
                     this.$el.fadeOut();
                 }, this), '确定要删除吗？');
             },
 
-            changeVisible: function(){
-                var notification = this.model.get('todo_visible') ?
-                    '确定要设为私密计划吗？' : '确定要公开该计划吗？';
-                this.dealTodo('/todo/change_visible', $.proxy(function(data){
+            changeVisible: function () {
+                var notification = this.model.get('todo_visible') ? '确定要设为私密计划吗？' : '确定要公开该计划吗？';
+                this.dealTodo('/todo/change_visible', $.proxy(function (data) {
                     this.model.set('todo_visible', data.todo_visible);
                 }, this), notification);
             },
 
-            addNewComplete: function(){
+            addNewComplete: function () {
                 var addNewAcModal = new AddNewAcModal({
                     editor: editor,
                     todoView: this
@@ -150,21 +148,21 @@ define(function(require, exports){
                 addNewAcModal.open({
                     width: $(window).width() * 0.6,
                     modal: true,
-                    title:"记录新的突破",
+                    title: "记录新的突破",
                     resizable: false
                 });
             },
 
-            render: function(){
+            render: function () {
                 this.$el.html(this.template({
                     todo: this.model.toJSON(),
                     user: context.user.toJSON()
                 }));
-                this.$el.mouseover($.proxy(function(){
+                this.$el.mouseover($.proxy(function () {
                     this.toggleOps();
-                },this)).mouseout($.proxy(function(){
-                        this.toggleOps();
-                    }, this));
+                }, this)).mouseout($.proxy(function () {
+                    this.toggleOps();
+                }, this));
                 return this;
             }
         });
@@ -184,9 +182,9 @@ define(function(require, exports){
                 'click #updateProfile': 'updateProfile'
             },
 
-            updateProfile: function(){
+            updateProfile: function () {
                 var desc = this.$('#id_description').val();
-                $.post('/account/update_profile', {desc: desc}, function(res){
+                $.post('/account/update_profile', {desc: desc}, function (res) {
                     libs.Noty.NotyWithRes(res);
                 });
             }
@@ -200,7 +198,7 @@ define(function(require, exports){
                 'click #resetPwd': 'resetPwd'
             },
 
-            resetPwd: function(){
+            resetPwd: function () {
                 var old_password = this.$('#id_old_password').val();
                 var new_password = this.$('#id_new_password').val();
                 var new_password_confirm = this.$('#id_new_password_confirm').val();
@@ -208,7 +206,7 @@ define(function(require, exports){
                     old_password: old_password,
                     new_password: new_password,
                     new_password_confirm: new_password_confirm
-                }, function(res){
+                }, function (res) {
                     libs.Noty.NotyWithRes(res);
                 });
             }
@@ -231,7 +229,7 @@ define(function(require, exports){
                 }
             ],
 
-            action: function(nav){
+            action: function (nav) {
                 var nav_id = nav.data('id');
                 this.options.content.refresh({flag: nav_id});
             }
@@ -250,30 +248,32 @@ define(function(require, exports){
                 }
             ],
 
-            action: function(nav){
-                var flag = nav.data('id');
-                var settingContent = this.options.content;
-                if(flag == 'profile')
+            action: function (nav) {
+                var flag = nav.data('id'),
+                    settingContent = this.options.content;
+                if (flag === 'profile') {
                     context.content.html(settingContent.render().el);
-                if(flag == 'pwd_reset')
+                }
+                if (flag === 'pwd_reset') {
                     context.content.html(new ResetPasswordContent().render().el);
+                }
             }
         });
 
-        context.router.route(":username(/:position)", "home", function(username, position){
-            $.get("/" + username, function(res){
+        context.router.route(":username(/:position)", "home", function (username, position) {
+            $.get("/" + username, function (res) {
                 var owner = res.data.owner;
-                var self_home = context.user.get("username") == owner["username"];
+                var self_home = context.user.get("username") === owner.username;
 
                 context.user.trigger('update-user-event', {
                     self_home: self_home,
                     at_index_page: false,
-                    other_home_owner: owner["username"]
+                    other_home_owner: owner.username
                 });
                 var content = null,
                     sideBarBoxes = null;
 
-                if(!!position && position == 'setting'){
+                if (!!position && position === 'setting') {
                     content = new SettingContent({
                         data: {
                             user: context.user.toJSON()
@@ -287,10 +287,10 @@ define(function(require, exports){
                         }),
                         new Common.Box.AboutBox()
                     ];
-                }else{
+                } else {
 
                     content = new HomeContent({
-                        data:{
+                        data: {
                             user: context.user
                         },
                         collection: new MyTodosCollection()
@@ -313,7 +313,7 @@ define(function(require, exports){
                     content: content
                 });
                 $(document).tooltip();
-            })
+            });
         });
     }
 });

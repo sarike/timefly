@@ -64,8 +64,9 @@ define(function (require, exports, module) {
         initialize: function () {
             if (this.collection) {
                 this.collection.bind("add", this.addItem, this);
-            } else
-                console.warn("No collection!");
+            } else {
+                console.error("No collection!");
+            }
             this.ItemView = this.ItemView || this.options.ItemView;
         },
 
