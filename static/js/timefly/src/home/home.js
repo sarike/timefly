@@ -102,11 +102,14 @@ define(function (require, exports) {
                 'click .up-vote': 'upVote'
             },
 
-            downVote: function () {
+            downVote: function (e) {
+                var $target = $(e.currentTarget),
+                    todo_id = $target.data("todo_id");
+
                 
             },
 
-            upVote: function () {
+            upVote: function (e) {
 
             },
 
