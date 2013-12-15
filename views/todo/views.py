@@ -74,6 +74,41 @@ def change_visible():
     return jsonify(res)
 
 
+@todo.route('/down_vote', methods=['GET'])
+def down_vote():
+    res = ajax_response()
+    todo_id = request.args.get('todo_id')
+    with session_cm() as db:
+        td = db.query(Todo).get(todo_id)
+        if not td.todo_down_vote:
+            td.todo_down_vote = 0
+        td.todo_down_vote += 1
+        res.update(data=td.todo_down_vote)
+        res.update({
+            'data': td.todo_down_vote,
+            'info': '如果你真心觉得不靠谱，希望你能给予正确的指点或者意见，谢谢！'
+        })
+        db.commit()
+        return jsonify(res)
+
+
+@todo.route('/up_vote', methods=['GET'])
+def up_vote():
+    res = ajax_response()
+    todo_id = request.args.get('todo_id')
+    with session_cm() as db:
+        td = db.query(Todo).get(todo_id)
+        if not td.todo_up_vote:
+            td.todo_up_vote = 0
+        td.todo_up_vote += 1
+        res.update({
+            'data': td.todo_up_vote,
+            'info': '鼓励别人，也是一种美德，谢谢！'
+        })
+        db.commit()
+        return jsonify(res)
+
+
 @todo.route('/add_ac', methods=['POST'])
 def add_new_complete():
     res = ajax_response()

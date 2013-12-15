@@ -102,35 +102,46 @@ define(function (require, exports) {
                 'click .up-vote': 'upVote'
             },
 
-            downVote: function (e) {
-                var $target = $(e.currentTarget),
-                    todo_id = $target.data("todo_id");
-
-                
-            },
-
-            upVote: function (e) {
-
-            },
-
             toggleOps: function () {
                 this.$(".todo-ops").toggle();
             },
 
             dealTodo: function (url, callback, notification) {
                 var todo_id = this.model.get('todo_id');
-                libs.Noty.Confirm({
-                    text: notification,
-                    ok: function (noty) {
-                        noty.close();
-                        $.get(url, {todo_id: todo_id}, function (res) {
-                            if (!!callback && typeof callback === 'function') {
-                                callback(res.data);
-                            }
-                            libs.Noty.NotyWithRes(res);
-                        });
-                    }
-                });
+                if (!notification) {
+                    $.get(url, {todo_id: todo_id}, function (res) {
+                        if (!!callback && typeof callback === 'function') {
+                            callback(res.data);
+                        }
+                        libs.Noty.NotyWithRes(res);
+                    });
+                } else {
+                    libs.Noty.Confirm({
+                        text: notification,
+                        ok: function (noty) {
+                            noty.close();
+                            $.get(url, {todo_id: todo_id}, function (res) {
+                                if (!!callback && typeof callback === 'function') {
+                                    callback(res.data);
+                                }
+                                libs.Noty.NotyWithRes(res);
+                            });
+                        }
+                    });
+                }
+            },
+
+            downVote: function () {
+                this.dealTodo('/todo/down_vote', $.proxy(function (data) {
+                    this.model.set('todo_down_vote', data);
+                }, this));
+            },
+
+            upVote: function () {
+                console.info('up vote');
+                this.dealTodo('/todo/up_vote', $.proxy(function (data) {
+                    this.model.set('todo_up_vote', data);
+                }, this));
             },
 
             markComplete: function () {
