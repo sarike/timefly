@@ -133,14 +133,18 @@ define(function (require, exports) {
 
             downVote: function () {
                 this.dealTodo('/todo/down_vote', $.proxy(function (data) {
-                    this.model.set('todo_down_vote', data);
+                    if(data) {
+                        this.model.set('todo_down_vote', data);
+                    }
                 }, this));
             },
 
             upVote: function () {
                 console.info('up vote');
                 this.dealTodo('/todo/up_vote', $.proxy(function (data) {
-                    this.model.set('todo_up_vote', data);
+                    if(data) {
+                        this.model.set('todo_up_vote', data);
+                    }
                 }, this));
             },
 

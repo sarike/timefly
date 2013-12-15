@@ -217,11 +217,16 @@
       border: 1px solid $main-color;
       position: absolute;
       top: 50px;
-      right: -50px;
+      right: -64px;
       .up-vote, .down-vote{
         padding: 5px 10px;
         cursor: pointer;
       }
+     .up-vote-count, .down-vote-count{
+        width: 21px;
+        display: inline-block;
+        text-align: center;
+     }
      .up-vote{
        border-bottom: 1px solid $main-color;
      }

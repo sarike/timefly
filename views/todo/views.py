@@ -78,6 +78,18 @@ def change_visible():
 def down_vote():
     res = ajax_response()
     todo_id = request.args.get('todo_id')
+    if not current_user.is_authenticated():
+        res.update({
+            'info': '还木有登录呢，太没诚意了……',
+            'type': 'error'
+        })
+        return jsonify(res)
+    if request.cookies.get('voted_todo_' + str(todo_id)):
+        res.update({
+            'info': '你已经表示过了，谢谢了哈……',
+            'type': 'info'
+        })
+        return jsonify(res)
     with session_cm() as db:
         td = db.query(Todo).get(todo_id)
         if not td.todo_down_vote:
@@ -89,13 +101,27 @@ def down_vote():
             'info': '如果你真心觉得不靠谱，希望你能给予正确的指点或者意见，谢谢！'
         })
         db.commit()
-        return jsonify(res)
+        response = jsonify(res)
+        response.set_cookie('voted_todo_' + str(todo_id), 'voted')
+        return response
 
 
 @todo.route('/up_vote', methods=['GET'])
 def up_vote():
     res = ajax_response()
     todo_id = request.args.get('todo_id')
+    if not current_user.is_authenticated():
+        res.update({
+            'info': '还木有登录呢，太没诚意了……',
+            'type': 'error'
+        })
+        return jsonify(res)
+    if request.cookies.get('voted_todo_' + str(todo_id)):
+        res.update({
+            'info': '你已经表示过了，谢谢了哈……',
+            'type': 'info'
+        })
+        return jsonify(res)
     with session_cm() as db:
         td = db.query(Todo).get(todo_id)
         if not td.todo_up_vote:
@@ -106,7 +132,9 @@ def up_vote():
             'info': '鼓励别人，也是一种美德，谢谢！'
         })
         db.commit()
-        return jsonify(res)
+        response = jsonify(res)
+        response.set_cookie('voted_todo_' + str(todo_id), 'voted')
+        return response
 
 
 @todo.route('/add_ac', methods=['POST'])
