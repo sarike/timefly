@@ -407,14 +407,14 @@ define("sarike/timefly/0.0.1/common/base/base-debug", [ "sarike/timefly/0.0.1/li
             var self = this;
             todo_form.validate({
                 errorClass: "input-error",
-                submitHandler: function(form) {
+                submitHandler: _.once(function(form) {
                     $(form).ajaxSubmit($.proxy(function(res) {
                         if (this.contentView.collection) {
                             this.contentView.collection.add(res.data);
                         }
                         self.destroy();
                     }, self));
-                },
+                }),
                 ignore: "input[type='checkbox']",
                 errorPlacement: function(error, element) {},
                 rules: {
@@ -725,13 +725,13 @@ define("sarike/timefly/0.0.1/home/home-debug", [ "$-debug", "gallery/underscore/
             var self = this;
             ac_form.validate({
                 errorClass: "error",
-                submitHandler: function(form) {
+                submitHandler: _.once(function(form) {
                     $(form).ajaxSubmit($.proxy(function(res) {
                         this.close();
                         this.todoView.model.get("achievement_list").push(res.data);
                         this.todoView.render();
                     }, self));
-                },
+                }),
                 ignore: "input[type='checkbox']",
                 errorPlacement: function(error, element) {
                     element.prev().hide();
@@ -769,7 +769,9 @@ define("sarike/timefly/0.0.1/home/home-debug", [ "$-debug", "gallery/underscore/
                 "click a.change-visible": "changeVisible",
                 "click a.add-new-complete": "addNewComplete",
                 "click .down-vote": "downVote",
-                "click .up-vote": "upVote"
+                "click .up-vote": "upVote",
+                "mouseover .todo-wrapper": "toggleOps",
+                "mouseout .todo-wrapper": "toggleOps"
             },
             toggleOps: function() {
                 this.$(".todo-ops").toggle();
@@ -810,7 +812,6 @@ define("sarike/timefly/0.0.1/home/home-debug", [ "$-debug", "gallery/underscore/
                 }, this));
             },
             upVote: function() {
-                console.info("up vote");
                 this.dealTodo("/todo/up_vote", $.proxy(function(data) {
                     if (data) {
                         this.model.set("todo_up_vote", data);
@@ -851,11 +852,6 @@ define("sarike/timefly/0.0.1/home/home-debug", [ "$-debug", "gallery/underscore/
                     todo: this.model.toJSON(),
                     user: context.user.toJSON()
                 }));
-                this.$el.mouseover($.proxy(function() {
-                    this.toggleOps();
-                }, this)).mouseout($.proxy(function() {
-                    this.toggleOps();
-                }, this));
                 return this;
             }
         });
@@ -990,4 +986,4 @@ define("sarike/timefly/0.0.1/home/templates/password_reset_form-debug.tpl", [], 
 
 define("sarike/timefly/0.0.1/home/templates/add_complete_modal-debug.tpl", [], '<div id="acModal">\n    <div>\n        <form id="ac-form" action="todo/add_ac" method="post">\n            <input type="hidden" name="todo_id" value="<%=todo_id %>"/>\n            <label for="id_ac_name">为你这一重大突破起一个响亮的名字</label>\n            <input id="id_ac_name" maxlength="20" name="ac_name" type="text" class="input-block-level">\n            <div class="editor-field">\n            </div>\n        </form>\n    </div>\n</div>');
 
-define("sarike/timefly/0.0.1/home/templates/todo_item-debug.tpl", [], '<div class="vote-btns">\n    <div class="up-vote" title="看好你哟">\n        <span class="icon-thumbs-up"></span>\n        <span class="up-vote-count"><%= todo.todo_up_vote %></span>\n    </div>\n    <div class="down-vote" title="拉倒吧你">\n        <span class="icon-thumbs-down"></span>\n        <span class="down-vote-count"><%= todo.todo_down_vote %></span>\n    </div>\n</div>\n<h2>\n    <%=todo.todo_name %>\n    <% if(user.is_authenticated && user.self_home){ %>\n        <span class="pull-right todo-ops hide">\n            <a href="javascript:void(0)"\n               class="mark-complete"\n               title="<% if(todo.todo_is_completed){ %>\n                       撤销已完成状态\n                      <% }else{ %>\n                       设置为已完成\n                      <% } %>">\n                <i class=" icon-ok"></i>\n            </a>\n            <% if(todo.todo_erasable){ %>\n                <a href="javascript:void(0)"\n                   class="delete-todo"\n                   title="删除该计划">\n                    <i class=" icon-trash"></i>\n                </a>\n            <% } %>\n            <a href="javascript:void(0)"\n               class="change-visible"\n               title="<% if(todo.todo_visible){ %>\n                         设置为仅对自己可见\n                      <% }else{ %>\n                         设置为对所有人可见\n                      <% } %>">\n                <i class=" icon-eye-open"></i>\n            </a>\n            <% if(!todo.todo_is_completed){ %>\n                <a href="javascript:void(0)"\n                   class="add-new-complete"\n                   title="添加新的进度">\n                    <i class="icon-plus"></i>\n                </a>\n            <% } %>\n        </span>\n    <% } %>\n</h2>\n<div class="todo_meta shadow <% if(!todo.todo_visible){ %>todo_private<% } %>">\n    <div class="todo_info">\n        该计划开始于  <%=todo.todo_start %> ，计划在\n         <%=todo.todo_end %>  完成！\n    </div>\n    <div class="todo_desc markdown"><%=tf.md.toHTML(todo.todo_description) %></div>\n</div>\n\n<div class="todo_complete">\n    <div class="accordion" id="todo-completes<%=todo.todo_id %>">\n    <% _.each(todo.achievement_list, function(ac, index, list){ %>\n        <div class="accordion-group">\n            <div class="accordion-heading">\n                <a class="accordion-toggle" data-toggle="collapse"\n                    data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.id %>">\n                    在<%=tf.mm.utc2local(ac.created_date) %> 记录: <%=ac.ac_name %>\n                </a>\n            </div>\n            <div id="collapse<%=ac.id %>" class="accordion-body collapse ">\n                <div class="accordion-inner markdown"><%=tf.md.toHTML(ac.ac_description) %></div>\n            </div>\n        </div>\n    <% }); %>\n    </div>\n</div>');
+define("sarike/timefly/0.0.1/home/templates/todo_item-debug.tpl", [], '<div class="todo-wrapper">\n    <div class="vote-btns">\n        <div class="up-vote" title="看好你哟">\n            <span class="icon-thumbs-up"></span>\n            <span class="up-vote-count"><%= todo.todo_up_vote %></span>\n        </div>\n        <div class="down-vote" title="拉倒吧你">\n            <span class="icon-thumbs-down"></span>\n            <span class="down-vote-count"><%= todo.todo_down_vote %></span>\n        </div>\n    </div>\n    <h2>\n        <%=todo.todo_name %>\n        <% if(user.is_authenticated && user.self_home){ %>\n            <span class="pull-right todo-ops hide">\n                <a href="javascript:void(0)"\n                   class="mark-complete"\n                   title="<% if(todo.todo_is_completed){ %>\n                           撤销已完成状态\n                          <% }else{ %>\n                           设置为已完成\n                          <% } %>">\n                    <i class=" icon-ok"></i>\n                </a>\n                <% if(todo.todo_erasable){ %>\n                    <a href="javascript:void(0)"\n                       class="delete-todo"\n                       title="删除该计划">\n                        <i class=" icon-trash"></i>\n                    </a>\n                <% } %>\n                <a href="javascript:void(0)"\n                   class="change-visible"\n                   title="<% if(todo.todo_visible){ %>\n                             设置为仅对自己可见\n                          <% }else{ %>\n                             设置为对所有人可见\n                          <% } %>">\n                    <i class=" icon-eye-open"></i>\n                </a>\n                <% if(!todo.todo_is_completed){ %>\n                    <a href="javascript:void(0)"\n                       class="add-new-complete"\n                       title="添加新的进度">\n                        <i class="icon-plus"></i>\n                    </a>\n                <% } %>\n            </span>\n        <% } %>\n    </h2>\n    <div class="todo_meta shadow <% if(!todo.todo_visible){ %>todo_private<% } %>">\n        <div class="todo_info">\n            该计划开始于  <%=todo.todo_start %> ，计划在\n             <%=todo.todo_end %>  完成！\n        </div>\n        <div class="todo_desc markdown"><%=tf.md.toHTML(todo.todo_description) %></div>\n    </div>\n\n    <div class="todo_complete">\n        <div class="accordion" id="todo-completes<%=todo.todo_id %>">\n        <% _.each(todo.achievement_list, function(ac, index, list){ %>\n            <div class="accordion-group">\n                <div class="accordion-heading">\n                    <a class="accordion-toggle" data-toggle="collapse"\n                        data-parent="#todo-completes<%=todo.todo_id %>" href="#collapse<%=ac.id %>">\n                        在<%=tf.mm.utc2local(ac.created_date) %> 记录: <%=ac.ac_name %>\n                    </a>\n                </div>\n                <div id="collapse<%=ac.id %>" class="accordion-body collapse ">\n                    <div class="accordion-inner markdown"><%=tf.md.toHTML(ac.ac_description) %></div>\n                </div>\n            </div>\n        <% }); %>\n        </div>\n    </div>\n</div>');
