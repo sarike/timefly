@@ -99,7 +99,9 @@ define(function (require, exports) {
                 'click a.change-visible': 'changeVisible',
                 'click a.add-new-complete': 'addNewComplete',
                 'click .down-vote': 'downVote',
-                'click .up-vote': 'upVote'
+                'click .up-vote': 'upVote',
+                'mouseover .todo-wrapper': 'toggleOps',
+                'mouseout .todo-wrapper': 'toggleOps'
             },
 
             toggleOps: function () {
@@ -133,16 +135,15 @@ define(function (require, exports) {
 
             downVote: function () {
                 this.dealTodo('/todo/down_vote', $.proxy(function (data) {
-                    if(data) {
+                    if (data) {
                         this.model.set('todo_down_vote', data);
                     }
                 }, this));
             },
 
             upVote: function () {
-                console.info('up vote');
                 this.dealTodo('/todo/up_vote', $.proxy(function (data) {
-                    if(data) {
+                    if (data) {
                         this.model.set('todo_up_vote', data);
                     }
                 }, this));
@@ -186,11 +187,6 @@ define(function (require, exports) {
                     todo: this.model.toJSON(),
                     user: context.user.toJSON()
                 }));
-                this.$el.mouseover($.proxy(function () {
-                    this.toggleOps();
-                }, this)).mouseout($.proxy(function () {
-                    this.toggleOps();
-                }, this));
                 return this;
             }
         });
@@ -343,5 +339,5 @@ define(function (require, exports) {
                 $(document).tooltip();
             });
         });
-    }
+    };
 });
