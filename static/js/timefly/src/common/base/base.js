@@ -235,14 +235,14 @@ define(function (require, exports, module) {
             var self = this;
             todo_form.validate({
                 errorClass: "input-error",
-                submitHandler: function (form) {
+                submitHandler: _.once(function (form) {
                     $(form).ajaxSubmit($.proxy(function (res) {
                         if (this.contentView.collection) {
                             this.contentView.collection.add(res.data);
                         }
                         self.destroy();
                     }, self));
-                },
+                }),
                 ignore: "input[type='checkbox']",
                 errorPlacement: function (error, element) {
                 },

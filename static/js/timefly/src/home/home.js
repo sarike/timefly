@@ -50,13 +50,13 @@ define(function (require, exports) {
             var self = this;
             ac_form.validate({
                 errorClass: "error",
-                submitHandler: function (form) {
+                submitHandler: _.once(function (form) {
                     $(form).ajaxSubmit($.proxy(function (res) {
                         this.close();
                         this.todoView.model.get('achievement_list').push(res.data);
                         this.todoView.render();
                     }, self));
-                },
+                }),
                 ignore: "input[type='checkbox']",
                 errorPlacement: function (error, element) {
                     element.prev().hide();
