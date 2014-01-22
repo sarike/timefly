@@ -26,7 +26,11 @@ define(function (require, exports) {
         url: "account/my_friends"
     });
 
-    var MyTodosCollection = Common.Collections.BaseCollection.extend({
+    var TodoModel = Common.Models.BaseModel.extend({
+        url: "todo/get_todo"
+    });
+
+    var MyTodoCollection = Common.Collections.BaseCollection.extend({
         url: "todo/my_todos"
     });
 
@@ -284,6 +288,10 @@ define(function (require, exports) {
             }
         });
 
+//        context.router.route(":username", "home", function(username){
+//
+//        });
+
         context.router.route(":username(/:position)", "home", function (username, position) {
             $.get("/" + username, function (res) {
                 var owner = res.data.owner;
@@ -317,7 +325,7 @@ define(function (require, exports) {
                         data: {
                             user: context.user
                         },
-                        collection: new MyTodosCollection()
+                        collection: new MyTodoCollection()
                     });
 
                     sideBarBoxes = [
@@ -331,6 +339,47 @@ define(function (require, exports) {
                         new Common.Box.AboutBox()
                     ];
                 }
+
+                Common.init(context, {
+                    sideBarBoxes: sideBarBoxes,
+                    content: content
+                });
+                $(document).tooltip();
+            });
+        });
+
+        context.router.route(":username/todo/:todo_id(/:ac_id)", "home_todo", function(username, todo_id, ac_id){
+            $.get("/" + username, function (res) {
+                var owner = res.data.owner;
+                var self_home = context.user.get("username") === owner.username;
+
+                context.user.trigger('update-user-event', {
+                    self_home: self_home,
+                    at_index_page: false,
+                    other_home_owner: owner.username
+                });
+                var todoCollection = new MyTodoCollection();
+                todoCollection.queryString = {
+                    todo_id: todo_id,
+                    ac_id: ac_id
+                };
+                var content = new HomeContent({
+                    data: {
+                        user: context.user
+                    },
+                    collection: todoCollection
+                });
+
+                var sideBarBoxes = [
+                    new Common.Box.UserProfileBox({model: new Backbone.Model(owner)}),
+                    new HomeSideNavBox({
+                        content: content
+                    }),
+                    new Common.Box.UserBox({
+                        collection: new MyFriendsCollection()
+                    }),
+                    new Common.Box.AboutBox()
+                ];
 
                 Common.init(context, {
                     sideBarBoxes: sideBarBoxes,

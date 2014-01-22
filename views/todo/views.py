@@ -170,34 +170,47 @@ def latest_todos():
     return jsonify(res)
 
 
+@todo.route('/todo')
+def get_todo():
+    res = ajax_response()
+    todo_id = request.args.get('todo_id')
+    with session_cm() as db:
+        td = db.query(Todo).get(todo_id)
+        res.update(data=td.to_dict())
+        return jsonify(res)
+
+
 @todo.route('/my_todos')
 def my_todos():
     res = ajax_response()
     flag = request.args.get('flag', 'doing')
+    todo_id = request.args.get('todo_id')
     with session_cm() as db:
-        my_todo_list_query = db.query(Todo). \
-            filter(Todo.todo_is_deleted == False,
-                   Todo.user_id == session["owner_id"])
+        if todo_id:
+            my_todo_list = db.query(Todo).filter(Todo.todo_id == todo_id).all()
+        else:
+            my_todo_list_query = db.query(Todo). \
+                filter(Todo.todo_is_deleted == False,
+                       Todo.user_id == session["owner_id"])
 
-        if not current_user.is_authenticated() or \
-                (current_user.is_authenticated() and current_user.user_id != session["owner_id"]):
-            my_todo_list_query = my_todo_list_query.filter(Todo.todo_visible == True)
+            if not current_user.is_authenticated() or \
+                    (current_user.is_authenticated() and current_user.user_id != session["owner_id"]):
+                my_todo_list_query = my_todo_list_query.filter(Todo.todo_visible == True)
 
-        if flag and flag == 'doing':
-            my_todo_list_query = my_todo_list_query.\
-                filter(Todo.todo_is_completed == False,
-                       Todo.todo_end > datetime.date.today())
+            if flag and flag == 'doing':
+                my_todo_list_query = my_todo_list_query.\
+                    filter(Todo.todo_is_completed == False,
+                           Todo.todo_end > datetime.date.today())
 
-        if flag and flag == 'completed':
-            my_todo_list_query = my_todo_list_query.\
-                filter(Todo.todo_is_completed == True)
+            if flag and flag == 'completed':
+                my_todo_list_query = my_todo_list_query.\
+                    filter(Todo.todo_is_completed == True)
 
-        if flag and flag == 'failed':
-            my_todo_list_query = my_todo_list_query.\
-                filter(Todo.todo_is_completed == False,
-                       Todo.todo_end < datetime.date.today())
-
-        my_todo_list = my_todo_list_query.options(joinedload('achievement_list')).all()
+            if flag and flag == 'failed':
+                my_todo_list_query = my_todo_list_query.\
+                    filter(Todo.todo_is_completed == False,
+                           Todo.todo_end < datetime.date.today())
+            my_todo_list = my_todo_list_query.options(joinedload('achievement_list')).all()
 
         items = []
         for td in my_todo_list:

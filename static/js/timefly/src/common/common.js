@@ -32,9 +32,19 @@ define(function (require, exports, module) {
     };
 
     var initContent = function (context, content) {
-        context.content.html(content.render().el);
+        if(content.model){
+            content.model.fetch({
+                data: content.model.queryString,
+                success: function(){
+                    context.content.html(content.render().el);
+                }
+            });
+            return;
+        }
         if (content.collection) {
+            context.content.html(content.render().el);
             content.collection.fetch({
+                data: content.collection.queryString,
                 success: function (collection) {
                     if (collection.length === 0) {
                         content.renderEmpty();

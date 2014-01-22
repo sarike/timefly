@@ -9,7 +9,9 @@ define(function (require, exports, module) {
     require("jquery-validate");
 
     // Models
-    var BaseModel = Backbone.Model.extend({});
+    var BaseModel = Backbone.Model.extend({
+        queryString:{}
+    });
 
     var BaseUser = Backbone.Model.extend({
         initialize: function () {
@@ -24,6 +26,9 @@ define(function (require, exports, module) {
     // Collections
     var BaseCollection = Backbone.Collection.extend({
         model: BaseModel,
+        initialize: function(){
+            this.queryString = {};
+        },
         parse: function (res) {
             return res.data.items;
         }
@@ -159,7 +164,19 @@ define(function (require, exports, module) {
 
         renderSubContent: function () {
             if (this.template) {
-                this.$el.append(this.template(this.options.data));
+                if(this.options.data){
+                    this.$el.append(this.template(this.options.data));
+                }else if(this.model){
+                    var self = this;
+                    this.model.fetch({
+                        data: this.model.queryString,
+                        success: function(model){
+                            self.$el.append(self.template(model.toJSON()));
+                        }
+                    })
+                }else{
+                    this.$el.append(this.template());
+                }
             }
         }
     });
