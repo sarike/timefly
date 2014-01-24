@@ -73,7 +73,7 @@ define(function (require, exports) {
                 rules: {
                     ac_name: {
                         required: true,
-                        maxlength: 20
+                        maxlength: 128
                     },
                     ac_description: 'required'
                 },

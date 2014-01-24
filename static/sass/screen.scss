@@ -257,15 +257,21 @@ a:hover .icon-chevron-right {
 
 .todo {
   .todo-wrapper {
-    & > h2 {
-      text-decoration: none;
+    .todo-header{
       height: 50px;
       line-height: 50px;
-      padding: 0px 20px;
-      font-weight: bold;
-      font-size: 25px;
+      h2 {
+        text-decoration: none;
+        padding: 0px 0px 0px 20px;
+        margin-right: 70px;
+        font-weight: bold;
+        font-size: 25px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
       .todo-ops {
-        padding-top: 5px;
+        padding: 0px 10px;
         a {
           &:hover {
             text-decoration: none;
@@ -315,8 +321,13 @@ a:hover .icon-chevron-right {
     margin-top: 10px;
     .accordion-heading {
       font-weight: bold;
-      a:hover {
+      a:hover, a{
         text-decoration: none;
+        height: 15px;
+        line-height: 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
   }

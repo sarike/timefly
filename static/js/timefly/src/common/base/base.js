@@ -266,7 +266,7 @@ define(function (require, exports, module) {
                 rules: {
                     todo_name: {
                         required: true,
-                        maxlength: 20
+                        maxlength: 128
                     },
                     todo_description: 'required',
                     todo_start: {

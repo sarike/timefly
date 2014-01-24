@@ -9,8 +9,7 @@
             <span class="down-vote-count"><%= todo.todo_down_vote %></span>
         </div>
     </div>
-    <h2>
-        <%=todo.todo_name %>
+    <div class="todo-header">
         <% if(user.is_authenticated && user.self_home){ %>
             <span class="pull-right todo-ops hide">
                 <a href="javascript:void(0)"
@@ -47,7 +46,8 @@
                 <% } %>
             </span>
         <% } %>
-    </h2>
+        <h2><%=todo.todo_name %></h2>
+    </div>
     <div class="todo_meta shadow <% if(!todo.todo_visible){ %>todo_private<% } %>">
         <div class="todo_info">
             该计划开始于  <%=todo.todo_start %> ，计划在
