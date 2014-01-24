@@ -3,9 +3,9 @@
 <head>
 <base href="{{request.host_url}}" />
     <meta charset="utf-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/bootstrap.min.css') }}"  media="screen, projection" type="text/css"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/screen.css') }}"  media="screen, projection" type="text/css"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/jquery-ui.min.css') }}"  media="screen, projection" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/bootstrap.min.css', t=static_timestamp) }}"  media="screen, projection" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/screen.css', t=static_timestamp) }}"  media="screen, projection" type="text/css"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/lib/jquery-ui.min.css', t=static_timestamp) }}"  media="screen, projection" type="text/css"/>
     <title>时光飞逝 |TimeFly</title>
 </head>
 <body>
@@ -38,7 +38,7 @@
         });
     {% endif %}
 </script>
-<script type="text/javascript" src="{{ url_for('static', filename='js/seajs-config.js', t='201401242339') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/seajs-config.js', t=static_timestamp) }}"></script>
 {% block javascript %}{% endblock %}
 {% if not debug %}
     <div class="hide">

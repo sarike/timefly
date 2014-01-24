@@ -17,7 +17,8 @@ frontend = Blueprint('frontend', __name__)
 @frontend.route('/index')
 def index():
     context = {
-        'debug': settings.DEBUG
+        'debug': settings.DEBUG,
+        'static_timestamp': settings.STATIC_FILE_TIME_STAMP
     }
     return render_template('index.html', **context)
 
