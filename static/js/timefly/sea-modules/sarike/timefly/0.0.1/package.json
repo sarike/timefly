@@ -3,6 +3,7 @@
   "name": "timefly",
   "version": "0.0.1",
   "spm": {
+    "include": "all",
     "output": [
       "timefly.js"
     ],
