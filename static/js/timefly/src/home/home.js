@@ -104,8 +104,29 @@ define(function (require, exports) {
                 'click a.add-new-complete': 'addNewComplete',
                 'click .down-vote': 'downVote',
                 'click .up-vote': 'upVote',
+                'click .comment': 'openCommentList',
                 'mouseover .todo-wrapper': 'toggleOps',
                 'mouseout .todo-wrapper': 'toggleOps'
+            },
+
+            openCommentList: function(){
+                if(!this.comments_opened){
+                    if(this.comments_el){
+                        this.$('.comment-list').slideDown();
+                        this.comments_opened = true;
+                    }else{
+                        this.comments_el = $('<div/>');//该div不需要设置class="ds-thread"
+                        this.comments_el.attr('data-thread-key', this.model.get('todo_id'))
+                            .attr('data-url', 'http://www.timefly.cn/#sarike/todo/' + this.model.get('todo_id'))
+                            .attr('data-author-key', this.model.get('user').user_id);//可选参数
+                        DUOSHUO.EmbedThread(this.comments_el);
+                        this.$('.comment-list').html(this.comments_el).slideDown();
+                        this.comments_opened = true;
+                    }
+                }else{
+                    this.$('.comment-list').slideUp();
+                    this.comments_opened = false;
+                }
             },
 
             toggleOps: function () {

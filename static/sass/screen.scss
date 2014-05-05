@@ -5,7 +5,7 @@
 @import "base";
 
 #wrapper {
-  margin-top: 40px;
+  margin: 40px 0;
 }
 
 #avatar {
@@ -13,6 +13,17 @@
   & > img {
     width: 100px;
     height: 100px;
+  }
+}
+
+p{
+  margin-bottom: 10px;
+  line-height: 2;
+}
+
+a{
+  &:link, &:visited, &:hover, &:active{
+    text-decoration: none;
   }
 }
 
@@ -55,6 +66,7 @@ form {
   .box-subheader {
     color: $main-color2;
     padding: 10px 0;
+    margin-bottom: 0;
   }
 }
 
@@ -257,6 +269,12 @@ a:hover .icon-chevron-right {
 
 .todo {
   .todo-wrapper {
+    .todo-meta{
+      text-align: right;
+      font-size: 12px;
+      margin-top: -15px;
+      padding: 5px 15px 10px;
+    }
     .todo-header{
       height: 50px;
       line-height: 50px;

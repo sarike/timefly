@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 {% block javascript %}
+    <script>var duoshuoQuery = {short_name:"timefly"};</script>
+    <script src="http://static.duoshuo.com/embed.js"></script>
     <script type="text/javascript">
         seajs.use(seajs.data.debug? "/static/js/timefly/src/timefly" : "sarike/timefly/0.0.1/timefly",
                 function(timefly){
