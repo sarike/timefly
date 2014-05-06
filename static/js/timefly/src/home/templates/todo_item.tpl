@@ -76,7 +76,7 @@
     <div class="todo-meta">
         <a href="javascript:void(0);" class="comment">
             <i class="icon-comment"></i>
-            回复
+            评论
         </a>
     </div>
     <div class="comment-list">
